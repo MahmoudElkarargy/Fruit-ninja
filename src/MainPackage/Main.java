@@ -9,9 +9,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
     public void start(Stage primarystage) {
         ViewManger manger = new ViewManger();
-        primarystage=manger.getMainstage();
+        primarystage=manger.getMainStage();
         primarystage.show();
-//        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
 
 
