@@ -53,7 +53,8 @@ public class ViewManger {
         classicButton.setLayoutY(GAMEHIGHT-500);
         classicButton.setOnMouseEntered(e->{ classicButton.setEffect(new DropShadow()); });
         classicButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
-        classicButton.setOnMouseClicked(e->{
+        classicButton.setOnMouseClicked(e->{ GameViewManger gamemanger = new GameViewManger();
+                        gamemanger.createNewGame(mainstage);
             System.out.println("Classic Game will open here");
         });
 //        mainpane.getChildren().add(classicButton);
