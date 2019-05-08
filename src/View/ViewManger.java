@@ -50,7 +50,7 @@ public class ViewManger {
     private void createClassicbutton(){
         classicButton = new ImageView("View/resources/Classic.png");
         classicButton.setLayoutX(50);
-        classicButton.setLayoutY(GAMEHIGHT-500);
+        classicButton.setLayoutY(GAMEHIGHT-600);
         classicButton.setOnMouseEntered(e->{ classicButton.setEffect(new DropShadow()); });
         classicButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
         classicButton.setOnMouseClicked(e->{
@@ -64,7 +64,7 @@ public class ViewManger {
         arcadeButton.setLayoutX(50);
         arcadeButton.setLayoutY(GAMEHIGHT-220);
         arcadeButton.setOnMouseEntered(e->{ arcadeButton.setEffect(new DropShadow()); });
-        arcadeButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
+        arcadeButton.setOnMouseExited(e->{ arcadeButton.setEffect(null); });
         arcadeButton.setOnMouseClicked(e->{
             System.out.println("arcade Game will open here");
         });
@@ -74,7 +74,7 @@ public class ViewManger {
     private void createGameZonebutton(){
         GameZoneButton = new ImageView("View/resources/GameZone.png");
         GameZoneButton.setLayoutX(750);
-        GameZoneButton.setLayoutY(GAMEHIGHT-500);
+        GameZoneButton.setLayoutY(GAMEHIGHT-600);
         GameZoneButton.setOnMouseEntered(e->{ GameZoneButton.setEffect(new DropShadow()); });
         GameZoneButton.setOnMouseExited(e->{ GameZoneButton.setEffect(null); });
         GameZoneButton.setOnMouseClicked(e->{
@@ -111,7 +111,7 @@ public class ViewManger {
     private void creatLogo(){
         logo = new ImageView("View/resources/logo.png");
         logo.setLayoutX(GAMEWIDTH/2-180);
-        logo.setLayoutY(50);
+        logo.setLayoutY(200);
         logo.setOnMouseEntered(e->{ logo.setEffect(new DropShadow()); });
         logo.setOnMouseExited(e->{ logo.setEffect(null); });
         logo.setOnMouseClicked(e->{
