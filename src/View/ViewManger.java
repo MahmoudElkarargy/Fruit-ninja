@@ -18,6 +18,7 @@ public class ViewManger {
         mainStage.setScene(mainScene);
 
         // hello pushed from me
+        //kkkk
     }
 
     public Stage getMainStage(){
