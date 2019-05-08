@@ -40,9 +40,9 @@ public class ViewManger {
         return mainstage;
     }
     private void addMenuButtons(fruitNinjaButton button){
-        button.setLayoutX(menu_button_start_x);
-        button.setLayoutY(menu_button_start_y + menubuttons.size()*100);
-        menubuttons.add(button);
+      //  button.setLayoutX(menu_button_start_x);
+        //button.setLayoutY(menu_button_start_y + menubuttons.size()*100);
+        //menubuttons.add(button);
         mainpane.getChildren().add(button);
 
     }
@@ -85,7 +85,7 @@ public class ViewManger {
 
 
     private void createBackground(){
-        Image backgroundImage = new Image("View/resources/background-scene---dojo.png",1024,700,false,true);
+        Image backgroundImage = new Image("view/resources/background-scene---dojo.png",1024,700,false,true);
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT , BackgroundPosition.DEFAULT,null);
         mainpane.setBackground(new Background(background));
     }
