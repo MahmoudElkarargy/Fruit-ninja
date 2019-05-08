@@ -41,10 +41,10 @@ public class ViewManger {
 
     private  void createButton(){
         createClassicbutton();
-//        createArcadebutton();
-//        createGameZonesbutton();
-//        createHelpbutton();
-//        createClosebutton();
+       createArcadebutton();
+        createGameZonebutton();
+        createHelpbutton();
+//       createClosebutton();
     }
 
     private void createClassicbutton(){
@@ -55,6 +55,40 @@ public class ViewManger {
         classicButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
         classicButton.setOnMouseClicked(e->{
             System.out.println("Classic Game will open here");
+        });
+//        mainpane.getChildren().add(classicButton);
+    }
+
+    private void createArcadebutton(){
+        arcadeButton = new ImageView("View/resources/Arcade.png");
+        arcadeButton.setLayoutX(50);
+        arcadeButton.setLayoutY(GAMEHIGHT-220);
+        arcadeButton.setOnMouseEntered(e->{ arcadeButton.setEffect(new DropShadow()); });
+        arcadeButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
+        arcadeButton.setOnMouseClicked(e->{
+            System.out.println("arcade Game will open here");
+        });
+//        mainpane.getChildren().add(classicButton);
+    }
+
+    private void createGameZonebutton(){
+        GameZoneButton = new ImageView("View/resources/GameZone.png");
+        GameZoneButton.setLayoutX(750);
+        GameZoneButton.setLayoutY(GAMEHIGHT-500);
+        GameZoneButton.setOnMouseEntered(e->{ GameZoneButton.setEffect(new DropShadow()); });
+        GameZoneButton.setOnMouseExited(e->{ GameZoneButton.setEffect(null); });
+        GameZoneButton.setOnMouseClicked(e->{
+            System.out.println("Game zone will open here");
+        });
+//        mainpane.getChildren().add(classicButton);
+    } private void createHelpbutton(){
+        helpButton = new ImageView("View/resources/Help.png");
+        helpButton.setLayoutX(800);
+        helpButton.setLayoutY(GAMEHIGHT-220);
+        helpButton.setOnMouseEntered(e->{ helpButton.setEffect(new DropShadow()); });
+        helpButton.setOnMouseExited(e->{ helpButton.setEffect(null); });
+        helpButton.setOnMouseClicked(e->{
+            System.out.println("help will open here");
         });
 //        mainpane.getChildren().add(classicButton);
     }
@@ -71,7 +105,7 @@ public class ViewManger {
             gridPane2.getChildren().add(backgroundImage2);
         }
         gridPane2.setLayoutX(-1250);
-        mainpane.getChildren().addAll(gridPane1,gridPane2,classicButton,logo);
+        mainpane.getChildren().addAll(gridPane1,gridPane2,classicButton,arcadeButton,GameZoneButton,helpButton,logo);
     }
 
     private void creatLogo(){
