@@ -17,7 +17,8 @@ public class ViewManger {
         mainStage = new Stage();
         mainStage.setScene(mainScene);
 
-
+        // hello pushed from me
+        //kkkk
     }
 
     public Stage getMainStage(){
