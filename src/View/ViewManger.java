@@ -23,7 +23,7 @@ public class ViewManger {
     private AnimationTimer gameTimer;
     private GridPane gridPane1,gridPane2;
     ImageView classicButton, arcadeButton, GameZoneButton, closeButton, helpButton, logo;
-
+    GameViewManger gameManger = new GameViewManger();
     public ViewManger(){
         mainpane=new AnchorPane();
         mainscene= new Scene(mainpane, 1024,700);
@@ -33,6 +33,7 @@ public class ViewManger {
         creatLogo();
         createBackground();
         creatGameLoop();
+
     }
 
     public Stage getMainstage() {
@@ -53,11 +54,10 @@ public class ViewManger {
         classicButton.setLayoutY(GAMEHIGHT-600);
         classicButton.setOnMouseEntered(e->{ classicButton.setEffect(new DropShadow()); });
         classicButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
-        classicButton.setOnMouseClicked(e->{ GameViewManger gamemanger = new GameViewManger();
-                        gamemanger.createNewGame(mainstage);
+        classicButton.setOnMouseClicked(e->{
+            gameManger.createNewGame(mainstage);
             System.out.println("Classic Game will open here");
         });
-//        mainpane.getChildren().add(classicButton);
     }
 
     private void createArcadebutton(){
@@ -68,8 +68,8 @@ public class ViewManger {
         arcadeButton.setOnMouseExited(e->{ arcadeButton.setEffect(null); });
         arcadeButton.setOnMouseClicked(e->{
             System.out.println("arcade Game will open here");
+            gameManger.createNewGame(mainstage);
         });
-//        mainpane.getChildren().add(classicButton);
     }
 
     private void createGameZonebutton(){
@@ -81,7 +81,6 @@ public class ViewManger {
         GameZoneButton.setOnMouseClicked(e->{
             System.out.println("Game zone will open here");
         });
-//        mainpane.getChildren().add(classicButton);
     } private void createHelpbutton(){
         helpButton = new ImageView("View/resources/Help.png");
         helpButton.setLayoutX(700);
@@ -91,7 +90,6 @@ public class ViewManger {
         helpButton.setOnMouseClicked(e->{
             System.out.println("help will open here");
         });
-//        mainpane.getChildren().add(classicButton);
     }
 
     private void createBackground(){

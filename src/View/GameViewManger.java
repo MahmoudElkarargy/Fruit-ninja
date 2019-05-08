@@ -22,7 +22,7 @@ public class GameViewManger {
 
     private GridPane gridpane1;
     private GridPane gridpane2;
-    private final static String Game_Background = "View/resources/background-scene---dojo.png";
+    private final static String Game_Background = "View/resources/GameBackground.jpg";
 
     private AnimationTimer gametimer;
 
@@ -30,19 +30,17 @@ public class GameViewManger {
     private final static String FRUIT_TWO = "View/resources/GameZone.png";
     private ImageView [] fruitone;
     private ImageView [] fruittwo;
-    Random randompositiongenerator ;
+    Random randomPositionGenerator ;
 
 
     public GameViewManger(){
         inializeStage();
-        createKeyListeners();
-        randompositiongenerator = new Random();
+        randomPositionGenerator = new Random();
     }
     private void createCaseloop(){
         gametimer = new AnimationTimer(){
             @Override
             public void handle(long now) {
-                moveBackground();
                 moveElements();
                 checkIfElementsBelowScreen();
             }
@@ -52,25 +50,6 @@ public class GameViewManger {
             gametimer.start();
     }
 
-    private void createKeyListeners() {
-        gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if(event.getCode()== KeyCode.LEFT){}
-                else if (event.getCode()== KeyCode.RIGHT){};
-            }}
-            );
-
-        gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-
-
-                if (event.getCode() == KeyCode.LEFT) {
-                } else if (event.getCode() == KeyCode.RIGHT) {}
-
-            }});
-    };
 
     private void createGameelements () {
         fruitone = new ImageView[3];
@@ -133,8 +112,8 @@ private void checkIfElementsBelowScreen(){
 
 
      private void setNewElementPosition(ImageView image){
-        image.setLayoutX(randompositiongenerator.nextInt(500));
-        image.setLayoutY((randompositiongenerator.nextInt(3200)+600));
+        image.setLayoutX(randomPositionGenerator.nextInt(500));
+        image.setLayoutY((randomPositionGenerator.nextInt(3200)+600));
 
 
      }
@@ -157,7 +136,7 @@ private void checkIfElementsBelowScreen(){
 
     }
 
-private void createBackground (){
+    private void createBackground (){
         gridpane1 = new GridPane();
         gridpane2 = new GridPane();
         for (int i = 0 ; i<12 ;i++){
@@ -171,21 +150,5 @@ private void createBackground (){
             gridpane2.setLayoutY(-600);
             gamePane.getChildren().addAll(gridpane1,gridpane2);
 }
-
-  private void moveBackground(){
-        gridpane1.setLayoutY(gridpane1.getLayoutY()+0.5);
-        gridpane2.setLayoutY(gridpane2.getLayoutY()+0.5);
-
-        if(gridpane1.getLayoutY()>=600){
-            gridpane1.setLayoutY(-600);
-        }
-        if(gridpane2.getLayoutY()>=600){
-            gridpane2.setLayoutY(-600);
-        }
-  }
-
-
-
-
 
 }
