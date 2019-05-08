@@ -11,7 +11,6 @@ public class Main extends Application {
         ViewManger manger = new ViewManger();
         primarystage=manger.getMainstage();
         primarystage.show();
-//        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
 
 
