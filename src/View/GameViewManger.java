@@ -27,7 +27,7 @@ public class GameViewManger {
     private final static String FRUIT_TWO = "View/resources/Fruits/watermelon.png";
     private final static String FRUIT_THREE = "View/resources/Fruits/Orange.png";
     private final static String FRUIT_FOUR = "View/resources/Fruits/dk.png";
-
+    private int numberOfLifes=3, LifeY=80;
 
     private ImageView [] fruitOne;
     private ImageView [] fruitTwo;
@@ -35,7 +35,7 @@ public class GameViewManger {
     private ImageView [] fruitFour;
 
     Random randomPositionGenerator ;
-    private ImageView closeButton,help,save,Sound;
+    private ImageView closeButton,help,save,Sound, life;
 
     public GameViewManger(){
         inializeStage();
@@ -180,9 +180,20 @@ public class GameViewManger {
         save.setOnMouseEntered(e->{ save.setEffect(new Glow()); });
         save.setOnMouseExited(e->{ save.setEffect(null); });
 
-
+        creatLifeNumbers();
         gamePane.getChildren().addAll(closeButton,help,save,Sound);
     }
+    public void creatLifeNumbers(){
+        life = new ImageView("View/resources/BonusObjects/Life.png");
+        life.setLayoutY(LifeY);
+        life.setFitHeight(50);
+        life.setFitWidth(50);
+        for (int i=0; i<numberOfLifes; i++){
+            life.setLayoutX(GAME_WIDTH-60);
+        }
+        gamePane.getChildren().add(life);
+    }
+
     public void createNewGame(Stage menustage){
         this.menustage = menustage;
         this.menustage.hide();
