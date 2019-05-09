@@ -3,15 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="45c2539d-6b72-4d56-a0a5-54effdbb2e76" name="Default Changelist" comment="a">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fruit-ninja/MainPackage/FRUITS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fruit-ninja/MainPackage/FRUITS.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Fruit-ninja/View/GameViewManger$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fruit-ninja/View/GameViewManger$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Fruit-ninja/View/GameViewManger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fruit-ninja/View/GameViewManger.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Fruit-ninja/View/ViewManger$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fruit-ninja/View/ViewManger$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Fruit-ninja/View/ViewManger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fruit-ninja/View/ViewManger.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainPackage/FRUITS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainPackage/FRUITS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/GameViewManger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/GameViewManger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/resources/Fruits/Sliced.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/resources/Fruits/SlicedCoconut.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/resources/Fruits/SlicedInverse.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/resources/Fruits/SlicedCoconutInverse.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/resources/Fruits/Watermilon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/resources/Fruits/dk.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/resources/Fruits/Coconut.png" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/View/ViewManger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-661">
-              <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+            <state relative-caret-position="-800">
+              <caret line="63" column="16" selection-start-line="63" selection-start-column="12" selection-end-line="63" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -55,14 +51,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/View/GameViewManger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="220" column="43" selection-start-line="220" selection-start-column="43" selection-end-line="220" selection-end-column="43" />
+            <state relative-caret-position="218">
+              <caret line="280" column="66" selection-start-line="280" selection-start-column="66" selection-end-line="280" selection-end-column="66" />
               <folding>
-                <element signature="e#4923#5139#0" expanded="true" />
-                <element signature="e#5138#5139#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -71,16 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MainPackage/FRUITS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-              <folding>
-                <element signature="e#867#868#0" expanded="true" />
-                <element signature="e#894#895#0" expanded="true" />
-                <element signature="e#927#928#0" expanded="true" />
-                <element signature="e#956#957#0" expanded="true" />
-                <element signature="e#996#997#0" expanded="true" />
-                <element signature="e#1032#1033#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="60">
+              <caret line="4" column="150" selection-start-line="4" selection-start-column="150" selection-end-line="4" selection-end-column="150" />
             </state>
           </provider>
         </entry>
@@ -133,6 +120,14 @@
       <find>clos</find>
       <find>checkIfElementsBelowScreen</find>
       <find>gametimer</find>
+      <find>move</find>
+      <find>fruitOn</find>
+      <find>Sys</find>
+      <find>FRUIT_ONE_SLICED</find>
+      <find>setNew</find>
+      <find>fruitOne</find>
+      <find>createGameelements</find>
+      <find>Syste</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -159,7 +154,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="777" />
@@ -172,8 +167,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -198,10 +191,27 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="View" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Fruit-ninja" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fruit-ninja" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="View" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Fruit-ninja" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fruit-ninja" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="View" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Fruits" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -294,7 +304,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26979" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27786753" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -304,8 +314,8 @@
       <window_info id="simpleUML" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329927" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3270073" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39869282" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3270073" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39854014" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -367,6 +377,16 @@
     <entry file="file://$PROJECT_DIR$/src/View/resources/logo.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/View/resources/BonusObjects/Life.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/View/resources/Fruits/Watermilon.png" />
+    <entry file="file://$PROJECT_DIR$/src/View/resources/Fruits/Apple.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/View/resources/Fruits/watermelon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/MainPackage/GameObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -381,8 +401,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/resources/BonusObjects/Life.png">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/src/MainPackage/FRUITS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="150" selection-start-line="4" selection-start-column="150" selection-end-line="4" selection-end-column="150" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/View/ClassicMode.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -405,47 +429,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/resources/Fruits/Watermilon.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/resources/Fruits/Apple.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/resources/Fruits/watermelon.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainPackage/FRUITS.java">
+    <entry file="file://$PROJECT_DIR$/src/View/GameViewManger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-          <folding>
-            <element signature="e#867#868#0" expanded="true" />
-            <element signature="e#894#895#0" expanded="true" />
-            <element signature="e#927#928#0" expanded="true" />
-            <element signature="e#956#957#0" expanded="true" />
-            <element signature="e#996#997#0" expanded="true" />
-            <element signature="e#1032#1033#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/ViewManger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-661">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+        <state relative-caret-position="218">
+          <caret line="280" column="66" selection-start-line="280" selection-start-column="66" selection-end-line="280" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/GameViewManger.java">
+    <entry file="file://$PROJECT_DIR$/src/View/ViewManger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="220" column="43" selection-start-line="220" selection-start-column="43" selection-end-line="220" selection-end-column="43" />
+        <state relative-caret-position="-800">
+          <caret line="63" column="16" selection-start-line="63" selection-start-column="12" selection-end-line="63" selection-end-column="16" />
           <folding>
-            <element signature="e#4923#5139#0" expanded="true" />
-            <element signature="e#5138#5139#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
