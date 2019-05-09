@@ -53,6 +53,7 @@ public class ViewManger {
     }
 
     private void createClassicbutton(){
+//        gameManger = new GameViewManger();
         classicButton = new ImageView("View/resources/Classic.png");
         classicButton.setLayoutX(80);
         classicButton.setLayoutY(GAMEHIGHT-600);
@@ -65,6 +66,7 @@ public class ViewManger {
     }
 
     private void createArcadebutton(){
+//        gameManger = new GameViewManger();
         arcadeButton = new ImageView("View/resources/Arcade.png");
         arcadeButton.setLayoutX(110);
         arcadeButton.setLayoutY(GAMEHIGHT-250);
