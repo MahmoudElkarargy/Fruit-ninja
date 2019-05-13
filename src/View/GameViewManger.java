@@ -1,25 +1,18 @@
 package View;
 
+import Logic.Score;
 import MainPackage.FRUITS;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.awt.*;
-import java.io.File;
-import java.util.Random;
 
 public class GameViewManger {
-    private AnchorPane gamePane;
+    public static AnchorPane gamePane;
     private Scene gameScene ;
     private Stage gameStage ;
     private static final int GAME_WIDTH= 1200;
@@ -29,23 +22,24 @@ public class GameViewManger {
     private boolean isMusicClicked = false;
     private int Score;
     private String musicSlice = "src/View/resources/Slice.mp3";
-    private static String FRUIT_ONE, FRUIT_ONE_SLICED,FRUIT_ONE_SLICED_INVERSE , FRUIT_TWO, FRUIT_TWO_SLICED, FRUIT_TWO_SLICED_INVERSE,
-            FRUIT_THREE, FRUIT_THREE_SLICED, FRUIT_THREE_SLICED_INVERSE, FRUIT_FOUR, FRUIT_FOUR_SLICED, FRUIT_FOUR_SLICED_INVERSE;
-    private int numberOfLifes=3, LifeY=80;
-    private static int CASE;
-    private ImageView fruitOne, fruitTwo, fruitThree, fruitFour;
-    private ImageView fruitOneSliced, fruitOneInverse, fruitTwoSliced, fruitTwoInverse;
-    private ImageView fruitThreeSliced, fruitThreeInverse, fruitFourSliced, fruitFourInverse;
-    private ImageView closeButton,help,save,Sound, life;
-    private Random randomPositionGenerator;
-    private Boolean isSliced=false;
-    Clock t = new Clock();
-    Score score1 = View.Score.getInstance();
+    private FRUITS CurrentFruit;
+    public int numberOfLifes=3;
+
+    private String FRUIT_PATH,FRUIT_SLICED_PATH, FRUIT_INVERSE_PATH;
+    private ImageView fruit,fruitSliced, fruitInverse;
+    private ImageView closeButton,help,save,Sound;
+//    private Random randomPositionGenerator;
+    private Boolean isSliced=false, ReachedMaxHeight=false;
+
+    Clock time = new Clock();
+    Score score1 = Logic.Score.getInstance();
     GameEngine gameEngine = GameEngine.getInstance();
+    private ClassicMode classicMode;
+
     public GameViewManger(){
         inializeStage();
         inializeFruits();
-        randomPositionGenerator = new Random();
+//        randomPositionGenerator = new Random();
     }
 
     private void inializeStage() {
@@ -53,6 +47,9 @@ public class GameViewManger {
         gameScene = new Scene(gamePane, GAME_WIDTH,GAME_HEIGHT);
         gameStage = new Stage ();
         gameStage.setScene(gameScene);
+        classicMode = new ClassicMode();
+        classicMode.setNumberOfLifes(numberOfLifes);
+
 //        gameStage.initStyle(StageStyle.TRANSPARENT);
         createIcons();
     }
@@ -63,7 +60,7 @@ public class GameViewManger {
         help = new ImageView("View/resources/Icons/help.png");
         save = new ImageView("View/resources/Icons/save.png");
         Sound = new ImageView(soundOn);
-        gamePane.getChildren().add(t);
+        gamePane.getChildren().add(time);
         gamePane.getChildren().add(score1);
 
         closeButton.setLayoutX(10);
@@ -110,27 +107,16 @@ public class GameViewManger {
         save.setOnMouseEntered(e->{ save.setEffect(new Glow()); });
         save.setOnMouseExited(e->{ save.setEffect(null); });
 
-        creatLifeNumbers();
         gamePane.getChildren().addAll(closeButton,help,save,Sound);
 
     }
 
     private void inializeFruits(){
-        FRUIT_ONE = FRUITS.APPLE.getIdle();
-        FRUIT_ONE_SLICED = FRUITS.APPLE.getSliced();
-        FRUIT_ONE_SLICED_INVERSE = FRUITS.APPLE.getSlicedInverse();
-
-        FRUIT_TWO = FRUITS.WATERMILION.getIdle();
-        FRUIT_TWO_SLICED = FRUITS.WATERMILION.getSliced();
-        FRUIT_TWO_SLICED_INVERSE = FRUITS.WATERMILION.getSlicedInverse();
-
-        FRUIT_THREE = FRUITS.ORANGE.getIdle();
-        FRUIT_THREE_SLICED = FRUITS.ORANGE.getSliced();
-        FRUIT_THREE_SLICED_INVERSE = FRUITS.ORANGE.getSlicedInverse();
-
-        FRUIT_FOUR = FRUITS.COCONUT.getIdle();
-        FRUIT_FOUR_SLICED = FRUITS.COCONUT.getSliced();
-        FRUIT_FOUR_SLICED_INVERSE = FRUITS.COCONUT.getSlicedInverse();
+        //Creating objects.
+        CurrentFruit = ((FRUITS)gameEngine.createGameObject().getObjectType());
+        FRUIT_PATH = CurrentFruit.getIdle();
+        FRUIT_SLICED_PATH = CurrentFruit.getSliced();
+        FRUIT_INVERSE_PATH = CurrentFruit.getSlicedInverse();
     }
 
     public void createNewGame(Stage menustage){
@@ -141,7 +127,7 @@ public class GameViewManger {
         createGameelements();
         createCaseloop();
         gameStage.show();
-        t.start();
+        time.start();
     }
     private void createBackground (){
         Image backgroundImage = new Image("View/resources/GameBackground.jpg",GAME_WIDTH,GAME_HEIGHT,false,true);
@@ -155,34 +141,21 @@ public class GameViewManger {
         gametimer = new AnimationTimer(){
             @Override
             public void handle(long l) {
-
                 moveElements();
                 checkIfElementsBelowScreen();
                 ImageEVENT();
-                moveFruitDown(CASE);
-
+                moveFruitDown();
             }
         };
             gametimer.start();
-
-
     }
     private void setNewElementPosition(ImageView image){
-        image.setLayoutX(randomPositionGenerator.nextInt(700));
-        image.setLayoutY((randomPositionGenerator.nextInt(600)+700));
+        image.setLayoutY(gameEngine.createGameObject().getYlocation());
+        image.setLayoutX(gameEngine.createGameObject().getXlocation());
     }
 
-    public void creatLifeNumbers(){
-        life = new ImageView("View/resources/BonusObjects/Life.png");
-        life.setLayoutY(LifeY);
-        life.setFitHeight(50);
-        life.setFitWidth(50);
-        for (int i=0; i<numberOfLifes; i++){
-            life.setLayoutX(GAME_WIDTH-60);
-        }
-        gamePane.getChildren().add(life);
-
-
+    public static AnchorPane getGamePain(){
+        return gamePane;
     }
 
 
@@ -196,173 +169,115 @@ public class GameViewManger {
 
 
     private void createGameelements () {
-
-        fruitOne = new ImageView(FRUIT_ONE);
-        fruitOneSliced = new ImageView(FRUIT_ONE_SLICED);
-        fruitOneInverse = new ImageView(FRUIT_ONE_SLICED_INVERSE);
-        fruitOne.setFitWidth(100);
-        fruitOne.setFitHeight(100);
-        setNewElementPosition(fruitOne);
-        gamePane.getChildren().add(fruitOne);
-
-
-        fruitTwo = new ImageView(FRUIT_TWO);
-        fruitTwoSliced = new ImageView(FRUIT_TWO_SLICED);
-        fruitTwoInverse = new ImageView(FRUIT_TWO_SLICED_INVERSE);
-        fruitTwo.setFitWidth(100);
-        fruitTwo.setFitHeight(100);
-        setNewElementPosition(fruitTwo);
-        gamePane.getChildren().addAll(fruitTwo);
-
-
-        fruitThree = new ImageView(FRUIT_THREE);
-        fruitThreeSliced = new ImageView(FRUIT_THREE_SLICED);
-        fruitThreeInverse = new ImageView(FRUIT_THREE_SLICED_INVERSE);
-        fruitThree.setFitWidth(100);
-        fruitThree.setFitHeight(100);
-        setNewElementPosition(fruitThree);
-        gamePane.getChildren().addAll(fruitThree);
-
-        fruitFour = new ImageView(FRUIT_FOUR);
-        fruitFourSliced = new ImageView(FRUIT_FOUR_SLICED);
-        fruitFourInverse = new ImageView(FRUIT_FOUR_SLICED_INVERSE);
-        fruitFour.setFitWidth(100);
-        fruitFour.setFitHeight(100);
-        setNewElementPosition(fruitFour);
-        gamePane.getChildren().addAll(fruitFour);
-
+        fruit = new ImageView(FRUIT_PATH);
+        fruitSliced = new ImageView(FRUIT_SLICED_PATH);
+        fruitInverse = new ImageView(FRUIT_INVERSE_PATH);
+        fruit.setFitWidth(100);
+        fruit.setFitHeight(100);
+        fruitSliced.setFitHeight(100);
+        fruitSliced.setFitWidth(100);
+        fruitInverse.setFitHeight(100);
+        fruitInverse.setFitWidth(100);
+        setNewElementPosition(fruit);
+        gamePane.getChildren().add(fruit);
     }
 
     private void moveElements() {
-        fruitOne.setLayoutY(fruitOne.getLayoutY() - 3);
-        fruitOne.setLayoutX(fruitOne.getLayoutX() + 1);
-
-        fruitTwo.setLayoutY(fruitTwo.getLayoutY() - 3);
-        fruitTwo.setLayoutX(fruitTwo.getLayoutX() + 1);
-
-        fruitThree.setLayoutY(fruitThree.getLayoutY() - 3);
-        fruitThree.setLayoutX(fruitThree.getLayoutX() + 1);
-
-        fruitFour.setLayoutY(fruitFour.getLayoutY() - 3);
-        fruitFour.setLayoutX(fruitFour.getLayoutX() + 1);
-    }
+        if(!isSliced) {
+            if (!ReachedMaxHeight) {
+                if (fruit.getLayoutY() > gameEngine.createGameObject().getMaxHeight()) {
+                    ReachedMaxHeight = false;
+                    fruit.setLayoutY(fruit.getLayoutY() - 3);
+                    fruit.setLayoutX(fruit.getLayoutX() + 1);
+                    fruit.setRotate(fruit.getRotate() + 5);
+                } else {
+                    fruit.setLayoutX(fruit.getLayoutX() + 5);
+                    ReachedMaxHeight = true;
+                }
+            } else {
+                fruit.setLayoutY(fruit.getLayoutY() + 3);
+                fruit.setLayoutX(fruit.getLayoutX() + 1);
+                fruit.setRotate(fruit.getRotate() + 5);
+                if (fruit.getLayoutY() > 701 && fruit.getLayoutY() <= 704 && !gamePane.getChildren().contains(fruitSliced)) {
+                    numberOfLifes -= 1;
+                    classicMode.setNumberOfLifes(numberOfLifes);
+                }
+            }
+        }
+}
 
 
     private void ImageEVENT(){
-            if(t.getState()==false)
+            if(time.getState()==false)
             {
                 gameStage.close();
                 ViewManger.mainstage.show();
                 gametimer.stop();
             }
-        //            Media Slice = new Media(new File(musicSlice).toURI().toString());
-//            MediaPlayer mediaSlice = new MediaPlayer(Slice);
         gamePane.setOnMouseDragged(event -> {
-        //                try {
-                            if (Math.abs(event.getSceneX() - fruitOne.getLayoutX()) < 100) {
-                                if (Math.abs(event.getSceneY() - fruitOne.getLayoutY()) < 50) {
-        //                        mediaSlice.play();
+                            if (Math.abs(event.getSceneX() - fruit.getLayoutX()) < 100) {
+                                if (Math.abs(event.getSceneY() - fruit.getLayoutY()) < 50) {
 
-                                    fruitOneSliced.setLayoutY(fruitOne.getLayoutY());
+                                    FRUIT_SLICED_PATH = CurrentFruit.getSliced();
+                                    fruitSliced.setImage(new Image(FRUIT_SLICED_PATH));
+                                    FRUIT_INVERSE_PATH = CurrentFruit.getSlicedInverse();
+                                    fruitInverse.setImage(new Image(FRUIT_INVERSE_PATH));
 
-                                    fruitOneSliced.setLayoutX(fruitOne.getLayoutX() + 50);
-                                    fruitOneSliced.setFitWidth(100);
-                                    fruitOneSliced.setFitHeight(100);
+                                    fruitSliced.setLayoutY(fruit.getLayoutY());
+                                    fruitSliced.setLayoutX(fruit.getLayoutX() + 70);
+                                    fruitSliced.setRotate(30);
+                                    fruitInverse.setRotate(30);
+                                    fruitInverse.setLayoutY(fruit.getLayoutY());
+                                    fruitInverse.setLayoutX(fruit.getLayoutX() - 70);
+
                                     if (!isSliced)
                                     {
-
-                                        gamePane.getChildren().add(fruitOneSliced);
+                                        gamePane.getChildren().addAll(fruitSliced,fruitInverse);
                                     }
                                     isSliced = true;
-                                    gamePane.getChildren().remove(fruitOne);
-                                    CASE = 0;
-
-                                    moveFruitDown(CASE);
-        //                        gamePane.getChildren().remove(fruitOneSliced);
-
+                                    gamePane.getChildren().remove(fruit);
+                                    moveFruitDown();
                                 }
                             }
-
-                            if (Math.abs(event.getSceneX() - fruitTwo.getLayoutX()) < 100) {
-                                if (Math.abs(event.getSceneY() - fruitTwo.getLayoutY()) < 50) {
-
-                                    fruitTwoSliced.setLayoutY(fruitTwo.getLayoutY());
-                                    fruitTwoSliced.setLayoutX(fruitTwo.getLayoutX() + 50);
-                                    fruitTwoSliced.setFitWidth(100);
-                                    fruitTwoSliced.setFitHeight(100);
-                                    if (!isSliced)
-                                        gamePane.getChildren().add(fruitTwoSliced);
-                                    isSliced = true;
-                                    gamePane.getChildren().remove(fruitTwo);
-                                    CASE = 1;
-                                    moveFruitDown(CASE);
-        //                        gamePane.getChildren().remove(fruitTwoSliced);
-                                }
-                            }
-
-
                             event.setDragDetect(false);
-        //                }
-        //                catch(Exception e){
-        //                        gamePane.getChildren().remove(fruitTwoSliced);
-        //
-        //                        gamePane.getChildren().remove(fruitOneSliced);
-
-
-
-
-        //                }
-
-
                     });
-//gamePane.getChildren().remove(t);
     }
 
-    private void moveFruitDown(int Case){
+    private void moveFruitDown(){
         if(isSliced) {
 
-            if (Case == 0) {
-                if(fruitOneSliced.getLayoutY()>700) {
-                    gamePane.getChildren().remove(fruitOneSliced);
-                    setNewElementPosition(fruitOne);
-                    gamePane.getChildren().add(fruitOne);
+//            if (Case == 0) {
+                if(fruitSliced.getLayoutY()>704) {
+                    gamePane.getChildren().removeAll(fruitSliced,fruitInverse);
+                    CurrentFruit = ((FRUITS)gameEngine.createGameObject().getObjectType());
+                    FRUIT_PATH = CurrentFruit.getIdle();
+                    fruit.setImage(new Image(FRUIT_PATH));
+                    setNewElementPosition(fruit);
+                    gamePane.getChildren().addAll(fruit);
                     gameEngine.sliceObjects();
                     isSliced = false;
                 }
-                else
-                    fruitOneSliced.setLayoutY(fruitOneSliced.getLayoutY() +5);
-            }
+                else {
+                    fruitSliced.setLayoutY(fruitSliced.getLayoutY() + 5);
+                    fruitInverse.setLayoutY(fruitInverse.getLayoutY() + 5);
+                    fruitInverse.setRotate(fruitInverse.getRotate()-2);
+                    fruitSliced.setRotate(fruitInverse.getRotate()+2);
+                    fruitSliced.setLayoutX(fruitSliced.getLayoutX() + 2);
+                    fruitInverse.setLayoutX(fruitInverse.getLayoutX() - 2);
 
-            if (Case == 1) {
-                if(fruitTwoSliced.getLayoutY()>700) {
-                    gamePane.getChildren().remove(fruitTwoSliced);
-                    setNewElementPosition(fruitTwo);
-                    gamePane.getChildren().add(fruitTwo);
-                    gameEngine.sliceObjects();
-                    isSliced = false;
+
                 }
-                else
-                    fruitTwoSliced.setLayoutY(fruitTwoSliced.getLayoutY() +5);
-            }
         }
     }
     private void checkIfElementsBelowScreen(){
-
-        if(fruitOne.getLayoutY()<0){
-            setNewElementPosition(fruitOne);
-        }
-        if(fruitTwo.getLayoutY()<0){
-            setNewElementPosition(fruitTwo);
-        }
-        if(fruitThree.getLayoutY()<0){
-            setNewElementPosition(fruitThree);
-        }
-        if(fruitFour.getLayoutY()<0){
-            setNewElementPosition(fruitFour);
+        if(fruit.getLayoutY()>701 ){
+            ReachedMaxHeight = false;
+            CurrentFruit = ((FRUITS)gameEngine.createGameObject().getObjectType());
+            FRUIT_PATH = CurrentFruit.getIdle();
+            fruit.setImage(new Image(FRUIT_PATH));
+            setNewElementPosition(fruit);
         }
 
     }
-
-
 }
 

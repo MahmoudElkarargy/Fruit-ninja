@@ -2,7 +2,7 @@ package MainPackage;
 
 public enum FRUITS {
     APPLE("View/resources/Fruits/Apple.png", "View/resources/Fruits/SlicedApple.png" , "View/resources/Fruits/SlicedAppleInverse.png"),
-    WATERMILION("View/resources/Fruits/watermelon.png", "View/resources/Fruits/SlicedWatermelon.png" , "View/resources/Fruits/SlicedwatermelonInversed.png"),
+    WATERMILION("View/resources/Fruits/watermelon.png", "View/resources/Fruits/SlicedwatermelonInversed.png" , "View/resources/Fruits/SlicedWatermelon.png"),
     ORANGE("View/resources/Fruits/Orange.png", "View/resources/Fruits/SlicedOrange.png" , "View/resources/Fruits/SlicedOrangeInverse.png"),
     COCONUT("View/resources/Fruits/Coconut.png", "View/resources/Fruits/SlicedCoconut.png" , "View/resources/Fruits/SlicedCoconutInverse.png");
 

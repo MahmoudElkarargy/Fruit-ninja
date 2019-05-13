@@ -1,5 +1,8 @@
 package View;
 
+import Logic.SaveScoreFILE;
+import Logic.SaveScoreModel;
+import Logic.Score;
 import MainPackage.GameActions;
 import MainPackage.GameObject;
 
@@ -8,6 +11,7 @@ public class GameEngine implements GameActions {
     Score score = Score.getInstance();
     private static GameEngine gameEngine = null;
     private GameEngine(){}
+
     public static GameEngine getInstance(){
         if(gameEngine==null){
             gameEngine = new GameEngine();
@@ -17,7 +21,8 @@ public class GameEngine implements GameActions {
             return gameEngine;
         }
     public GameObject createGameObject() {
-        return null;
+        Fruits fruits = new Fruits();
+        return fruits;
     }
 
     public void updateObjectsLocations() {
@@ -25,7 +30,7 @@ public class GameEngine implements GameActions {
     }
 
     public void sliceObjects() {
-    score.add();
+        score.add();
 
     }
 

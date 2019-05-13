@@ -1,4 +1,4 @@
-package View;
+package Logic;
 
 public class SaveScoreModel {
     int score;

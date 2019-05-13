@@ -1,4 +1,4 @@
-package View;
+package Logic;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,7 +28,7 @@ public class SaveScoreFILE {
              Document doc = icBuilder.newDocument();
 
             Element mainRootElement;
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/View/Score.xml", false));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/Logic/Score.xml", false));
 
             mainRootElement = doc.createElementNS("alyelshwahy@yahoo.com", "Data");
 
