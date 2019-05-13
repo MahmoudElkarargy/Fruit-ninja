@@ -40,8 +40,8 @@ public class GameViewManger {
     private Random randomPositionGenerator;
     private Boolean isSliced=false;
     Clock t = new Clock();
-
-
+    Score score1 = View.Score.getInstance();
+    GameEngine gameEngine = GameEngine.getInstance();
     public GameViewManger(){
         inializeStage();
         inializeFruits();
@@ -64,12 +64,15 @@ public class GameViewManger {
         save = new ImageView("View/resources/Icons/save.png");
         Sound = new ImageView(soundOn);
         gamePane.getChildren().add(t);
+        gamePane.getChildren().add(score1);
+
         closeButton.setLayoutX(10);
         closeButton.setLayoutY(10);
         closeButton.setOnMouseClicked(e->{
             gameStage.close();
             ViewManger.mainstage.show();
             gametimer.stop();
+            gameEngine.saveScore();
         });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });
         closeButton.setOnMouseExited(e->{ closeButton.setEffect(null); });
@@ -133,6 +136,7 @@ public class GameViewManger {
     public void createNewGame(Stage menustage){
         this.menustage = menustage;
         this.menustage.hide();
+        gameEngine.ResetGame();
         createBackground();
         createGameelements();
         createCaseloop();
@@ -322,6 +326,7 @@ public class GameViewManger {
                     gamePane.getChildren().remove(fruitOneSliced);
                     setNewElementPosition(fruitOne);
                     gamePane.getChildren().add(fruitOne);
+                    gameEngine.sliceObjects();
                     isSliced = false;
                 }
                 else
@@ -333,6 +338,7 @@ public class GameViewManger {
                     gamePane.getChildren().remove(fruitTwoSliced);
                     setNewElementPosition(fruitTwo);
                     gamePane.getChildren().add(fruitTwo);
+                    gameEngine.sliceObjects();
                     isSliced = false;
                 }
                 else
