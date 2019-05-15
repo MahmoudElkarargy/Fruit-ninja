@@ -50,4 +50,7 @@ public class Clock extends Pane {
             return false;
         else return true;
     }
+    void stopAnimation(){
+        animation.stop();
+    }
 }

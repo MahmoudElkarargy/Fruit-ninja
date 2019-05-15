@@ -10,6 +10,10 @@ public class Fruits implements GameObject {
 
     Random randomPositionGenerator = new Random();
     private boolean slicedFromGui;
+    private boolean isReachedMaxHeight;
+    private static int initiSpeed = 3;
+    private static int fallSpeed = 3;
+
     @Override
     public Enum getObjectType() {
         int fruitType = randomPositionGenerator.nextInt(4);
@@ -41,13 +45,20 @@ public class Fruits implements GameObject {
 
     @Override
     public int getInitialVelocity() {
-        return 0;
+        return initiSpeed;
     }
-
+    public void setInitiSpeed(int initiSpeed){
+        this.initiSpeed = initiSpeed;
+    }
+//    public int getFallSpeed() {return fallSpeed;}
+    public void setfallSpeed(int fallSpeed){
+        this.fallSpeed = fallSpeed;
+    }
     @Override
     public int getFallingVelocity() {
-        return 0;
+        return fallSpeed;
     }
+
     public void setSlicedFromGui(boolean slicedFromGui){
         this.slicedFromGui = slicedFromGui;
     }
@@ -74,5 +85,12 @@ public class Fruits implements GameObject {
     @Override
     public BufferedImage[] getBufferedImages() {
         return new BufferedImage[0];
+    }
+
+    public void setIsReachedMaxHeight(boolean isReachedMaxHeight){
+        this.isReachedMaxHeight = isReachedMaxHeight;
+    }
+    public Boolean getIsReachedMaxHeight(){
+        return isReachedMaxHeight? true:false;
     }
 }

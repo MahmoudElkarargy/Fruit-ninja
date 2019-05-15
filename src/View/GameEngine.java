@@ -33,7 +33,9 @@ public class GameEngine implements GameActions {
         score.add();
 
     }
-
+    public int getScore(){
+        return score.getTmp();
+    }
     public void saveGame() {
 
     }
