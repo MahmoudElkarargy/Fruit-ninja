@@ -17,6 +17,7 @@ public class Fruits implements GameObject {
     @Override
     public Enum getObjectType() {
         int fruitType = randomPositionGenerator.nextInt(4);
+//        int fruitType =0;
         if(fruitType==0)
             return FRUITS.APPLE;
         else if(fruitType==1)
@@ -25,7 +26,6 @@ public class Fruits implements GameObject {
             return FRUITS.ORANGE;
         else
             return FRUITS.COCONUT;
-
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Fruits implements GameObject {
 
     @Override
     public int getYlocation() {
-        return randomPositionGenerator.nextInt(200)+700;
+        return 700;
     }
 
     @Override

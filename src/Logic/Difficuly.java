@@ -20,11 +20,11 @@ public class Difficuly {
         }
         else if(score<15){
             difficulyLevel =  randomPositionGenerator.nextInt(3)+1;
-            System.out.println("Score is less than 10- - Diff is: "+difficulyLevel);
+//            System.out.println("Score is less than 10- - Diff is: "+difficulyLevel);
         }
         else if(score<30){
             difficulyLevel =  randomPositionGenerator.nextInt(4)+2;
-            System.out.println("Bigger than 10- - Diff is: "+difficulyLevel);
+//            System.out.println("Bigger than 10- - Diff is: "+difficulyLevel);
         }
         else if(score<40){
             new Fruits().setInitiSpeed(10);

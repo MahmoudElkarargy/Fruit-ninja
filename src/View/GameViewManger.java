@@ -5,10 +5,13 @@ import Logic.Score;
 import MainPackage.FRUITS;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -162,7 +165,7 @@ public class GameViewManger {
                 checkIfElementsBelowScreen();
                 ImageEVENT();
                 moveFruitDown();
-                checkLife();
+                //checkLife();
             }
         };
             gametimer.start();
@@ -212,14 +215,12 @@ public class GameViewManger {
                 if (!fruitsObjects[i].getIsReachedMaxHeight()) {
 
                     if (fruit[i].getLayoutY() > gameEngine.createGameObject().getMaxHeight()) {
-//                        ReachedMaxHeight = false;
                         fruitsObjects[i].setIsReachedMaxHeight(false);
                         fruit[i].setLayoutY(fruit[i].getLayoutY() - fruitsObjects[i].getInitialVelocity());
                         fruit[i].setLayoutX(fruit[i].getLayoutX() + 1);
                         fruit[i].setRotate(fruit[i].getRotate() + 5);
                     } else {
                         fruit[i].setLayoutX(fruit[i].getLayoutX() + 5);
-//                        ReachedMaxHeight = true;
                         fruitsObjects[i].setIsReachedMaxHeight(true);
                     }
                 } else {
@@ -235,11 +236,11 @@ public class GameViewManger {
         }
 }
 
-public void checkLife(){
+    public void checkLife(){
         if(numberOfLifes==0){
             gametimer.stop();
             time.stopAnimation();
-            System.out.println("ganeover");
+            System.out.println("gameover");
         }
 }
 
@@ -251,6 +252,7 @@ public void checkLife(){
                 gametimer.stop();
             }
         gamePane.setOnMouseDragged(event -> {
+
             for(int i=0; i<difficltyLevel; i++) {
                 if (Math.abs(event.getSceneX() - fruit[i].getLayoutX()) < 100) {
                     if (Math.abs(event.getSceneY() - fruit[i].getLayoutY()) < 50) {
@@ -289,14 +291,13 @@ public void checkLife(){
                     CurrentFruit[i] = ((FRUITS) gameEngine.createGameObject().getObjectType());
                     FRUIT_PATH[i] = CurrentFruit[i].getIdle();
                     fruit[i].setImage(new Image(FRUIT_PATH[i]));
-                    setNewElementPosition(fruit[i]);
-                    gamePane.getChildren().addAll(fruit[i]);
                     gameEngine.sliceObjects();
                     Score = gameEngine.getScore();
-                    System.out.println("Score is: "+ Score);
                     difficuly.setScore(Score);
 //                    isSliced = false;
                     fruitsObjects[i].setSlicedFromGui(false);
+                    setNewElementPosition(fruit[i]);
+                    gamePane.getChildren().addAll(fruit[i]);
                 } else {
                     fruitSliced[i].setLayoutY(fruitSliced[i].getLayoutY() + fruitsObjects[i].getFallingVelocity());
                     fruitInverse[i].setLayoutY(fruitInverse[i].getLayoutY() + fruitsObjects[i].getFallingVelocity());
@@ -310,7 +311,7 @@ public void checkLife(){
     }
     private void checkIfElementsBelowScreen(){
         for (int i=0; i<difficltyLevel; i++) {
-            if (fruit[i].getLayoutY() > 701) {
+            if (fruit[i].getLayoutY() > 705) {
 //                ReachedMaxHeight = false;
                 fruitsObjects[i].setIsReachedMaxHeight(false);
                 CurrentFruit[i] = ((FRUITS) gameEngine.createGameObject().getObjectType());
