@@ -4,6 +4,7 @@ import Logic.Difficuly;
 import Logic.Score;
 import MainPackage.FRUITS;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -11,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -284,6 +286,9 @@ public class GameViewManger {
 }
 
     private void ImageEVENT(){
+        Canvas canvas = new Canvas(1200, 700);
+        final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+        initDraw(graphicsContext);
             if(time.getState()==false)
             {
                 System.out.println(score1.getTmp());
@@ -292,10 +297,65 @@ public class GameViewManger {
                 gametimer.stop();
             }
 
+            gamePane.setOnMousePressed(e->{
+                graphicsContext.beginPath();
+                graphicsContext.moveTo(e.getX(), e.getY());
+                graphicsContext.stroke();
+            });
+            gamePane.setOnMouseReleased(e->{
+                graphicsContext.clearRect(0,0,1200,700);
+            });
         gamePane.setOnMouseDragged(event -> {
+
+
+
+//            canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
+//                    new EventHandler<MouseEvent>(){
+
+//                        @Override
+//                        public void handle(MouseEvent event) {
+//                            graphicsContext.beginPath();
+//                            graphicsContext.moveTo(event.getX(), event.getY());
+//                            graphicsContext.stroke();
+//                        }
+//                    });
+
+//            canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+//                    new EventHandler<MouseEvent>(){
+
+//                        @Override
+//                        public void handle(MouseEvent event) {
+                            System.out.println("Drrrrr");
+                            graphicsContext.lineTo(event.getX(), event.getY());
+                            graphicsContext.stroke();
+//                        }
+//                    });
+
+//            canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,
+//                    new EventHandler<MouseEvent>(){
+//
+//                        @Override
+//                        public void handle(MouseEvent event) {
+//
+//                        }
+//                    });
+
+            StackPane root = new StackPane();
+            root.getChildren().add(canvas);
+            gamePane.getChildren().add(root);
+//            Scene scene = new Scene(root, 400, 400);
+//            gameStage.setTitle("java-buddy.blogspot.com");
+//            gameStage.setScene(scene);
+//            gameStage.show();
+
+
+
+
             for(int i=0; i<fruit.size(); i++) {
                 if (Math.abs(event.getSceneX() - fruit.get(i).getLayoutX()) < 100) {
                     if (Math.abs(event.getSceneY() - fruit.get(i).getLayoutY()) < 50) {
+
+
 
                         FRUIT_SLICED_PATH.set(i, CurrentFruit.get(i).getSliced());
                         fruitSliced.get(i).setImage(new Image(FRUIT_SLICED_PATH.get(i)));
@@ -379,5 +439,28 @@ public class GameViewManger {
             createGameelements();
         }
         }
+
+
+    private void initDraw(GraphicsContext gc){
+
+        double canvasWidth = gc.getCanvas().getWidth();
+        double canvasHeight = gc.getCanvas().getHeight();
+
+        gc.setFill(Color.LIGHTGRAY);
+//        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(5);
+
+        gc.fill();
+        gc.strokeRect(
+                0,              //x of the upper left corner
+                0,              //y of the upper left corner
+                canvasWidth,    //width of the rectangle
+                canvasHeight);  //height of the rectangle
+
+        gc.setFill(Color.RED);
+        gc.setStroke(Color.BLUE);
+        gc.setLineWidth(1);
+
+    }
 }
 
