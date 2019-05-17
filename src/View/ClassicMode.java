@@ -1,10 +1,9 @@
 package View;
 
-import MainPackage.Istrategy;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class ClassicMode implements Istrategy {
+public class ClassicMode {
     private AnchorPane gamePane;
     private ImageView life[];
     private int space=0, numberOfLifes;

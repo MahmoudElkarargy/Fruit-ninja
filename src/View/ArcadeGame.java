@@ -1,12 +1,7 @@
 package View;
 
-import java.awt.Label;
-import java.util.Optional;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import Logic.Score;
 import MainPackage.FRUITS;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -20,15 +15,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 //bombs aren't added correctly yet.., they appear in the x direction only and nothing happens when clicked (should be when sliced too)
 
@@ -51,7 +43,7 @@ public class ArcadeGame extends Application{
     private static String FruitOne = "View/resources/Arcade.png";
     private final static String FruitTwo = "View/resources/Classic.png";
     private ImageView Bomb;
-    private static String BOMB_PATH= ("View/resources/BonusObjects/boom.png");
+    private static String BOMB_PATH= ("View/resources/booms/boom.png");
     //= "View/resources/BonusObjects/boom.png";
     private ImageView [] fruitone;
     private ImageView [] fruittwo;
