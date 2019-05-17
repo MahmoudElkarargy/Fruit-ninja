@@ -8,7 +8,6 @@ import MainPackage.GameObject;
 
 
 public class GameEngine implements GameActions {
-//    private int score = 0 ;
     Score score = Score.getInstance();
     private static GameEngine gameEngine = null;
     private GameEngine(){}
@@ -53,5 +52,12 @@ public class GameEngine implements GameActions {
     public void ResetGame() {
     score.reset();
 
+    }
+    public void ReseetClock(Clock clock,int Case){
+        clock.reset();
+        if(Case==1)
+        clock.startAnimation();
+        else if(Case == 0)
+            clock.stopAnimation();
     }
 }

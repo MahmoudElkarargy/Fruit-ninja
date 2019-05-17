@@ -11,11 +11,11 @@ import java.util.Timer;
 
 public class Clock extends Pane {
     private Timeline animation;
-    private int tmp = 150;
+    private int tmp = 60;
     private String S = "";
      boolean close;
 
-    Label label = new Label("150");
+    Label label = new Label("60");
     public Clock(){
         close = true;
         label.setFont(Font.font(50));
@@ -42,7 +42,7 @@ public class Clock extends Pane {
             this.close = false ;
     }
     void start(){
-        this.tmp = 150;
+        this.tmp = 60;
         this.label.setText(tmp+"");
     }
     boolean getState(){
@@ -52,5 +52,12 @@ public class Clock extends Pane {
     }
     void stopAnimation(){
         animation.stop();
+    }
+    void startAnimation(){
+        animation.play();
+    }
+    void reset(){
+        tmp = 60;
+        this.label.setText(tmp+"");
     }
 }

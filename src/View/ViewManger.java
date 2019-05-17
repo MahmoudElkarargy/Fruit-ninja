@@ -53,6 +53,7 @@ public class ViewManger {
     }
 
     private void createClassicbutton(){
+
 //        gameManger = new GameViewManger();
         classicButton = new ImageView("View/resources/Classic.png");
         classicButton.setLayoutX(80);
@@ -60,7 +61,7 @@ public class ViewManger {
         classicButton.setOnMouseEntered(e->{ classicButton.setEffect(effect2); });
         classicButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
         classicButton.setOnMouseClicked(e->{
-            gameManger.createNewGame(mainstage);
+            gameManger.createNewGame(mainstage,0);
             System.out.println("Classic Game will open here");
         });
     }
@@ -74,7 +75,7 @@ public class ViewManger {
         arcadeButton.setOnMouseExited(e->{ arcadeButton.setEffect(null); });
         arcadeButton.setOnMouseClicked(e->{
             System.out.println("arcade Game will open here");
-            gameManger.createNewGame(mainstage);
+            gameManger.createNewGame(mainstage,1);
         });
     }
 

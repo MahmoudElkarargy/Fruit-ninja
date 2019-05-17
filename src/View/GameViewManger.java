@@ -50,11 +50,13 @@ public class GameViewManger {
     private List<ImageView> fruitInverse = new LinkedList<ImageView>();
     private boolean IAlreadyCreated;
     private List<Fruits> fruitsObjects = new LinkedList<Fruits>();
-
+     int Case;
     Clock time = new Clock();
     Score score1 = Logic.Score.getInstance();
+
     GameEngine gameEngine = GameEngine.getInstance();
-    private ClassicMode classicMode;
+    private ClassicMode classicMode ;
+
 
     public GameViewManger(){
         inializeStage();
@@ -67,7 +69,8 @@ public class GameViewManger {
         gameScene = new Scene(gamePane, GAME_WIDTH,GAME_HEIGHT);
         gameStage = new Stage ();
         gameStage.setScene(gameScene);
-        classicMode = new ClassicMode();
+         classicMode = new ClassicMode();
+
         classicMode.setNumberOfLifes(numberOfLifes);
         difficuly = new Difficuly();
         gameStage.initStyle(StageStyle.TRANSPARENT);
@@ -80,7 +83,7 @@ public class GameViewManger {
         help = new ImageView("View/resources/Icons/help.png");
         save = new ImageView("View/resources/Icons/save.png");
         Sound = new ImageView(soundOn);
-        gamePane.getChildren().add(time);
+
         gamePane.getChildren().add(score1);
 
         closeButton.setLayoutX(10);
@@ -90,6 +93,7 @@ public class GameViewManger {
             ViewManger.mainstage.show();
             gametimer.stop();
             gameEngine.saveScore();
+            time.reset();
         });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });
         closeButton.setOnMouseExited(e->{ closeButton.setEffect(null); });
@@ -135,16 +139,46 @@ public class GameViewManger {
         difficltyLevel = difficuly.getDifficulyLevel();
     }
 
-    public void createNewGame(Stage menustage){
+    public void createNewGame(Stage menustage,int Case) {
         this.menustage = menustage;
         this.menustage.hide();
+        this.Case = Case;
+
         gameEngine.ResetGame();
+
         createBackground();
         setDiffculty();
         createGameelements();
-        createCaseloop();
+        createCaseloop(Case);
         gameStage.show();
-        time.start();
+        if(this.Case==1) {
+            gameEngine.ReseetClock(time,1);
+//            time.reset();
+//            time.startAnimation();
+            classicMode.removeLifes();
+            this.numberOfLifes=3;
+            classicMode.reset_space();
+            gamePane.getChildren().remove(time);
+            gamePane.getChildren().add(time);
+            gamePane.getChildren().remove(closeButton);
+            gamePane.getChildren().add(closeButton);
+            gamePane.getChildren().remove(save);
+            gamePane.getChildren().add(save);
+//            time.reset();
+
+        }
+
+        if(Case==0){
+//            time.reset();
+            gameEngine.ReseetClock(time,0);
+            classicMode.removeLifes();
+            this.numberOfLifes=3;
+           classicMode.reset_space();
+            classicMode.creatLifeNumbers(numberOfLifes);
+            gamePane.getChildren().remove(time);
+//            time.stopAnimation();
+//            time.reset();
+        }
     }
     private void createBackground (){
         Image backgroundImage = new Image("View/resources/GameBackground.jpg",GAME_WIDTH,GAME_HEIGHT,false,true);
@@ -153,9 +187,9 @@ public class GameViewManger {
     }
 
 
-    private void createCaseloop(){
+    private void createCaseloop(int Case){
 
-        gametimer = new AnimationTimer(){
+            gametimer = new AnimationTimer(){
             @Override
             public void handle(long l) {
                 setDiffculty();
@@ -164,7 +198,9 @@ public class GameViewManger {
                 checkIfElementsBelowScreen();
                 ImageEVENT();
                 moveFruitDown();
+                if(Case ==0){
                 checkLife();
+                }
             }
         };
             gametimer.start();
@@ -243,13 +279,14 @@ public class GameViewManger {
         if(numberOfLifes==0){
             gametimer.stop();
             time.stopAnimation();
-            System.out.println("GameOver");
+//            System.out.println("GameOver");
         }
 }
 
     private void ImageEVENT(){
             if(time.getState()==false)
             {
+                System.out.println(score1.getTmp());
                 gameStage.close();
                 ViewManger.mainstage.show();
                 gametimer.stop();
@@ -327,9 +364,10 @@ public class GameViewManger {
                     FRUIT_PATH.remove(FRUIT_PATH.get(i));
                     fruit.remove(fruit.get(i));
                     fruitsObjects.remove(fruitsObjects.get(i));
-                    numberOfLifes -= 1;
-                    classicMode.setNumberOfLifes(numberOfLifes);
-
+                    if(Case==0) {
+                        numberOfLifes -= 1;
+                        classicMode.setNumberOfLifes(numberOfLifes);
+                    }
                 }
             }
         if(fruit.isEmpty()) {
