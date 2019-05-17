@@ -69,7 +69,7 @@ public class GameViewManger {
         gameScene = new Scene(gamePane, GAME_WIDTH,GAME_HEIGHT);
         gameStage = new Stage ();
         gameStage.setScene(gameScene);
-         classicMode = new ClassicMode();
+         classicMode = ClassicMode.getInstance();
 
         classicMode.setNumberOfLifes(numberOfLifes);
         difficuly = new Difficuly();

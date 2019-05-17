@@ -1,6 +1,6 @@
 package View;
 
-public class ArcadeMode {
+public class ArcadeMode  {
 
 
 

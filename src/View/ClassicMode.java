@@ -1,17 +1,26 @@
 package View;
 
+import MainPackage.Istrategy;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class ClassicMode {
+public class ClassicMode implements Istrategy {
     private AnchorPane gamePane;
     private ImageView life[];
     private int space=0, numberOfLifes;
+    private static ClassicMode Instance=null;
 
     private final String PATH = "View/resources/BonusObjects/Life.png";
-    public ClassicMode(){
+    private ClassicMode(){
         gamePane = new AnchorPane();
         this.gamePane = GameViewManger.getGamePain();
+    }
+    public static ClassicMode getInstance(){
+        if(Instance==null)
+        {
+            Instance=new ClassicMode();
+        }
+        return Instance;
     }
     public void reset_space(){
         this.space=0;
