@@ -6,6 +6,7 @@ import Logic.Score;
 import MainPackage.GameActions;
 import MainPackage.GameObject;
 
+
 public class GameEngine implements GameActions {
 //    private int score = 0 ;
     Score score = Score.getInstance();
