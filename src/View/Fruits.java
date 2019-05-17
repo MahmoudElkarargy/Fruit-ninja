@@ -12,7 +12,7 @@ public class Fruits implements GameObject {
     private boolean slicedFromGui;
     private boolean isReachedMaxHeight;
     private static int initiSpeed = 3;
-    private static int fallSpeed = 3;
+    private static int fallSpeed = 5;
 
     @Override
     public Enum getObjectType() {
@@ -30,17 +30,16 @@ public class Fruits implements GameObject {
 
     @Override
     public int getXlocation() {
-        return randomPositionGenerator.nextInt(600);
+        return randomPositionGenerator.nextInt(800);
     }
 
     @Override
-    public int getYlocation() {
-        return 700;
+    public int getYlocation() { return 700;
     }
 
     @Override
     public int getMaxHeight() {
-        return 150;
+        return randomPositionGenerator.nextInt(150)+80;
     }
 
     @Override

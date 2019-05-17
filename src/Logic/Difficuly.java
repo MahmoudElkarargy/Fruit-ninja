@@ -23,12 +23,15 @@ public class Difficuly {
 //            System.out.println("Score is less than 10- - Diff is: "+difficulyLevel);
         }
         else if(score<30){
-            difficulyLevel =  randomPositionGenerator.nextInt(4)+2;
+            difficulyLevel =  randomPositionGenerator.nextInt(3)+2;
+            new Fruits().setInitiSpeed(5);
+            new Fruits().setfallSpeed(9);
 //            System.out.println("Bigger than 10- - Diff is: "+difficulyLevel);
         }
         else if(score<40){
-            new Fruits().setInitiSpeed(10);
-            new Fruits().setfallSpeed(10);
+            difficulyLevel =  randomPositionGenerator.nextInt(3)+4;
+            new Fruits().setInitiSpeed(8);
+            new Fruits().setfallSpeed(12);
 
         }
         return difficulyLevel;
