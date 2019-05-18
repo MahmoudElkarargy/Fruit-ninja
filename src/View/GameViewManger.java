@@ -328,6 +328,7 @@ public class GameViewManger {
                             System.out.println("Drrrrr");
                             graphicsContext.lineTo(event.getX(), event.getY());
                             graphicsContext.stroke();
+
 //                        }
 //                    });
 

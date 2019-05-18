@@ -1,5 +1,6 @@
 package Logic;
 
+import MainPackage.IStartegy;
 import View.Fruits;
 
 import java.util.Random;
@@ -8,7 +9,7 @@ public class Difficuly {
     private int score;
     private int difficulyLevel;
     Random randomPositionGenerator = new Random();
-
+    IStartegy Game_level;
     public void setScore( int score){
         this.score = score;
         setDifficuly(score);
@@ -19,19 +20,30 @@ public class Difficuly {
             difficulyLevel =1;
         }
         else if(score<15){
-            difficulyLevel =  randomPositionGenerator.nextInt(3)+1;
+            Game_level = new Level0();
+            difficulyLevel = Game_level.increaseDifficuilty();
+//            difficulyLevel =  randomPositionGenerator.nextInt(3)+1;
 //            System.out.println("Score is less than 10- - Diff is: "+difficulyLevel);
         }
         else if(score<30){
-            difficulyLevel =  randomPositionGenerator.nextInt(3)+2;
-            new Fruits().setInitiSpeed(5);
-            new Fruits().setfallSpeed(9);
+            Game_level = new Level1();
+            difficulyLevel = Game_level.increaseDifficuilty();
+
+//            difficulyLevel =  randomPositionGenerator.nextInt(3)+2;
+//            new Fruits().setInitiSpeed(5);
+//            new Fruits().setfallSpeed(9);
+
+
+
 //            System.out.println("Bigger than 10- - Diff is: "+difficulyLevel);
         }
         else if(score<40){
-            difficulyLevel =  randomPositionGenerator.nextInt(3)+4;
-            new Fruits().setInitiSpeed(8);
-            new Fruits().setfallSpeed(12);
+            Game_level = new Level2();
+            difficulyLevel = Game_level.increaseDifficuilty();
+
+//            difficulyLevel =  randomPositionGenerator.nextInt(3)+4;
+//            new Fruits().setInitiSpeed(8);
+//            new Fruits().setfallSpeed(12);
 
         }
         return difficulyLevel;
