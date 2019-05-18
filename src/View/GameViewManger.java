@@ -4,15 +4,12 @@ import Logic.Difficuly;
 import Logic.Score;
 import MainPackage.FRUITS;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -53,8 +50,9 @@ public class GameViewManger {
     private boolean IAlreadyCreated;
     private List<Fruits> fruitsObjects = new LinkedList<Fruits>();
      int Case;
-    Clock time = new Clock();
+    ClockTimer time = new ClockTimer();
     Score score1 = Logic.Score.getInstance();
+    ClockStopWatch watch = new ClockStopWatch();
 
     GameEngine gameEngine = GameEngine.getInstance();
     private ClassicMode classicMode ;
@@ -154,12 +152,15 @@ public class GameViewManger {
         createCaseloop(Case);
         gameStage.show();
         if(this.Case==1) {
-            gameEngine.ReseetClock(time,1);
+            gameEngine.ReseetClockTimer(time,1);
+            gameEngine.ResertStopWatch(watch);
+            watch.stopAnimation();
 //            time.reset();
 //            time.startAnimation();
             classicMode.removeLifes();
             this.numberOfLifes=3;
             classicMode.reset_space();
+            gamePane.getChildren().remove(watch);
             gamePane.getChildren().remove(time);
             gamePane.getChildren().add(time);
             gamePane.getChildren().remove(closeButton);
@@ -172,12 +173,21 @@ public class GameViewManger {
 
         if(Case==0){
 //            time.reset();
-            gameEngine.ReseetClock(time,0);
+            gameEngine.ReseetClockTimer(time,0);
+            gameEngine.ResertStopWatch(watch);
             classicMode.removeLifes();
+            watch.startAnimation();
+            gamePane.getChildren().remove(watch);
+            gamePane.getChildren().add(watch);
+
             this.numberOfLifes=3;
            classicMode.reset_space();
             classicMode.creatLifeNumbers(numberOfLifes);
             gamePane.getChildren().remove(time);
+            gamePane.getChildren().remove(closeButton);
+            gamePane.getChildren().add(closeButton);
+            gamePane.getChildren().remove(save);
+            gamePane.getChildren().add(save);
 //            time.stopAnimation();
 //            time.reset();
         }
@@ -281,6 +291,7 @@ public class GameViewManger {
         if(numberOfLifes==0){
             gametimer.stop();
             time.stopAnimation();
+            watch.stopAnimation();
 //            System.out.println("GameOver");
         }
 }
@@ -297,59 +308,24 @@ public class GameViewManger {
                 gametimer.stop();
             }
 
-            gamePane.setOnMousePressed(e->{
-                graphicsContext.beginPath();
-                graphicsContext.moveTo(e.getX(), e.getY());
-                graphicsContext.stroke();
-            });
-            gamePane.setOnMouseReleased(e->{
-                graphicsContext.clearRect(0,0,1200,700);
-            });
+//            gamePane.setOnMousePressed(e->{
+//                graphicsContext.beginPath();
+//                graphicsContext.moveTo(e.getX(), e.getY());
+//                graphicsContext.stroke();
+//            });
+//            gamePane.setOnMouseReleased(e->{
+//                graphicsContext.clearRect(0,0,1200,700);
+//            });
         gamePane.setOnMouseDragged(event -> {
 
-
-
-//            canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
-//                    new EventHandler<MouseEvent>(){
-
-//                        @Override
-//                        public void handle(MouseEvent event) {
-//                            graphicsContext.beginPath();
-//                            graphicsContext.moveTo(event.getX(), event.getY());
+//            System.out.println("Drrrrr");
+//                            graphicsContext.lineTo(event.getX(), event.getY());
 //                            graphicsContext.stroke();
-//                        }
-//                    });
-
-//            canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
-//                    new EventHandler<MouseEvent>(){
-
-//                        @Override
-//                        public void handle(MouseEvent event) {
-                            System.out.println("Drrrrr");
-                            graphicsContext.lineTo(event.getX(), event.getY());
-                            graphicsContext.stroke();
-
-//                        }
-//                    });
-
-//            canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,
-//                    new EventHandler<MouseEvent>(){
 //
-//                        @Override
-//                        public void handle(MouseEvent event) {
-//
-//                        }
-//                    });
 
-            StackPane root = new StackPane();
-            root.getChildren().add(canvas);
-            gamePane.getChildren().add(root);
-//            Scene scene = new Scene(root, 400, 400);
-//            gameStage.setTitle("java-buddy.blogspot.com");
-//            gameStage.setScene(scene);
-//            gameStage.show();
-
-
+//            StackPane root = new StackPane();
+//            root.getChildren().add(canvas);
+//            gamePane.getChildren().add(root);
 
 
             for(int i=0; i<fruit.size(); i++) {

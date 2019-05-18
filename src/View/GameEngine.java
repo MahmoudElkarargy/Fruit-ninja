@@ -1,5 +1,6 @@
 package View;
 
+import Logic.SaveComand;
 import Logic.SaveScoreFILE;
 import Logic.SaveScoreModel;
 import Logic.Score;
@@ -42,7 +43,11 @@ public class GameEngine implements GameActions {
     public void saveScore(){
         SaveScoreModel save = new SaveScoreModel(score.getTmp(),1);
         SaveScoreFILE file = new SaveScoreFILE(save);
-        file.Save_File();
+        RemoteSave control = new RemoteSave();
+        SaveComand SAVE = new SaveComand(file);
+        control.setComand(SAVE);
+        control.press();
+
     }
 
     public void loadGame() {
@@ -53,11 +58,15 @@ public class GameEngine implements GameActions {
     score.reset();
 
     }
-    public void ReseetClock(Clock clock,int Case){
+    public void ReseetClockTimer(ClockTimer clock, int Case){
         clock.reset();
         if(Case==1)
         clock.startAnimation();
         else if(Case == 0)
             clock.stopAnimation();
+    }
+
+    public void ResertStopWatch(ClockStopWatch watch){
+        watch.reset();
     }
 }

@@ -55,7 +55,7 @@ public class ArcadeGame extends Application{
     ButtonType buttonTypeOne = new ButtonType("MainMenu");
     ButtonType buttonTypeTwo = new ButtonType("AnotherGame");
     GameEngine gameEngine = GameEngine.getInstance();
-    Clock timer = new Clock();
+    ClockTimer timer = new ClockTimer();
     private boolean isMusicClicked = false;
     private int Score;
     private String musicSlice = "src/View/resources/Slice.mp3";
