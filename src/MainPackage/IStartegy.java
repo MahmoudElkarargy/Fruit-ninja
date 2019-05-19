@@ -7,5 +7,9 @@ public interface IStartegy {
     int increaseBooms();
     void getIntsBomms();
     void getFallsBooms();
+    int increaseBonus();
+    void getIntsBonus();
+    void getFallsBonus();
+
 
 }

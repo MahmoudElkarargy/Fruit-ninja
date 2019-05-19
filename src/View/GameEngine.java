@@ -4,6 +4,7 @@ import Logic.SaveComand;
 import Logic.SaveScoreFILE;
 import Logic.SaveScoreModel;
 import Logic.Score;
+import MainPackage.BONUS;
 import MainPackage.GameActions;
 import MainPackage.GameObject;
 
@@ -26,9 +27,13 @@ public class GameEngine implements GameActions {
             Fruits fruits = new Fruits();
             return fruits;
         }
-        else {
+        else if(type==1){
             Booms booms = new Booms();
             return booms;
+        }
+        else {
+            BonusObjects bonusObjects = new BonusObjects();
+            return bonusObjects;
         }
     }
 
@@ -39,6 +44,9 @@ public class GameEngine implements GameActions {
     public void sliceObjects() {
         score.add();
 
+    }
+    public void slicedBonus(){
+        score.addBonus();
     }
     public int getScore(){
         return score.getTmp();

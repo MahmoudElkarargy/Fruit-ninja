@@ -1,6 +1,8 @@
 package Logic;
 
 import MainPackage.IStartegy;
+import View.BonusObjects;
+import View.Booms;
 import View.Fruits;
 
 import java.util.Random;
@@ -14,6 +16,20 @@ public class Level1 implements IStartegy {
      return randomPositionGenerator.nextInt(3)+2;
     }
 
+    @Override
+    public int increaseBonus() {
+        return randomPositionGenerator.nextInt(2);
+    }
+
+    @Override
+    public void getIntsBonus() {
+        new BonusObjects().setInitiSpeed(3);
+    }
+
+    @Override
+    public void getFallsBonus() {
+        new BonusObjects().setfallSpeed(3);
+    }
     @Override
     public void getInts() {
         new Fruits().setInitiSpeed(5);
@@ -31,16 +47,16 @@ public class Level1 implements IStartegy {
 
     @Override
     public int increaseBooms() {
-        return 0;
+        return randomPositionGenerator.nextInt(3);
     }
 
     @Override
     public void getIntsBomms() {
-
+        new Booms().setInitiSpeed(5);
     }
 
     @Override
     public void getFallsBooms() {
-
+        new Booms().setInitiSpeed(8);
     }
 }

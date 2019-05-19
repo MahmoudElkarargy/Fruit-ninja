@@ -3,6 +3,7 @@ package View;
 import Logic.Difficuly;
 import Logic.LineDrawing;
 import Logic.Score;
+import MainPackage.BONUS;
 import MainPackage.BOOM;
 import MainPackage.FRUITS;
 import javafx.animation.AnimationTimer;
@@ -38,24 +39,34 @@ public class GameViewManger {
     private String musicSlice = "src/View/resources/Slice.mp3";
     private List<FRUITS> CurrentFruit = new LinkedList<FRUITS>();
     private List<BOOM> CurrentBoom = new LinkedList<BOOM>();
+    private List<BONUS> CurrentBonus = new LinkedList<BONUS>();
     public int numberOfLifes=3,flag=0;;
-
-    private int difficltyLevel=1;
+    private int index=0;
+    private boolean largetxt =false;
+    private int difficltyLevel=0;
     private  int boomsLevel=0;
+    private int bonusLevel=0;
     private Difficuly difficuly;
+    private boolean moveWTFplease=false;
 
     private ImageView closeButton,help,save,Sound, playAgian;
     private String BOOM_PATH, EXPL1, EXPL2, EXPL3, txtEXPL;
     private List<String> FRUIT_PATH = new LinkedList<String>();
     private List<String> FRUIT_SLICED_PATH = new LinkedList<String>();
     private List<String> FRUIT_INVERSE_PATH = new LinkedList<String>();
-
+    private List<String> Bonus_PATH = new LinkedList<String>();
+    private List<String> txtBonus = new LinkedList<String>();
+    private List<ImageView> bonus = new LinkedList<ImageView>();
     private List<ImageView> boom = new LinkedList<ImageView>();
     private List<ImageView> fruit = new LinkedList<ImageView>();
     private List<ImageView> fruitSliced = new LinkedList<ImageView>();
     private List<ImageView> fruitInverse = new LinkedList<ImageView>();
     private List<Fruits> fruitsObjects = new LinkedList<Fruits>();
     private List<Booms> boomObject = new LinkedList<Booms>();
+    private List<BonusObjects> bonusObject = new LinkedList<BonusObjects>();
+
+    private ImageView wtf = new ImageView("View/resources/Texts/WTF.png");
+
     private int Case;
     private ClockTimer time = new ClockTimer();
     private Score score1 = Logic.Score.getInstance();
@@ -71,6 +82,9 @@ public class GameViewManger {
     public GameViewManger(){
         inializeStage();
         difficuly.setScore(Score);
+        difficltyLevel=0;
+        boomsLevel=0;
+        bonusLevel=0;
         setDiffculty();
     }
 
@@ -85,8 +99,6 @@ public class GameViewManger {
         difficuly = new Difficuly();
         gameStage.initStyle(StageStyle.TRANSPARENT);
         createIcons();
-
-
     }
     private void createIcons(){
         Image soundOn = new Image("View/resources/Icons/Sound.png");
@@ -105,6 +117,11 @@ public class GameViewManger {
             ViewManger.mainstage.show();
             gametimer.stop();
             gameEngine.saveScore();
+            gametimer.stop();
+//            gamePane.getChildren().clear();
+            if(youLostHAHA)
+                boomTimer.stop();
+            youLostHAHA = false;
             resetFunction();
         });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });
@@ -161,18 +178,20 @@ public class GameViewManger {
     private void resetFunction(){
         gameEngine.ResetGame();
         time.reset();
+        difficltyLevel = difficuly.getDifficulyLevel();
+        boomsLevel = difficuly.getBoomsLevel();
         gameEngine.ResertStopWatch(watch);
         gameEngine.ReseetClockTimer(time,1);
         if(gamePane.getChildren().contains(lose))
             gamePane.getChildren().remove(lose);
-        for(int i=0; i<fruit.size();i++) {
+        for(int i=0; i<fruitsObjects.size();i++) {
             gamePane.getChildren().remove(fruit.get(i));
             fruit.remove(fruit.get(i));
             CurrentFruit.remove(CurrentFruit.get(i));
             FRUIT_PATH.remove(FRUIT_PATH.get(i));
             fruitsObjects.remove(fruitsObjects.get(i));
         }
-        for(int i=0; i<boom.size();i++) {
+        for(int i=0; i<boomObject.size();i++) {
             gamePane.getChildren().remove(boom.get(i));
             boom.remove(boom.get(i));
             CurrentBoom.remove(CurrentBoom.get(i));
@@ -192,8 +211,8 @@ public class GameViewManger {
             difficuly.setScore(Score);
         }
         setDiffculty();
-        createGameelements();
-        createBooms();
+//        createGameelements();
+//        createBooms();
         if(youLostHAHA) {
             boomTimer.stop();
             gametimer.start();
@@ -208,22 +227,30 @@ public class GameViewManger {
 
     private void setDiffculty(){
         difficltyLevel = difficuly.getDifficulyLevel();
-        boomsLevel =1;
+    }
+    private void setDiffcultyBonus(){
+
+        bonusLevel = difficuly.getBonusLevel();
     }
 
     public void createNewGame(Stage menustage,int Case) {
         this.menustage = menustage;
         this.menustage.hide();
         this.Case = Case;
-
+        difficltyLevel = 0;
+        boomsLevel =0;
+        bonusLevel=0;
         gameEngine.ResetGame();
         lineDrawing = new LineDrawing(gameScene);
         gamePane.getChildren().add(lineDrawing);
         lineDrawing.Draw();
         createBackground();
         setDiffculty();
+        setDifficltyLevelBooms();
+        setDiffcultyBonus();
         createGameelements();
         createBooms();
+        createBonus();
         createCaseloop(Case);
         gameStage.show();
         if(this.Case==1) {
@@ -272,6 +299,7 @@ public class GameViewManger {
 //            time.stopAnimation();
 //            time.reset();
         }
+//        resetFunction();
     }
     private void createBackground (){
         Image backgroundImage = new Image("View/resources/GameBackground.jpg",GAME_WIDTH,GAME_HEIGHT,false,true);
@@ -279,7 +307,9 @@ public class GameViewManger {
         gamePane.setBackground(new Background(background));
     }
 
-
+    private void setDifficltyLevelBooms(){
+        boomsLevel = difficuly.getBoomsLevel();
+    }
     private void createCaseloop(int Case){
 
             gametimer = new AnimationTimer(){
@@ -288,10 +318,14 @@ public class GameViewManger {
                 setDiffculty();
                 moveElements();
                 setDiffculty();
+                setDiffcultyBonus();
+                setDifficltyLevelBooms();
                 checkIfElementsBelowScreen();
                 ImageEVENT();
                 moveFruitDown();
                 boomExplosion();
+                movetxt(index);
+                moveWTF(wtf);
 //                if(Case ==0){
                 checkLife();
 //                }
@@ -343,7 +377,7 @@ public class GameViewManger {
     }
 
     private void createBooms(){
-        System.out.println("Number of Booms: "+boomsLevel);
+        setDifficltyLevelBooms();
         if(boomsLevel!=0){
             for (int i=0; i<boomsLevel; i++){
                 boomObject.add(i, (Booms) gameEngine.createGameObject(1));
@@ -365,6 +399,35 @@ public class GameViewManger {
                 gamePane.getChildren().add(boom.get(i));
             }
         }
+    }
+    private void createBonus(){
+        for (int i=0; i<bonusLevel; i++){
+            bonusObject.add(i, (BonusObjects) gameEngine.createGameObject(2));
+            bonusObject.get(i).setSlicedFromGui(false);
+            CurrentBonus.add(i, ((BONUS) bonusObject.get(i).getObjectType()));
+            while( (String.valueOf(CurrentBonus.get(i)) == "Life" && numberOfLifes==3) || (String.valueOf(CurrentBonus.get(i)) == "Time" && Case==0)
+            || (String.valueOf(CurrentBonus.get(i)) == "Poison" && Case==1)){
+                    bonusObject.remove(bonusObject.get(i));
+                    CurrentBonus.remove(CurrentBonus.get(i));
+                    bonusObject.add(i, (BonusObjects) gameEngine.createGameObject(2));
+                    bonusObject.get(i).setSlicedFromGui(false);
+                    CurrentBonus.add(i, ((BONUS) bonusObject.get(i).getObjectType()));
+            }
+
+
+            Bonus_PATH.add(i, CurrentBonus.get(i).getIdle() );
+            txtBonus.add(i, CurrentBonus.get(i).getTxt() );
+
+            bonus.add(i, new ImageView(Bonus_PATH.get(i)));
+
+            bonus.get(i).setFitWidth(70);
+            bonus.get(i).setFitHeight(70);
+            bonusObject.get(i).setIsReachedMaxHeight(false);
+            bonusObject.get(i).setSlicedFromGui(false);
+            setNewElementPositionBOOM(bonus.get(i));
+            gamePane.getChildren().add(bonus.get(i));
+        }
+
     }
     private void moveElements() {
 
@@ -398,7 +461,6 @@ public class GameViewManger {
 
 
 
-        if(boomsLevel!=0){
             for (int i = 0; i < boomObject.size(); i++) {
                 if (!boomObject.get(i).isSliced()) {
                     if (!boomObject.get(i).getIsReachedMaxHeight()) {
@@ -420,14 +482,42 @@ public class GameViewManger {
                             boom.remove(boom.get(i));
                             CurrentBoom.remove(CurrentBoom.get(i));
                             boomObject.remove(boomObject.get(i));
+
                             i=0;
                         }
                     }
                 }
             }
 
-        }
 
+        for (int i = 0; i < bonusObject.size(); i++) {
+            if (!bonusObject.get(i).isSliced()) {
+                if (!bonusObject.get(i).getIsReachedMaxHeight()) {
+
+                    if (bonus.get(i).getLayoutY() > gameEngine.createGameObject(2).getMaxHeight()) {
+                        bonusObject.get(i).setIsReachedMaxHeight(false);
+                        bonus.get(i).setLayoutY(bonus.get(i).getLayoutY() - bonusObject.get(i).getInitialVelocity());
+                        bonus.get(i).setLayoutX(bonus.get(i).getLayoutX() + 1);
+                        bonus.get(i).setRotate(bonus.get(i).getRotate() + 5);
+                    } else {
+                        bonus.get(i).setLayoutX(bonus.get(i).getLayoutX() + 5);
+                        bonusObject.get(i).setIsReachedMaxHeight(true);
+                    }
+                } else {
+                    bonus.get(i).setLayoutY(bonus.get(i).getLayoutY() + bonusObject.get(i).getInitialVelocity());
+                    bonus.get(i).setLayoutX(bonus.get(i).getLayoutX() + 1);
+                    bonus.get(i).setRotate(bonus.get(i).getRotate() + 5);
+                    if (bonus.get(i).getLayoutY() > 705) {
+                        bonus.remove(bonus.get(i));
+                        CurrentBonus.remove(CurrentBonus.get(i));
+                        bonusObject.remove(bonusObject.get(i));
+                        Bonus_PATH.remove(Bonus_PATH.get(i));
+                        txtBonus.remove(txtBonus.get(i));
+                        i = 0;
+                    }
+                }
+            }
+        }
     }
 
     public void checkLife(){
@@ -449,9 +539,7 @@ public class GameViewManger {
             };
             boomTimer.start();
             watch.stopAnimation();
-//            System.out.println("GameOver");
         }
-
     }
 
     private void lostWindow(){
@@ -471,7 +559,6 @@ public class GameViewManger {
 
             if(time.getState()==false)
             {
-                System.out.println(score1.getTmp());
                 gameStage.close();
                 ViewManger.mainstage.show();
                 gametimer.stop();
@@ -495,8 +582,12 @@ public class GameViewManger {
                         fruitInverse.get(i).setLayoutY(fruit.get(i).getLayoutY());
                         fruitInverse.get(i).setLayoutX(fruit.get(i).getLayoutX() - 70);
 
+
                         if (!fruitsObjects.get(i).isSliced()) {
                             gamePane.getChildren().addAll(fruitSliced.get(i), fruitInverse.get(i));
+                            Score = gameEngine.getScore();
+                            difficuly.setScore(Score);
+                            gameEngine.sliceObjects();
                         }
                         fruitsObjects.get(i).setSlicedFromGui(true);
                         for(int j=0; j<fruit.size(); j++)
@@ -509,7 +600,7 @@ public class GameViewManger {
 
 
             for(int i=0; i<boom.size(); i++) {
-                if (Math.abs(event.getSceneX() - boom.get(i).getLayoutX()) < 100) {
+                if (Math.abs(event.getSceneX() - boom.get(i).getLayoutX()) < 70) {
                     if (Math.abs(event.getSceneY() - boom.get(i).getLayoutY()) < 50) {
 
                         boom.get(i).setImage(new Image(EXPL1));
@@ -531,10 +622,81 @@ public class GameViewManger {
                     }
                 }
             }
+
+            for(int i=0; i<bonus.size(); i++) {
+                if (Math.abs(event.getSceneX() - bonus.get(i).getLayoutX()) < 70) {
+                    if (Math.abs(event.getSceneY() - bonus.get(i).getLayoutY()) < 50) {
+                        if(!bonusObject.get(i).isSliced()){
+                            bonusObject.get(i).setSlicedFromGui(true);
+                            addBonus(bonusObject.get(i), i);
+                        }
+                    }
+                }
+            }
+
                             event.setDragDetect(false);
                     });
     }
 
+    private void addBonus(BonusObjects bonuseObject, int index){
+        if(bonuseObject.isSliced()) {
+            if(String.valueOf(CurrentBonus.get(index)) == "Bonus") {
+                bonus.get(index).setImage(new Image(txtBonus.get(index)));
+                bonus.get(index).setRotate(0);
+                Score = gameEngine.getScore();
+                difficuly.setScore(Score);
+                gameEngine.slicedBonus();
+                largetxt =true;
+                this.index = index;
+                movetxt(index);
+            }
+                if (String.valueOf(CurrentBonus.get(index)) == "Life") {
+                    bonus.get(index).setImage(new Image(txtBonus.get(index)));
+                    bonus.get(index).setRotate(0);
+                    numberOfLifes += 1;
+                    classicMode.setNumberOfLifes(numberOfLifes);
+                    largetxt = true;
+                    this.index = index;
+                    movetxt(index);
+                }
+            if(String.valueOf(CurrentBonus.get(index)) == "Poison") {
+                bonus.get(index).setImage(new Image(txtBonus.get(index)));
+                bonus.get(index).setRotate(0);
+                numberOfLifes -= 1;
+                classicMode.setNumberOfLifes(numberOfLifes);
+                largetxt =true;
+                this.index = index;
+                movetxt(index);
+            }
+            if(String.valueOf(CurrentBonus.get(index)) == "Time") {
+                bonus.get(index).setImage(new Image(txtBonus.get(index)));
+                bonus.get(index).setRotate(0);
+                time.increase();
+                largetxt =true;
+                this.index = index;
+                movetxt(index);
+            }
+        }
+    }
+
+
+    private void movetxt(int index){
+        if(largetxt) {
+            if (bonus.get(index).getFitHeight() < 200) {
+                bonus.get(index).setFitHeight(bonus.get(index).getFitHeight() + 5);
+                bonus.get(index).setFitWidth(bonus.get(index).getFitWidth() + 5);
+                bonus.get(index).setLayoutY(bonus.get(index).getLayoutY() + 1);
+            } else {
+                gamePane.getChildren().remove(bonus.get(index));
+                bonus.remove(bonus.get(index));
+                bonusObject.remove(bonusObject.get(index));
+                CurrentBonus.remove(CurrentBonus.get(index));
+                txtBonus.remove(txtBonus.get(index));
+                Bonus_PATH.remove(Bonus_PATH.get(index));
+                largetxt = false;
+            }
+        }
+    }
     private void boomExplosion() {
         for (int i = 0; i < boom.size(); i++) {
             if (boomObject.get(i).isSliced()) {
@@ -583,9 +745,7 @@ public class GameViewManger {
                     fruitInverse.remove(fruitInverse.get(i));
                     i=0;
 
-                    gameEngine.sliceObjects();
-                    Score = gameEngine.getScore();
-                    difficuly.setScore(Score);
+
                 } else {
                     fruitSliced.get(i).setLayoutY(fruitSliced.get(i).getLayoutY() + fruitsObjects.get(i).getFallingVelocity());
                     fruitInverse.get(i).setLayoutY(fruitInverse.get(i).getLayoutY() + fruitsObjects.get(i).getFallingVelocity());
@@ -603,9 +763,30 @@ public class GameViewManger {
 
 
     }
+    private void viewWTF(double X){
+        wtf.setLayoutX(X);
+        wtf.setLayoutY(550);
+        if(!gamePane.getChildren().contains(wtf))
+            gamePane.getChildren().add(wtf);
+        moveWTFplease = true;
+        moveWTF(wtf);
+    }
+    private void moveWTF(ImageView wtf){
+        if(moveWTFplease) {
+            if (wtf.getLayoutY() > 400) {
+                wtf.setLayoutY(wtf.getLayoutY() - 10);
+                wtf.setFitWidth(wtf.getFitWidth() - 10);
+                wtf.setFitHeight(wtf.getFitHeight() - 10);
+            } else {
+                gamePane.getChildren().remove(wtf);
+                moveWTFplease = false;
+            }
+        }
+    }
     private void checkIfElementsBelowScreen() {
         for (int i = 0; i < fruit.size(); i++) {
                 if (fruit.get(i).getLayoutY() >= 700) {
+                    viewWTF(fruit.get(i).getLayoutX());
                     CurrentFruit.remove(CurrentFruit.get(i));
                     FRUIT_PATH.remove(FRUIT_PATH.get(i));
                     fruit.remove(fruit.get(i));
@@ -614,6 +795,7 @@ public class GameViewManger {
                         numberOfLifes -= 1;
                         classicMode.setNumberOfLifes(numberOfLifes);
                     }
+
                 }
             }
         if(fruit.isEmpty()) {
@@ -636,29 +818,20 @@ public class GameViewManger {
         if(boom.isEmpty()) {
             createBooms();
         }
+
+        for (int i = 0; i < bonus.size(); i++) {
+            if (bonus.get(i).getLayoutY() >= 810) {
+                CurrentBonus.remove(CurrentBonus.get(i));
+                bonus.remove(bonus.get(i));
+                bonusObject.remove(bonusObject.get(i));
+                txtBonus.remove(txtBonus.get(i));
+                Bonus_PATH.remove(Bonus_PATH.get(i));
+            }
+        }
+        if(bonus.isEmpty()) {
+            createBonus();
+        }
     }
 
-
-//    private void initDraw(GraphicsContext gc){
-//
-//        double canvasWidth = gc.getCanvas().getWidth();
-//        double canvasHeight = gc.getCanvas().getHeight();
-//
-//        gc.setFill(Color.LIGHTGRAY);
-////        gc.setStroke(Color.BLACK);
-//        gc.setLineWidth(5);
-//
-//        gc.fill();
-//        gc.strokeRect(
-//                0,              //x of the upper left corner
-//                0,              //y of the upper left corner
-//                canvasWidth,    //width of the rectangle
-//                canvasHeight);  //height of the rectangle
-//
-//        gc.setFill(Color.RED);
-//        gc.setStroke(Color.BLUE);
-//        gc.setLineWidth(1);
-//
-//    }
 }
 

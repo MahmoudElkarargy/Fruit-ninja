@@ -60,4 +60,10 @@ public class ClockTimer extends Pane {
         tmp = 60;
         this.label.setText(tmp+"");
     }
+    void increase(){
+        tmp+=10;
+
+        S=tmp +"";
+        label.setText(S);
+    }
 }

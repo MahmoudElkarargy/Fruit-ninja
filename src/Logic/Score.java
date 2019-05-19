@@ -27,6 +27,11 @@ public class Score extends Pane {
         tmp ++;
         label.setText(tmp+"");
     }
+    public void addBonus(){
+        tmp += 5;
+        label.setText(tmp+"");
+    }
+
     public void reset(){
         tmp = 0;
         label.setText(tmp+"");

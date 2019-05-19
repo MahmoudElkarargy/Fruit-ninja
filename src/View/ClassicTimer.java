@@ -36,7 +36,7 @@ public class ClassicTimer extends Pane {
     private void timelabel() {
  
             tmp++;
-       
+
 
         S=tmp +"";
         label.setText(S);
@@ -46,5 +46,6 @@ public class ClassicTimer extends Pane {
         this.tmp = 0;
         this.label.setText(tmp+"");
     }
+
 
 }
