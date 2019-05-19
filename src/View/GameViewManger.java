@@ -54,21 +54,18 @@ public class GameViewManger {
     private List<ImageView> fruitSliced = new LinkedList<ImageView>();
     private List<ImageView> fruitInverse = new LinkedList<ImageView>();
     private List<Fruits> fruitsObjects = new LinkedList<Fruits>();
-<<<<<<< HEAD
     private List<Booms> boomObject = new LinkedList<Booms>();
     private int Case;
     private Clock time = new Clock();
     private Score score1 = Logic.Score.getInstance();
 
     private GameEngine gameEngine = GameEngine.getInstance();
-=======
      int Case;
     ClockTimer time = new ClockTimer();
     Score score1 = Logic.Score.getInstance();
     ClockStopWatch watch = new ClockStopWatch();
     LineDrawing lineDrawing ;
     GameEngine gameEngine = GameEngine.getInstance();
->>>>>>> 1cbd80f80388534decf24555199f347f23bd8305
     private ClassicMode classicMode ;
 
     public GameViewManger(){
@@ -285,11 +282,7 @@ public class GameViewManger {
                 checkIfElementsBelowScreen();
                 ImageEVENT();
                 moveFruitDown();
-<<<<<<< HEAD
                 boomExplosion();
-=======
-
->>>>>>> 1cbd80f80388534decf24555199f347f23bd8305
                 if(Case ==0){
                 checkLife();
                 }
@@ -432,7 +425,6 @@ public class GameViewManger {
         if(numberOfLifes==0){
             gametimer.stop();
             time.stopAnimation();
-<<<<<<< HEAD
             boomTimer = new AnimationTimer(){
                 @Override
                 public void handle(long l) {
@@ -447,10 +439,8 @@ public class GameViewManger {
                 }
             };
             boomTimer.start();
-=======
             watch.stopAnimation();
 //            System.out.println("GameOver");
->>>>>>> 1cbd80f80388534decf24555199f347f23bd8305
         }
 
     }
@@ -469,13 +459,6 @@ public class GameViewManger {
     }
 
     private void ImageEVENT(){
-<<<<<<< HEAD
-//        Canvas canvas = new Canvas(1200, 700);
-//        final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-//        initDraw(graphicsContext);
-=======
-
->>>>>>> 1cbd80f80388534decf24555199f347f23bd8305
 
             if(time.getState()==false)
             {
@@ -485,39 +468,7 @@ public class GameViewManger {
                 gametimer.stop();
             }
 
-//            gamePane.setOnMousePressed(e->{
-//                graphicsContext.beginPath();
-//                graphicsContext.moveTo(e.getX(), e.getY());
-//                graphicsContext.stroke();
-//            });
-//            gamePane.setOnMouseReleased(e->{
-//                graphicsContext.clearRect(0,0,1200,700);
-//            });
-<<<<<<< HEAD
-
         gamePane.setOnMouseDragged(event -> {
-=======
->>>>>>> 1cbd80f80388534decf24555199f347f23bd8305
-
-        gamePane.setOnMouseDragged(event -> {
-
-<<<<<<< HEAD
-
-//                            System.out.println("Drrrrr");
-//                            graphicsContext.lineTo(event.getX(), event.getY());
-//                            graphicsContext.stroke();
-
-=======
-//            System.out.println("Drrrrr");
-//                            graphicsContext.lineTo(event.getX(), event.getY());
-//                            graphicsContext.stroke();
-//
->>>>>>> 1cbd80f80388534decf24555199f347f23bd8305
-
-//            StackPane root = new StackPane();
-//            root.getChildren().add(canvas);
-//            gamePane.getChildren().add(root);
-
 
             for(int i=0; i<fruit.size(); i++) {
                 if (Math.abs(event.getSceneX() - fruit.get(i).getLayoutX()) < 100) {
