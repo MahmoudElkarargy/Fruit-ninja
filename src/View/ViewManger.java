@@ -3,9 +3,13 @@ package View;
 import java.util.List;
 
 
+import Logic.Save_File_name;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -22,10 +26,13 @@ public class ViewManger {
     private final static int GAMEHIGHT = 700;
     private AnimationTimer gameTimer;
     private GridPane gridPane1,gridPane2;
+    private CreateSubScene newSubScene;
+    private CreateSubScene sceneToHide;
     private ImageView classicButton, arcadeButton, GameZoneButton, closeButton, helpButton, logo;
     private GameViewManger gameManger = new GameViewManger();
     private Reflection effect1 = new Reflection();
     private MotionBlur effect2 = new MotionBlur();
+    private int Case;
 
     public ViewManger(){
         mainpane=new AnchorPane();
@@ -35,6 +42,8 @@ public class ViewManger {
         effect2.setInput(effect1);
         createButton();
         creatLogo();
+        createSubScene();
+
         createBackground();
         creatGameLoop();
 
@@ -61,8 +70,12 @@ public class ViewManger {
         classicButton.setOnMouseEntered(e->{ classicButton.setEffect(effect2); });
         classicButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
         classicButton.setOnMouseClicked(e->{
-            gameManger.createNewGame(mainstage,0);
+//            gameManger.createNewGame(mainstage,0);
             System.out.println("Classic Game will open here");
+            mainpane.getChildren().remove(newSubScene);
+            this.Case = 0;
+            createSubScene();
+            showSubScene(newSubScene);
         });
     }
 
@@ -74,9 +87,44 @@ public class ViewManger {
         arcadeButton.setOnMouseEntered(e->{ arcadeButton.setEffect(effect2);});
         arcadeButton.setOnMouseExited(e->{ arcadeButton.setEffect(null); });
         arcadeButton.setOnMouseClicked(e->{
+            mainpane.getChildren().remove(newSubScene);
+            this.Case =1;
+            createSubScene();
             System.out.println("arcade Game will open here");
-            gameManger.createNewGame(mainstage,1);
+            showSubScene(newSubScene);
+
         });
+    }
+    private void createSubScene(){
+
+        newSubScene = new CreateSubScene(createBackground1());
+        Label  n = new Label("Enter your Name");
+        TextField textField = new TextField();
+        textField.setLayoutX(100);
+        textField.setLayoutY(170);
+        Button button = new Button("OK");
+        button.setLayoutX(400);
+        button.setLayoutY(250);
+        Save_File_name s = new Save_File_name(Case);
+        button.setOnAction(e->{
+            if(Case==1) {
+                s.OverWrite(textField.getText());
+                gameManger.createNewGame(mainstage, Case);
+            }
+            else if(Case==0){
+                s.OverWrite(textField.getText());
+                gameManger.createNewGame(mainstage, Case);
+            }
+
+
+        });
+        n.setLayoutX(100);
+        n.setLayoutY(50);
+        n.setStyle("-fx-text-fill: #fff;-fx-font-size: 50px; font-weight: bold");
+        newSubScene.getPane().getChildren().addAll(n,button,textField);
+        mainpane.getChildren().add(newSubScene);
+
+
     }
 
     private void createGameZonebutton(){
@@ -87,6 +135,7 @@ public class ViewManger {
         GameZoneButton.setOnMouseExited(e->{ GameZoneButton.setEffect(null); });
         GameZoneButton.setOnMouseClicked(e->{
             System.out.println("Game zone will open here");
+            mainpane.getChildren().remove(newSubScene);
         });
     } private void createHelpbutton(){
         helpButton = new ImageView("View/resources/Help.png");
@@ -95,6 +144,8 @@ public class ViewManger {
         helpButton.setOnMouseEntered(e->{ helpButton.setEffect(effect2); });
         helpButton.setOnMouseExited(e->{ helpButton.setEffect(null); });
         helpButton.setOnMouseClicked(e->{
+
+
             System.out.println("help will open here");
         });
     }
@@ -154,4 +205,21 @@ public class ViewManger {
             gridPane2.setLayoutX(-1250);
         }
     }
+    private BackgroundImage createBackground1 (){
+        Image backgroundImage = new Image("View/resources/backgroundLarge.png",700,300,false,true);
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
+        return background;
+    }
+
+    public void showSubScene(CreateSubScene subScene){
+        if(sceneToHide != null){
+            sceneToHide.moveSubScene();
+        }
+        subScene.moveSubScene();
+        sceneToHide = subScene;
+
+
+
+    }
+
 }

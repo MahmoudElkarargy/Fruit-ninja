@@ -104,7 +104,7 @@ public class GameViewManger {
             gameStage.close();
             ViewManger.mainstage.show();
             gametimer.stop();
-            gameEngine.saveScore();
+            gameEngine.saveScore(Case);
             resetFunction();
         });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });

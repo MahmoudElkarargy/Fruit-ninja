@@ -1,9 +1,6 @@
 package View;
 
-import Logic.SaveComand;
-import Logic.SaveScoreFILE;
-import Logic.SaveScoreModel;
-import Logic.Score;
+import Logic.*;
 import MainPackage.GameActions;
 import MainPackage.GameObject;
 
@@ -46,13 +43,15 @@ public class GameEngine implements GameActions {
     public void saveGame() {
 
     }
-    public void saveScore(){
+    public void saveScore(int Case){
         SaveScoreModel save = new SaveScoreModel(score.getTmp(),1);
         SaveScoreFILE file = new SaveScoreFILE(save);
         RemoteSave control = new RemoteSave();
         SaveComand SAVE = new SaveComand(file);
         control.setComand(SAVE);
         control.press();
+        Save_File_name s = new Save_File_name(Case);
+        s.OverWrite_scores(score.getTmp());
 
     }
 
