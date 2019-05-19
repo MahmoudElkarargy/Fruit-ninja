@@ -22,6 +22,29 @@ import javafx.stage.StageStyle;
 import java.time.Clock;
 import java.util.LinkedList;
 import java.util.List;
+        package View;
+
+        import Logic.Difficuly;
+        import Logic.LineDrawing;
+        import Logic.Score;
+        import MainPackage.BOOM;
+        import MainPackage.FRUITS;
+        import javafx.animation.AnimationTimer;
+        import javafx.scene.Scene;
+        import javafx.scene.canvas.Canvas;
+        import javafx.scene.canvas.GraphicsContext;
+        import javafx.scene.control.Label;
+        import javafx.scene.effect.Glow;
+        import javafx.scene.image.Image;
+        import javafx.scene.image.ImageView;
+        import javafx.scene.layout.*;
+        import javafx.scene.paint.Color;
+        import javafx.stage.Stage;
+        import javafx.stage.StageStyle;
+
+        import java.time.Clock;
+        import java.util.LinkedList;
+        import java.util.List;
 
 
 public class GameViewManger {
@@ -122,6 +145,7 @@ public class GameViewManger {
             if(youLostHAHA)
                 boomTimer.stop();
             youLostHAHA = false;
+            gameEngine.saveScore(Case);
             resetFunction();
         });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });
@@ -220,7 +244,7 @@ public class GameViewManger {
         youLostHAHA = false;
 
         if(gamePane.getChildren().contains(lose))
-             gamePane.getChildren().remove(lose);
+            gamePane.getChildren().remove(lose);
         if(!gamePane.getChildren().contains(save))
             gamePane.getChildren().addAll(save);
     }
@@ -287,7 +311,7 @@ public class GameViewManger {
             gamePane.getChildren().add(watch);
 
             this.numberOfLifes=3;
-           classicMode.reset_space();
+            classicMode.reset_space();
             classicMode.creatLifeNumbers(numberOfLifes);
             gamePane.getChildren().remove(time);
             gamePane.getChildren().remove(closeButton);
@@ -312,7 +336,7 @@ public class GameViewManger {
     }
     private void createCaseloop(int Case){
 
-            gametimer = new AnimationTimer(){
+        gametimer = new AnimationTimer(){
             @Override
             public void handle(long l) {
                 setDiffculty();
@@ -331,7 +355,7 @@ public class GameViewManger {
 //                }
             }
         };
-            gametimer.start();
+        gametimer.start();
     }
 
     private void setNewElementPosition(ImageView image){
@@ -350,30 +374,30 @@ public class GameViewManger {
 
 
     private void createGameelements () {
-            for (int i = 0; i < difficltyLevel; i++) {
-                fruitsObjects.add(i, (Fruits) gameEngine.createGameObject(0));
-                fruitsObjects.get(i).setSlicedFromGui(false);
-                CurrentFruit.add(i, ((FRUITS) fruitsObjects.get(i).getObjectType()));
+        for (int i = 0; i < difficltyLevel; i++) {
+            fruitsObjects.add(i, (Fruits) gameEngine.createGameObject(0));
+            fruitsObjects.get(i).setSlicedFromGui(false);
+            CurrentFruit.add(i, ((FRUITS) fruitsObjects.get(i).getObjectType()));
 
-                FRUIT_PATH.add(i, CurrentFruit.get(i).getIdle());
-                FRUIT_SLICED_PATH.add(i, CurrentFruit.get(i).getSliced());
-                FRUIT_INVERSE_PATH.add(i, CurrentFruit.get(i).getSlicedInverse());
+            FRUIT_PATH.add(i, CurrentFruit.get(i).getIdle());
+            FRUIT_SLICED_PATH.add(i, CurrentFruit.get(i).getSliced());
+            FRUIT_INVERSE_PATH.add(i, CurrentFruit.get(i).getSlicedInverse());
 
-                fruit.add(i, new ImageView(FRUIT_PATH.get(i)));
-                fruitSliced.add(i, new ImageView(FRUIT_SLICED_PATH.get(i)));
-                fruitInverse.add(i, new ImageView(FRUIT_INVERSE_PATH.get(i)));
+            fruit.add(i, new ImageView(FRUIT_PATH.get(i)));
+            fruitSliced.add(i, new ImageView(FRUIT_SLICED_PATH.get(i)));
+            fruitInverse.add(i, new ImageView(FRUIT_INVERSE_PATH.get(i)));
 
-                fruit.get(i).setFitWidth(100);
-                fruit.get(i).setFitHeight(100);
-                fruitSliced.get(i).setFitWidth(100);
-                fruitSliced.get(i).setFitHeight(100);
-                fruitInverse.get(i).setFitWidth(100);
-                fruitInverse.get(i).setFitHeight(100);
-                fruitsObjects.get(i).setIsReachedMaxHeight(false);
-                fruitsObjects.get(i).setSlicedFromGui(false);
-                setNewElementPosition(fruit.get(i));
-                gamePane.getChildren().add(fruit.get(i));
-            }
+            fruit.get(i).setFitWidth(100);
+            fruit.get(i).setFitHeight(100);
+            fruitSliced.get(i).setFitWidth(100);
+            fruitSliced.get(i).setFitHeight(100);
+            fruitInverse.get(i).setFitWidth(100);
+            fruitInverse.get(i).setFitHeight(100);
+            fruitsObjects.get(i).setIsReachedMaxHeight(false);
+            fruitsObjects.get(i).setSlicedFromGui(false);
+            setNewElementPosition(fruit.get(i));
+            gamePane.getChildren().add(fruit.get(i));
+        }
     }
 
     private void createBooms(){
@@ -431,33 +455,33 @@ public class GameViewManger {
     }
     private void moveElements() {
 
-            for (int i = 0; i < fruit.size(); i++) {
-                if (!fruitsObjects.get(i).isSliced()) {
-                    if (!fruitsObjects.get(i).getIsReachedMaxHeight()) {
+        for (int i = 0; i < fruit.size(); i++) {
+            if (!fruitsObjects.get(i).isSliced()) {
+                if (!fruitsObjects.get(i).getIsReachedMaxHeight()) {
 
-                        if (fruit.get(i).getLayoutY() > gameEngine.createGameObject(0).getMaxHeight()) {
-                            fruitsObjects.get(i).setIsReachedMaxHeight(false);
-                            fruit.get(i).setLayoutY(fruit.get(i).getLayoutY() - fruitsObjects.get(i).getInitialVelocity());
-                            fruit.get(i).setLayoutX(fruit.get(i).getLayoutX() + 1);
-                            fruit.get(i).setRotate(fruit.get(i).getRotate() + 5);
-                        } else {
-                            fruit.get(i).setLayoutX(fruit.get(i).getLayoutX() + 5);
-                            fruitsObjects.get(i).setIsReachedMaxHeight(true);
-                        }
-                    } else {
-                        fruit.get(i).setLayoutY(fruit.get(i).getLayoutY() + fruitsObjects.get(i).getInitialVelocity());
+                    if (fruit.get(i).getLayoutY() > gameEngine.createGameObject(0).getMaxHeight()) {
+                        fruitsObjects.get(i).setIsReachedMaxHeight(false);
+                        fruit.get(i).setLayoutY(fruit.get(i).getLayoutY() - fruitsObjects.get(i).getInitialVelocity());
                         fruit.get(i).setLayoutX(fruit.get(i).getLayoutX() + 1);
                         fruit.get(i).setRotate(fruit.get(i).getRotate() + 5);
-                        if (fruit.get(i).getLayoutY() > 701 && fruit.get(i).getLayoutY() <= 704 && !gamePane.getChildren().contains(fruitSliced.get(i))) {
-                            fruit.remove(fruit.get(i));
-                            CurrentFruit.remove(CurrentFruit.get(i));
-                            FRUIT_PATH.remove(FRUIT_PATH.get(i));
-                            fruitsObjects.remove(fruitsObjects.get(i));
-                            i=0;
-                        }
+                    } else {
+                        fruit.get(i).setLayoutX(fruit.get(i).getLayoutX() + 5);
+                        fruitsObjects.get(i).setIsReachedMaxHeight(true);
+                    }
+                } else {
+                    fruit.get(i).setLayoutY(fruit.get(i).getLayoutY() + fruitsObjects.get(i).getInitialVelocity());
+                    fruit.get(i).setLayoutX(fruit.get(i).getLayoutX() + 1);
+                    fruit.get(i).setRotate(fruit.get(i).getRotate() + 5);
+                    if (fruit.get(i).getLayoutY() > 701 && fruit.get(i).getLayoutY() <= 704 && !gamePane.getChildren().contains(fruitSliced.get(i))) {
+                        fruit.remove(fruit.get(i));
+                        CurrentFruit.remove(CurrentFruit.get(i));
+                        FRUIT_PATH.remove(FRUIT_PATH.get(i));
+                        fruitsObjects.remove(fruitsObjects.get(i));
+                        i=0;
                     }
                 }
             }
+        }
 
 
 
@@ -563,7 +587,6 @@ public class GameViewManger {
                 ViewManger.mainstage.show();
                 gametimer.stop();
             }
-
         gamePane.setOnMouseDragged(event -> {
 
             for(int i=0; i<fruit.size(); i++) {
@@ -591,7 +614,7 @@ public class GameViewManger {
                         }
                         fruitsObjects.get(i).setSlicedFromGui(true);
                         for(int j=0; j<fruit.size(); j++)
-                        gamePane.getChildren().remove(fruit.get(i));
+                            gamePane.getChildren().remove(fruit.get(i));
                         moveFruitDown();
 
                     }
@@ -636,6 +659,8 @@ public class GameViewManger {
 
                             event.setDragDetect(false);
                     });
+            event.setDragDetect(false);
+        });
     }
 
     private void addBonus(BonusObjects bonuseObject, int index){
@@ -795,9 +820,9 @@ public class GameViewManger {
                         numberOfLifes -= 1;
                         classicMode.setNumberOfLifes(numberOfLifes);
                     }
-
                 }
             }
+        }
         if(fruit.isEmpty()) {
             for(int j=0; j<fruitSliced.size(); j++){
                 fruitSliced.remove(fruitSliced.get(j));
@@ -834,4 +859,3 @@ public class GameViewManger {
     }
 
 }
-
