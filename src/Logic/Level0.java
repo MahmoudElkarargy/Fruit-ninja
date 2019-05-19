@@ -21,4 +21,19 @@ public class Level0 implements IStartegy {
     public void getFalls() {
 
     }
+
+    @Override
+    public int increaseBooms() {
+        return randomPositionGenerator.nextInt(2);
+    }
+
+    @Override
+    public void getIntsBomms() {
+
+    }
+
+    @Override
+    public void getFallsBooms() {
+
+    }
 }

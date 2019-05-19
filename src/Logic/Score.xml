@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Data xmlns="alyelshwahy@yahoo.com">
   <user1 TYPE="1">
-    <Score>0</Score>
+<<<<<<< HEAD
+    <Score>4</Score>
+=======
+    <Score>146</Score>
+>>>>>>> 1cbd80f80388534decf24555199f347f23bd8305
   </user1>
 </Data>

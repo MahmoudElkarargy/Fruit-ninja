@@ -28,6 +28,10 @@ public class ClassicMode {
         this.numberOfLifes = numberOfLifes;
         space =0;
         if(!gamePane.getChildren().isEmpty()) {
+            if(numberOfLifes==3)
+                for (int i=0;i<numberOfLifes;i++)
+                    gamePane.getChildren().removeAll(life[i]);
+                else
             for (int i=0;i<numberOfLifes+1;i++)
                 gamePane.getChildren().removeAll(life[i]);
         }

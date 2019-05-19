@@ -3,7 +3,7 @@ package MainPackage;
 public interface GameActions {
 
     /** @return ​created game object */
-    public GameObject createGameObject();
+    public GameObject createGameObject(int type);
 
     /** update moving objects locations */
     public void updateObjectsLocations();

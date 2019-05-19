@@ -1,36 +1,23 @@
 package View;
 
-import MainPackage.FRUITS;
+
+import MainPackage.BOOM;
 import MainPackage.GameObject;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.Random;
 
-public class Fruits implements GameObject {
-
+public class Booms implements GameObject {
     Random randomPositionGenerator = new Random();
     private boolean slicedFromGui;
     private boolean isReachedMaxHeight;
     private static int initiSpeed = 3;
     private static int fallSpeed = 5;
-//    private String Cut="src/View/resources/Slice.mp3";
-//    Media CUTTMEDIA = new Media(new File(Cut).toURI().toString());
-//    MediaPlayer CutingSound = new MediaPlayer(CUTTMEDIA);
+
+
     @Override
     public Enum getObjectType() {
-        int fruitType = randomPositionGenerator.nextInt(4);
-//        int fruitType =0;
-        if(fruitType==0)
-            return FRUITS.APPLE;
-        else if(fruitType==1)
-            return FRUITS.WATERMILION;
-        else if(fruitType==2)
-            return FRUITS.ORANGE;
-        else
-            return FRUITS.COCONUT;
+        return BOOM.boom1;
     }
 
     @Override
@@ -39,12 +26,13 @@ public class Fruits implements GameObject {
     }
 
     @Override
-    public int getYlocation() { return 700;
+    public int getYlocation() {
+        return 800;
     }
 
     @Override
     public int getMaxHeight() {
-        return randomPositionGenerator.nextInt(200)+80;
+        return 150;
     }
 
     @Override
@@ -62,11 +50,9 @@ public class Fruits implements GameObject {
         return fallSpeed;
     }
 
-    public void setSlicedFromGui(boolean slicedFromGui){
 
+    public void setSlicedFromGui(boolean slicedFromGui){
         this.slicedFromGui = slicedFromGui;
-//        if(slicedFromGui)
-//            CutingSound.play();
     }
     @Override
     public Boolean isSliced() {

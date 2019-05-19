@@ -20,8 +20,24 @@ public class Level2 implements IStartegy {
 
     @Override
     public void getFalls() {
-        new Fruits().setfallSpeed(12);
+        new Fruits().setfallSpeed(9);
     }
+
+    @Override
+    public int increaseBooms() {
+        return 0;
+    }
+
+    @Override
+    public void getIntsBomms() {
+
+    }
+
+    @Override
+    public void getFallsBooms() {
+
+    }
+
     public Level2(){
         getFalls();
         getInts();
