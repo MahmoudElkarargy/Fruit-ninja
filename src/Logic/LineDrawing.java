@@ -3,16 +3,17 @@ package Logic;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+
+import java.io.File;
 
 public class LineDrawing extends Group {
         Path path;
@@ -20,10 +21,13 @@ public class LineDrawing extends Group {
         public LineDrawing(Scene scene){
             this.scene=scene;
         }
+    private String Cut="src/View/resources/sword1.mp3";
+        Media CUTTMEDIA = new Media(new File(Cut).toURI().toString());
+    MediaPlayer CutingSound = new MediaPlayer(CUTTMEDIA);
     public void Draw() {
         path = new Path();
-        path.setStrokeWidth(10);
-        path.setStroke(Color.SILVER);
+        path.setStrokeWidth(3);
+        path.setStroke(Color.valueOf("#7DF9FF"));
 
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseDragged(mouseHandler);
@@ -41,11 +45,18 @@ public class LineDrawing extends Group {
         public void handle(MouseEvent mouseEvent) {
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) {
                 path.getElements().clear();
+                CutingSound.play();
                 path.getElements()
                         .add(new MoveTo(mouseEvent.getX(), mouseEvent.getY()));
             } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+
                 path.getElements()
                         .add(new LineTo(mouseEvent.getX(), mouseEvent.getY()));
+            }
+            else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
+                path.getElements().clear();
+                CutingSound.stop();
+
             }
 
         }
