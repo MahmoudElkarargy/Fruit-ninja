@@ -29,6 +29,7 @@ public class LineDrawing extends Group {
         path.setStrokeWidth(3);
         path.setStroke(Color.valueOf("#7DF9FF"));
 
+
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseDragged(mouseHandler);
         scene.setOnMouseEntered(mouseHandler);
@@ -52,6 +53,7 @@ public class LineDrawing extends Group {
 
                 path.getElements()
                         .add(new LineTo(mouseEvent.getX(), mouseEvent.getY()));
+
             }
             else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
                 path.getElements().clear();

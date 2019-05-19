@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.time.Clock;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,16 +57,15 @@ public class GameViewManger {
     private List<Fruits> fruitsObjects = new LinkedList<Fruits>();
     private List<Booms> boomObject = new LinkedList<Booms>();
     private int Case;
-    private Clock time = new Clock();
+    private ClockTimer time = new ClockTimer();
     private Score score1 = Logic.Score.getInstance();
 
     private GameEngine gameEngine = GameEngine.getInstance();
-     int Case;
-    ClockTimer time = new ClockTimer();
-    Score score1 = Logic.Score.getInstance();
+
+
     ClockStopWatch watch = new ClockStopWatch();
     LineDrawing lineDrawing ;
-    GameEngine gameEngine = GameEngine.getInstance();
+
     private ClassicMode classicMode ;
 
     public GameViewManger(){
@@ -105,7 +105,7 @@ public class GameViewManger {
             ViewManger.mainstage.show();
             gametimer.stop();
             gameEngine.saveScore();
-            time.reset();
+            resetFunction();
         });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });
         closeButton.setOnMouseExited(e->{ closeButton.setEffect(null); });
@@ -160,6 +160,9 @@ public class GameViewManger {
 
     private void resetFunction(){
         gameEngine.ResetGame();
+        time.reset();
+        gameEngine.ResertStopWatch(watch);
+        gameEngine.ReseetClockTimer(time,1);
         if(gamePane.getChildren().contains(lose))
             gamePane.getChildren().remove(lose);
         for(int i=0; i<fruit.size();i++) {
@@ -183,16 +186,18 @@ public class GameViewManger {
             FRUIT_SLICED_PATH.remove(FRUIT_SLICED_PATH.get(i));
             FRUIT_INVERSE_PATH.remove(FRUIT_INVERSE_PATH.get(i));
         }
-        numberOfLifes = 3;
-        classicMode.setNumberOfLifes(numberOfLifes);
-        difficuly.setScore(Score);
+        if(Case==0) {
+            numberOfLifes = 3;
+            classicMode.setNumberOfLifes(numberOfLifes);
+            difficuly.setScore(Score);
+        }
         setDiffculty();
         createGameelements();
         createBooms();
-        gametimer.stop();
-        gametimer.start();
-        if(youLostHAHA)
+        if(youLostHAHA) {
             boomTimer.stop();
+            gametimer.start();
+        }
         youLostHAHA = false;
 
         if(gamePane.getChildren().contains(lose))
@@ -239,6 +244,8 @@ public class GameViewManger {
             gamePane.getChildren().add(closeButton);
             gamePane.getChildren().remove(save);
             gamePane.getChildren().add(save);
+            gamePane.getChildren().remove(playAgian);
+            gamePane.getChildren().add(playAgian);
 //            time.reset();
 
         }
@@ -260,6 +267,8 @@ public class GameViewManger {
             gamePane.getChildren().add(closeButton);
             gamePane.getChildren().remove(save);
             gamePane.getChildren().add(save);
+            gamePane.getChildren().remove(playAgian);
+            gamePane.getChildren().add(playAgian);
 //            time.stopAnimation();
 //            time.reset();
         }
@@ -283,9 +292,9 @@ public class GameViewManger {
                 ImageEVENT();
                 moveFruitDown();
                 boomExplosion();
-                if(Case ==0){
+//                if(Case ==0){
                 checkLife();
-                }
+//                }
             }
         };
             gametimer.start();
