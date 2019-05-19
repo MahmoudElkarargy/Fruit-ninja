@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
+import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.media.Media;
@@ -27,8 +28,9 @@ public class LineDrawing extends Group {
     public void Draw() {
         path = new Path();
         path.setStrokeWidth(3);
-        path.setStroke(Color.valueOf("#7DF9FF"));
-
+        path.setStroke(Color.valueOf("#FFF"));
+        Glow glow = new Glow(80);
+        path.setEffect(glow);
 
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseDragged(mouseHandler);
@@ -53,7 +55,6 @@ public class LineDrawing extends Group {
 
                 path.getElements()
                         .add(new LineTo(mouseEvent.getX(), mouseEvent.getY()));
-
             }
             else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
                 path.getElements().clear();

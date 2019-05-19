@@ -1,6 +1,7 @@
 package Logic;
 
 import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
@@ -14,6 +15,7 @@ public class Score extends Pane {
         label.setStyle("-fx-text-fill:white;");
         label.setTranslateX(600);
         label.setTranslateY(600);
+        label.setEffect(new Glow(80));
         getChildren().add(label);
     }
     public static Score getInstance(){
