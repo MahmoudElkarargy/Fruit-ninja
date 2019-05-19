@@ -22,29 +22,8 @@ import javafx.stage.StageStyle;
 import java.time.Clock;
 import java.util.LinkedList;
 import java.util.List;
-        package View;
 
-        import Logic.Difficuly;
-        import Logic.LineDrawing;
-        import Logic.Score;
-        import MainPackage.BOOM;
-        import MainPackage.FRUITS;
-        import javafx.animation.AnimationTimer;
-        import javafx.scene.Scene;
-        import javafx.scene.canvas.Canvas;
-        import javafx.scene.canvas.GraphicsContext;
-        import javafx.scene.control.Label;
-        import javafx.scene.effect.Glow;
-        import javafx.scene.image.Image;
-        import javafx.scene.image.ImageView;
-        import javafx.scene.layout.*;
-        import javafx.scene.paint.Color;
-        import javafx.stage.Stage;
-        import javafx.stage.StageStyle;
 
-        import java.time.Clock;
-        import java.util.LinkedList;
-        import java.util.List;
 
 
 public class GameViewManger {
@@ -139,7 +118,7 @@ public class GameViewManger {
             gameStage.close();
             ViewManger.mainstage.show();
             gametimer.stop();
-            gameEngine.saveScore();
+//            gameEngine.saveScore();
             gametimer.stop();
 //            gamePane.getChildren().clear();
             if(youLostHAHA)
@@ -659,8 +638,7 @@ public class GameViewManger {
 
                             event.setDragDetect(false);
                     });
-            event.setDragDetect(false);
-        });
+
     }
 
     private void addBonus(BonusObjects bonuseObject, int index){
@@ -822,7 +800,6 @@ public class GameViewManger {
                     }
                 }
             }
-        }
         if(fruit.isEmpty()) {
             for(int j=0; j<fruitSliced.size(); j++){
                 fruitSliced.remove(fruitSliced.get(j));

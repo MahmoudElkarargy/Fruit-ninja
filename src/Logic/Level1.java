@@ -32,13 +32,13 @@ public class Level1 implements IStartegy {
     }
     @Override
     public void getInts() {
-        new Fruits().setInitiSpeed(5);
+        new Fruits().setInitiSpeed(3);
 
     }
 
     @Override
     public void getFalls() {
-        new Fruits().setfallSpeed(5);
+        new Fruits().setfallSpeed(4);
     }
     public Level1(){
         getFalls();

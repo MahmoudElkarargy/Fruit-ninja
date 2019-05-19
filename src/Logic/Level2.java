@@ -17,12 +17,12 @@ public class Level2 implements IStartegy {
 
     @Override
     public void getInts() {
-        new Fruits().setInitiSpeed(8);
+        new Fruits().setInitiSpeed(4);
     }
 
     @Override
     public void getFalls() {
-        new Fruits().setfallSpeed(9);
+        new Fruits().setfallSpeed(5);
     }
 
     @Override
