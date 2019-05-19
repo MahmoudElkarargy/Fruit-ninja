@@ -16,9 +16,9 @@ public class Fruits implements GameObject {
     private boolean isReachedMaxHeight;
     private static int initiSpeed = 3;
     private static int fallSpeed = 5;
-    private String Cut="src/View/resources/Slice.mp3";
-    Media CUTTMEDIA = new Media(new File(Cut).toURI().toString());
-    MediaPlayer CutingSound = new MediaPlayer(CUTTMEDIA);
+//    private String Cut="src/View/resources/Slice.mp3";
+//    Media CUTTMEDIA = new Media(new File(Cut).toURI().toString());
+//    MediaPlayer CutingSound = new MediaPlayer(CUTTMEDIA);
     @Override
     public Enum getObjectType() {
         int fruitType = randomPositionGenerator.nextInt(4);
@@ -66,8 +66,8 @@ public class Fruits implements GameObject {
     public void setSlicedFromGui(boolean slicedFromGui){
 
         this.slicedFromGui = slicedFromGui;
-        if(slicedFromGui)
-            CutingSound.play();
+//        if(slicedFromGui)
+//            CutingSound.play();
     }
     @Override
     public Boolean isSliced() {

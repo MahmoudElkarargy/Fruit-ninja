@@ -1,6 +1,7 @@
 package View;
 
 import Logic.Difficuly;
+import Logic.LineDrawing;
 import Logic.Score;
 import MainPackage.FRUITS;
 import javafx.animation.AnimationTimer;
@@ -53,7 +54,7 @@ public class GameViewManger {
     ClockTimer time = new ClockTimer();
     Score score1 = Logic.Score.getInstance();
     ClockStopWatch watch = new ClockStopWatch();
-
+    LineDrawing lineDrawing ;
     GameEngine gameEngine = GameEngine.getInstance();
     private ClassicMode classicMode ;
 
@@ -75,6 +76,8 @@ public class GameViewManger {
         difficuly = new Difficuly();
         gameStage.initStyle(StageStyle.TRANSPARENT);
         createIcons();
+
+
     }
     private void createIcons(){
         Image soundOn = new Image("View/resources/Icons/Sound.png");
@@ -145,7 +148,9 @@ public class GameViewManger {
         this.Case = Case;
 
         gameEngine.ResetGame();
-
+        lineDrawing = new LineDrawing(gameScene);
+        gamePane.getChildren().add(lineDrawing);
+        lineDrawing.Draw();
         createBackground();
         setDiffculty();
         createGameelements();
@@ -157,6 +162,8 @@ public class GameViewManger {
             watch.stopAnimation();
 //            time.reset();
 //            time.startAnimation();
+
+
             classicMode.removeLifes();
             this.numberOfLifes=3;
             classicMode.reset_space();
@@ -210,6 +217,7 @@ public class GameViewManger {
                 checkIfElementsBelowScreen();
                 ImageEVENT();
                 moveFruitDown();
+
                 if(Case ==0){
                 checkLife();
                 }
@@ -297,9 +305,8 @@ public class GameViewManger {
 }
 
     private void ImageEVENT(){
-        Canvas canvas = new Canvas(1200, 700);
-        final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-        initDraw(graphicsContext);
+
+
             if(time.getState()==false)
             {
                 System.out.println(score1.getTmp());
@@ -316,6 +323,7 @@ public class GameViewManger {
 //            gamePane.setOnMouseReleased(e->{
 //                graphicsContext.clearRect(0,0,1200,700);
 //            });
+
         gamePane.setOnMouseDragged(event -> {
 
 //            System.out.println("Drrrrr");

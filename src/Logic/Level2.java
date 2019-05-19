@@ -20,7 +20,7 @@ public class Level2 implements IStartegy {
 
     @Override
     public void getFalls() {
-        new Fruits().setfallSpeed(12);
+        new Fruits().setfallSpeed(9);
     }
     public Level2(){
         getFalls();
