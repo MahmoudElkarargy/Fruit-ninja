@@ -80,6 +80,9 @@ public class GameEngine implements GameActions {
         SaveComand SAVE = new SaveComand(file);
         control.setComand(SAVE);
         control.press();
+
+    }
+    public void saveScore(int Case){
         Save_File_name s = new Save_File_name(Case);
         s.OverWrite_scores(score.getTmp());
 
