@@ -27,6 +27,8 @@ public class ViewManger {
     private final static int GAMEHIGHT = 700;
     private AnimationTimer gameTimer;
     private GridPane gridPane1,gridPane2;
+    private boolean movable = false;
+    private AnimationTimer viewTimer;
     private CreateSubScene newSubScene;
     private static CreateSubScene ScoreLeaderBoard;
     private CreateSubScene sceneToHide;
@@ -35,6 +37,7 @@ public class ViewManger {
     private Reflection effect1 = new Reflection();
     private MotionBlur effect2 = new MotionBlur();
     private int Case =0;
+    private ImageView ChoosenIcon = new ImageView();
     private static ViewManger viewManger = null;
     public static ViewManger getInstance(){
         if (viewManger==null)
@@ -66,8 +69,18 @@ public class ViewManger {
         createGameZonebutton();
         createHelpbutton();
        createClosebutton();
+        createCaseloop();
     }
+    private void createCaseloop(){
 
+        viewTimer = new AnimationTimer(){
+            @Override
+            public void handle(long l) {
+                moveIcon(ChoosenIcon);
+            }
+        };
+        viewTimer.start();
+    }
     private void createClassicbutton(){
 
 //        gameManger = new GameViewManger();
@@ -79,6 +92,7 @@ public class ViewManger {
         classicButton.setOnMouseClicked(e->{
 //            gameManger.createNewGame(mainstage,0);
             System.out.println("Classic Game will open here");
+            ChoosenIcon = classicButton;
             mainpane.getChildren().remove(newSubScene);
             this.Case = 0;
             createSubScene();
@@ -86,6 +100,35 @@ public class ViewManger {
         });
     }
 
+    private void moveIcon(ImageView ChoosenIcon){
+        this.ChoosenIcon = ChoosenIcon;
+        if(movable){
+            if(ChoosenIcon.getLayoutX() < 400 && ChoosenIcon.getFitHeight()==0){
+                if(mainpane.getChildren().contains(helpButton)){
+                    mainpane.getChildren().removeAll(helpButton,logo,arcadeButton,GameZoneButton,classicButton);
+                    mainpane.getChildren().add(ChoosenIcon);
+                }
+                ChoosenIcon.setLayoutX(ChoosenIcon.getLayoutX()+7);
+                ChoosenIcon.setLayoutY(ChoosenIcon.getLayoutY()+2);
+                ChoosenIcon.setRotate(ChoosenIcon.getRotate()+20);
+//                ChoosenIcon.setFitHeight();
+            }
+            else {
+                if(ChoosenIcon.getFitHeight()<1500){
+                    ChoosenIcon.setLayoutX(ChoosenIcon.getLayoutX() -9);
+                    ChoosenIcon.setLayoutY(ChoosenIcon.getLayoutY() - 7);
+                    ChoosenIcon.setRotate(0);
+                    ChoosenIcon.setFitHeight(ChoosenIcon.getFitHeight()+20);
+                    ChoosenIcon.setFitWidth(ChoosenIcon.getFitWidth()+20);
+
+                }
+                else {
+                    movable = false;
+                gameManger.createNewGame(mainstage, Case);
+                }
+            }
+        }
+    }
     private void createArcadebutton(){
 //        gameManger = new GameViewManger();
         arcadeButton = new ImageView("View/resources/Arcade.png");
@@ -116,14 +159,13 @@ public class ViewManger {
         button.setOnAction(e->{
             if(Case==1) {
                 s.OverWrite(textField.getText());
-                gameManger.createNewGame(mainstage, Case);
             }
             else if(Case==0){
                 s.OverWrite(textField.getText());
-                gameManger.createNewGame(mainstage, Case);
             }
-
-
+            mainpane.getChildren().remove(newSubScene);
+            movable= true;
+            moveIcon(ChoosenIcon);
         });
         n.setLayoutX(100);
         n.setLayoutY(50);
@@ -206,6 +248,8 @@ public class ViewManger {
         helpButton.setOnMouseEntered(e->{ helpButton.setEffect(effect2); });
         helpButton.setOnMouseExited(e->{ helpButton.setEffect(null); });
         helpButton.setOnMouseClicked(e->{
+        	Help helpscene = new Help();
+        	helpscene.createHelpScene(mainstage);
 
 //            Save_File_name s = new Save_File_name(Case);
 //            s.ReadFile1();
@@ -246,7 +290,9 @@ public class ViewManger {
         logo.setOnMouseEntered(e->{ logo.setEffect(new Bloom()); });
         logo.setOnMouseExited(e->{ logo.setEffect(null); });
         logo.setOnMouseClicked(e->{
-            System.out.println("Credit will open here");
+        	CreditsScene credits = new CreditsScene();
+        	credits.createCreditsScene(mainstage);
+        	System.out.println("Credit will open here");
         });
     }
 
