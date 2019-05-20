@@ -7,6 +7,7 @@ import Logic.Score;
 import MainPackage.BONUS;
 import MainPackage.BOOM;
 import MainPackage.FRUITS;
+import MainPackage.Observer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -27,7 +28,7 @@ import java.util.List;
 
 
 
-public class GameViewManger {
+public class GameViewManger implements Observer{
     public static AnchorPane gamePane;
     private Scene gameScene ;
     private Stage gameStage ;
@@ -91,6 +92,7 @@ public class GameViewManger {
         boomsLevel=0;
         bonusLevel=0;
         setDiffculty();
+        time.attach(this);
     }
 
     private void inializeStage() {
@@ -104,6 +106,7 @@ public class GameViewManger {
         difficuly = new Difficuly();
         gameStage.initStyle(StageStyle.TRANSPARENT);
         createIcons();
+        
     }
     private void createIcons(){
         Image soundOn = new Image("View/resources/Icons/Sound.png");
@@ -881,5 +884,11 @@ public class GameViewManger {
         gameEngine.saveScore(Case,temp);
 
     }
+
+	@Override
+	public void update() {
+		time.label.setText(time.getTmp()+"");
+		
+	}
 
 }

@@ -1,20 +1,26 @@
 package View;
 
 import javafx.animation.KeyFrame;
+
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Timer;
+
+import MainPackage.Observer;
 
 public class ClockTimer extends Pane {
     private Timeline animation;
     private int tmp = 60;
     private String S = "";
      boolean close;
+     ArrayList<Observer> obs = new ArrayList<Observer>();
 
+     
     Label label = new Label("60");
     public ClockTimer(){
         close = true;
@@ -30,14 +36,29 @@ public class ClockTimer extends Pane {
         animation.play();
     }
 
+
+    public void attach(Observer o) {
+    	obs.add(o);
+    	
+    }
+public void notifyAllObservers() {
+	for(int i=0;i<obs.size();i++)
+	{
+		obs.get(i).update();
+	}
+}
+
+    
     private void timelabel() {
         if(tmp>0){
             tmp--;
+            notifyAllObservers();
+
         this.close=true;
         }
 
         S=tmp +"";
-        label.setText(S);
+      //  label.setText(S);
         if(tmp == 0)
             this.close = false ;
     }
@@ -66,4 +87,14 @@ public class ClockTimer extends Pane {
         S=tmp +"";
         label.setText(S);
     }
+    
+    
+
+
+	public int getTmp() {
+		return tmp;
+	}
+	public void setTmp(int tmp) {
+		this.tmp = tmp;
+	}
 }

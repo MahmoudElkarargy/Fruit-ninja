@@ -206,6 +206,8 @@ public class ViewManger {
         helpButton.setOnMouseEntered(e->{ helpButton.setEffect(effect2); });
         helpButton.setOnMouseExited(e->{ helpButton.setEffect(null); });
         helpButton.setOnMouseClicked(e->{
+        	Help helpscene = new Help();
+        	helpscene.createHelpScene(mainstage);
 
 //            Save_File_name s = new Save_File_name(Case);
 //            s.ReadFile1();
@@ -246,7 +248,9 @@ public class ViewManger {
         logo.setOnMouseEntered(e->{ logo.setEffect(new Bloom()); });
         logo.setOnMouseExited(e->{ logo.setEffect(null); });
         logo.setOnMouseClicked(e->{
-            System.out.println("Credit will open here");
+        	CreditsScene credits = new CreditsScene();
+        	credits.createCreditsScene(mainstage);
+        	System.out.println("Credit will open here");
         });
     }
 
