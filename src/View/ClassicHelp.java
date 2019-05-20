@@ -22,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class ClassicHelp {
@@ -54,6 +55,8 @@ public class ClassicHelp {
         classichelp = new Stage ();
         classichelp.setScene(Classichelpscene);
         effect2.setInput(effect1);
+        classichelp.initStyle(StageStyle.TRANSPARENT);
+
         createIcons();
       
     }
@@ -220,11 +223,12 @@ public class ClassicHelp {
 
     public void createNewGame(Stage menustage){
         this.MenuStage = menustage;
-        this.MenuStage.hide();
+     
         createBackground();
         creatGameLoop();
        // moveBackground();
         classichelp.show();
+        this.MenuStage.hide();
         
         
     }

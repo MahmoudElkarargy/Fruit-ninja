@@ -89,8 +89,6 @@ public void notifyAllObservers() {
     }
     
     
-
-
 	public int getTmp() {
 		return tmp;
 	}

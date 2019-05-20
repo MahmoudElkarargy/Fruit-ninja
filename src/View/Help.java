@@ -15,6 +15,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Help {
 
@@ -23,7 +24,7 @@ public class Help {
     private Stage HelpStage, MenuStage ;
     private static final int width= 1200;
     private static final int height =700;
-    private ImageView closeButton,help,save,Sound,arcadehelpbutton,classichelpbutton,helptext,classictext;
+    private ImageView closeButton,help,save,Sound,arcadehelpbutton,classichelpbutton;
     private boolean isMusicClicked = false;
     private Reflection effect1 = new Reflection();
     private MotionBlur effect2 = new MotionBlur();
@@ -31,15 +32,18 @@ public class Help {
     public Help(){
     	
        inializeStage();
-      
+       
      
     }
     private void inializeStage() {
         HelpPane = new AnchorPane();
         HelpScene = new Scene(HelpPane, width,height);
         HelpStage = new Stage ();
+        HelpStage.initStyle(StageStyle.TRANSPARENT);
+
         HelpStage.setScene(HelpScene);
-        effect2.setInput(effect1);
+        
+       effect2.setInput(effect1);
         createIcons();
       
     }
@@ -84,7 +88,9 @@ public class Help {
             }
         });
         Sound.setOnMouseEntered(e->{ Sound.setEffect(new Glow()); });
-        Sound.setOnMouseExited(e->{ Sound.setEffect(null); });
+        Sound.setOnMouseExited(e->{
+        	Sound.setEffect(null);
+        	});
 
 //        save.setLayoutX(10);
 //        save.setLayoutY(50);
@@ -97,60 +103,79 @@ public class Help {
         
         arcadehelpbutton = new ImageView("View/resources/Help/ArcadeHelp2.png");
         arcadehelpbutton.setLayoutX(110);
-        arcadehelpbutton.setLayoutY(height-600);
+        arcadehelpbutton.setLayoutY(height-430);
         arcadehelpbutton.setOnMouseEntered(e->{ 
         	
         	arcadehelpbutton.setEffect(effect2);
-        	       	
-        
+//        	if(!HelpPane.getChildren().contains(helptext))
+//        		HelpPane.getChildren().add(helptext);
+//        	
         });
-        arcadehelpbutton.setOnMouseExited(e->{ arcadehelpbutton.setEffect(null); });
+        arcadehelpbutton.setOnMouseExited(e->{ 
+        	arcadehelpbutton.setEffect(null);
+        	
+//        	if(HelpPane.getChildren().contains(helptext))
+//        		HelpPane.getChildren().remove(helptext);
+        	});
         arcadehelpbutton.setOnMouseClicked(e->{
+        	
         	ArcadeHelpClass arcade= new ArcadeHelpClass();
         	arcade.createNewGame(HelpStage);
+        	HelpStage.close();
+        	
         	
         	
         });
     
         classichelpbutton = new ImageView("View/resources/Help/ClassicHelp2.png");
         classichelpbutton.setLayoutX(800);
-        classichelpbutton.setLayoutY(height-620);
+        classichelpbutton.setLayoutY(height-450);
         classichelpbutton.setOnMouseEntered(e->{
-        
         	
         	classichelpbutton.setEffect(effect2);
+//        	if(!HelpPane.getChildren().contains(classictext))
+//        		HelpPane.getChildren().add(classictext);        
+//             	
         	
         });
-        classichelpbutton.setOnMouseExited(e->{ classichelpbutton.setEffect(null); });
+        classichelpbutton.setOnMouseExited(e->{ 
+        	
+        	classichelpbutton.setEffect(null); 
+//        	if(HelpPane.getChildren().contains(classictext))
+//        		HelpPane.getChildren().remove(classictext);
+//               	
+        	});
+        
         classichelpbutton.setOnMouseClicked(e->{
         	
         	ClassicHelp classic = new ClassicHelp();
         	classic.createNewGame(HelpStage);
-        	
-        	
+        	HelpStage.close();
+        	        	
         });
     
-        helptext = new ImageView("View/resources/Help/Arcadehelptextt.png");
+  /*      helptext = new ImageView("View/resources/Help/Arcadehelptextt.png");
         helptext.setLayoutX(5);
         helptext.setLayoutY(height -480);
         helptext.setOnMouseEntered(e->helptext.setEffect(effect2));
-        helptext.setOnMouseExited(e->{ 
-        	helptext.setEffect(null); 
-        	});
+//        helptext.setOnMouseExited(e->{ 
+//        	helptext.setEffect(null); 
+//        	});
         classictext = new ImageView("View/resources/Help/classichelptextt3.png");
-        classictext.setLayoutX(750);
-        classictext.setLayoutY(height -510);
+        classictext.setLayoutX(720);
+        classictext.setLayoutY(height -470);
         classictext.setOnMouseEntered(e->classictext.setEffect(effect2));
-        classictext.setOnMouseExited(e->{ 
-        	classictext.setEffect(null); 
-        	});
+     /*   classictext.setOnMouseExited(e->{ 
+        	classictext.setEffect(null);
+        */	
+        //	});
         
         
         
         
    
         
-        HelpPane.getChildren().addAll(closeButton,help,Sound,arcadehelpbutton,classichelpbutton,helptext,classictext);
+        HelpPane.getChildren().addAll(closeButton,help,Sound,arcadehelpbutton,classichelpbutton);
         
         
         
@@ -166,9 +191,10 @@ public class Help {
 
     public void createHelpScene(Stage menustage){
         this.MenuStage = menustage;
-        this.MenuStage.hide();
+       
         createBackground();
         HelpStage.show();
+        this.MenuStage.hide();
         
     }
 

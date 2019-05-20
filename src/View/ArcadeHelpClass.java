@@ -21,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class ArcadeHelpClass {
@@ -31,7 +32,9 @@ public class ArcadeHelpClass {
     private Stage ArcadehelpStage, MenuStage ;
     private static final int width= 1200;
     private static final int height =700;
-    private ImageView closeButton,help,save,Sound,bombbutton,bombtext,extratimebutton,extratimetext,poisonbutton,poisontext;
+    private GameViewManger gameManger = new GameViewManger();
+
+    private ImageView starbutton,closeButton,help,save,Sound,bombbutton,bombtext,extratimebutton,extratimetext,poisonbutton,poisontext;
     private ImageView ninja1,ninja2,ninja3,ninja4,ninja5;
     
     private boolean isMusicClicked = false;
@@ -40,8 +43,10 @@ public class ArcadeHelpClass {
     private Reflection effect1 = new Reflection();
     private MotionBlur effect2 = new MotionBlur();
     private GridPane gridPane1,gridPane2; 
-    private AnimationTimer arcadehelptimer;
+    private AnimationTimer arcadehelptimer,bombtimer;
+    private boolean movebomb=false;
     Help helpInst = new Help();
+    private ImageView button= new ImageView();
 
     public ArcadeHelpClass(){
     	
@@ -55,8 +60,10 @@ public class ArcadeHelpClass {
         ArcadehelpStage = new Stage ();
         ArcadehelpStage.setScene(Arcadehelpscene);
         effect2.setInput(effect1);
+        ArcadehelpStage.initStyle(StageStyle.TRANSPARENT);
+
         createIcons();
-      
+        starttimer();      
     }
     
     private void createIcons(){
@@ -113,7 +120,9 @@ public class ArcadeHelpClass {
 //        
 //        
         
-        bombbutton = new ImageView("View/resources/Help/bomb.png");
+ /*       bombbutton = new ImageView("View/resources/Help/bomb.png");
+        bombbutton.setFitHeight(80);
+        bombbutton.setFitWidth(60);
         bombbutton.setLayoutX(100);
         bombbutton.setLayoutY(height-670);
         bombbutton.setOnMouseEntered(e->{
@@ -133,9 +142,11 @@ public class ArcadeHelpClass {
         	});
         
         
-        extratimebutton = new ImageView("View/resources/Help/BonusTime.png");
+        extratimebutton = new ImageView("View/resources/BonusObjects/BonusTime.png");
+        extratimebutton.setFitHeight(60);
+        extratimebutton.setFitWidth(60);
         extratimebutton.setLayoutX(100);
-        extratimebutton.setLayoutY(height -470);
+        extratimebutton.setLayoutY(height -540);
         extratimebutton.setOnMouseEntered(e->extratimebutton.setEffect(effect2));
         extratimebutton.setOnMouseExited(e->{ 
         	extratimebutton.setEffect(null); 
@@ -147,12 +158,15 @@ public class ArcadeHelpClass {
         extratimetext.setOnMouseEntered(e->extratimetext.setEffect(effect2));
         extratimetext.setOnMouseExited(e->{ 
         	extratimetext.setEffect(null); 
+        	
         	});
-        
-        
+  
         poisonbutton = new ImageView("View/resources/Help/poison2.png");
+        poisonbutton.setFitHeight(80);
+        poisonbutton.setFitWidth(60);
+        
         poisonbutton.setLayoutX(100);
-        poisonbutton.setLayoutY(height -310);
+        poisonbutton.setLayoutY(height -410);
         poisonbutton.setOnMouseEntered(e->poisonbutton.setEffect(effect2));
         poisonbutton.setOnMouseExited(e->{ 
         	poisonbutton.setEffect(null); 
@@ -168,6 +182,73 @@ public class ArcadeHelpClass {
         	});
     
         
+        starbutton = new ImageView("View/resources/BonusObjects/Bonus.png");
+        starbutton.setFitHeight(70);
+        starbutton.setFitWidth(70);
+        starbutton.setLayoutX(100);
+        starbutton.setLayoutY(height -280);
+        starbutton.setOnMouseEntered(e->starbutton.setEffect(effect2));
+        starbutton.setOnMouseExited(e->{ 
+        	starbutton.setEffect(null); 
+        	});
+    */
+        
+        bombbutton = new ImageView("View/resources/Help/bomb.png");
+        bombbutton.setFitHeight(190);
+        bombbutton.setFitWidth(150);
+        bombbutton.setLayoutX(200);
+        bombbutton.setLayoutY(height-475);
+        bombbutton.setOnMouseEntered(e->{
+        
+        //	bombbutton.setRotate(50);
+         
+        bombbutton.setEffect(effect2);
+        		
+        		
+        });
+        bombbutton.setOnMouseExited(e->{
+        	
+        	bombbutton.setEffect(null);
+        	
+             	
+        
+        });
+        bombbutton.setOnMouseClicked(e->{ 
+        	movebomb=true;	
+        });
+        
+        
+        extratimebutton = new ImageView("View/resources/BonusObjects/BonusTime.png");
+        extratimebutton.setFitHeight(160);
+        extratimebutton.setFitWidth(120);
+        extratimebutton.setLayoutX(450);
+        extratimebutton.setLayoutY(height -440);
+        extratimebutton.setOnMouseEntered(e->extratimebutton.setEffect(effect2));
+        extratimebutton.setOnMouseExited(e->{ 
+        	extratimebutton.setEffect(null); 
+        	});
+        
+        poisonbutton = new ImageView("View/resources/Help/poison2.png");
+        poisonbutton.setFitHeight(160);
+        poisonbutton.setFitWidth(120);
+        
+        poisonbutton.setLayoutX(690);
+        poisonbutton.setLayoutY(height -440);
+        poisonbutton.setOnMouseEntered(e->poisonbutton.setEffect(effect2));
+        poisonbutton.setOnMouseExited(e->{ 
+        	poisonbutton.setEffect(null); 
+        	});
+        
+        starbutton = new ImageView("View/resources/BonusObjects/Bonus.png");
+        starbutton.setFitHeight(150);
+        starbutton.setFitWidth(150);
+        starbutton.setLayoutX(900);
+        starbutton.setLayoutY(height -445);
+        starbutton.setOnMouseEntered(e->starbutton.setEffect(effect2));
+        starbutton.setOnMouseExited(e->{ 
+        	starbutton.setEffect(null); 
+        	});
+        
          ninja1 = new ImageView();
         Image image = new Image("View/resources/Help/HiNinja.png");
         
@@ -179,7 +260,7 @@ public class ArcadeHelpClass {
         fade1.setDuration(new Duration(1500));
         fade1.setFromValue(1.0);
         fade1.setToValue(0.0);
-        fade1.setCycleCount(50);
+        fade1.setCycleCount(100);
         fade1.setAutoReverse(true);
         fade1.play();
         
@@ -195,7 +276,7 @@ public class ArcadeHelpClass {
         fade2.setDuration(new Duration(1000));
         fade2.setFromValue(1.0);
         fade2.setToValue(0.0);
-        fade2.setCycleCount(50);
+        fade2.setCycleCount(100);
         fade2.setAutoReverse(true);
         fade2.play();
    
@@ -210,7 +291,7 @@ public class ArcadeHelpClass {
         fade3.setDuration(new Duration(1500));
         fade3.setFromValue(1.0);
         fade3.setToValue(0.0);
-        fade3.setCycleCount(50);
+        fade3.setCycleCount(100);
         fade3.setAutoReverse(true);
         fade3.play();
         
@@ -226,7 +307,7 @@ public class ArcadeHelpClass {
         fade4.setDuration(new Duration(1000));
         fade4.setFromValue(1.0);
         fade4.setToValue(0.0);
-        fade4.setCycleCount(50);
+        fade4.setCycleCount(100);
         fade4.setAutoReverse(true);
         fade4.play();
         
@@ -242,7 +323,7 @@ public class ArcadeHelpClass {
         fade5.setDuration(new Duration(1500));
         fade5.setFromValue(1.0);
         fade5.setToValue(0.0);
-        fade5.setCycleCount(50);
+        fade5.setCycleCount(100);
         fade5.setAutoReverse(true);
         fade5.play();
         
@@ -260,7 +341,39 @@ public class ArcadeHelpClass {
 
     }
 
+    
+    public void starttimer() {
+    	bombtimer= new AnimationTimer() {
+			
+			@Override
+			public void handle(long now) {
+				
+				//add method
+				imagerotation(bombbutton);
+			}
 
+		};
+		bombtimer.start();
+		
+    }
+    
+    //if true
+
+    public void imagerotation(ImageView button) {
+    	if (movebomb) {
+    		System.out.println(button.getLayoutX());
+    		if (button.getLayoutY() > 100) {
+    			button.setLayoutX(button.getLayoutX()-3);
+    			button.setLayoutY(button.getLayoutY() +10);
+    		}
+    		else
+    			movebomb = false;
+    	}
+    }
+    		    
+    			
+    		
+    	
 
    public static AnchorPane getGamePain(){
        return Arcadehelppane;
@@ -270,10 +383,11 @@ public class ArcadeHelpClass {
 
     public void createNewGame(Stage menustage){
         this.MenuStage = menustage;
-        this.MenuStage.hide();
         createBackground();
         creatGameLoop();
         ArcadehelpStage.show();
+        this.MenuStage.hide();
+
         
     }
 
@@ -291,7 +405,8 @@ public class ArcadeHelpClass {
         }
         gridPane2.setLayoutX(-1250);
         
-          Arcadehelppane.getChildren().addAll(gridPane1,gridPane2,closeButton,help,Sound,bombbutton,bombtext,extratimebutton,extratimetext,poisonbutton,poisontext,ninja1,ninja2,ninja3,ninja4,ninja5);
+//          Arcadehelppane.getChildren().addAll(gridPane1,gridPane2,closeButton,help,Sound,bombbutton,bombtext,extratimebutton,extratimetext,poisonbutton,poisontext,ninja1,ninja2,ninja3,ninja4,ninja5,starbutton);
+        Arcadehelppane.getChildren().addAll(gridPane1,gridPane2,closeButton,help,Sound,bombbutton,extratimebutton,poisonbutton,ninja1,ninja2,ninja3,ninja4,ninja5,starbutton);
 
         
         

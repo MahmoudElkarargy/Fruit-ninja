@@ -105,6 +105,7 @@ public class ViewManger {
         if(movable){
             if(ChoosenIcon.getLayoutX() < 400 && ChoosenIcon.getFitHeight()==0){
                 if(mainpane.getChildren().contains(helpButton)){
+                	
                     mainpane.getChildren().removeAll(helpButton,logo,arcadeButton,GameZoneButton,classicButton);
                     mainpane.getChildren().add(ChoosenIcon);
                 }

@@ -145,7 +145,8 @@ public class CreditsScene {
 
 
         msg.setTextOrigin(VPos.CENTER);
-        msg.setFont(Font.font("Arial",FontPosture.REGULAR,35));
+        msg.setFont(Font.font("Ink Free",FontPosture.REGULAR,35));
+        msg.setStyle("font-weight: bold"); 
         msg.setX(10);
         msg.setY(20);
 
