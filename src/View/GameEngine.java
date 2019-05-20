@@ -52,6 +52,21 @@ public class GameEngine implements GameActions {
     public void slicedBonus(){
         score.addBonus();
     }
+    public void sliced3Combo(){
+        score.add3();
+    }
+
+    public void sliced4Combo(){
+        score.add4();
+    }
+
+    public void sliced5Combo(){
+        score.add5();
+    }
+
+    public void sliced6Combo(){
+        score.add6();
+    }
     public int getScore(){
         return score.getTmp();
     }
@@ -65,6 +80,9 @@ public class GameEngine implements GameActions {
         SaveComand SAVE = new SaveComand(file);
         control.setComand(SAVE);
         control.press();
+
+    }
+    public void saveScore(int Case){
         Save_File_name s = new Save_File_name(Case);
         s.OverWrite_scores(score.getTmp());
 

@@ -29,11 +29,27 @@ public class Score extends Pane {
         tmp ++;
         label.setText(tmp+"");
     }
+    public void add3(){
+        tmp += 3;
+        label.setText(tmp+"");
+    }
+    public void add4(){
+        tmp += 4;
+        label.setText(tmp+"");
+    }
+    public void add5(){
+        tmp += 5;
+        label.setText(tmp+"");
+    }
+    public void add6(){
+        tmp += 6;
+        label.setText(tmp+"");
+    }
+
     public void addBonus(){
         tmp += 5;
         label.setText(tmp+"");
     }
-
     public void reset(){
         tmp = 0;
         label.setText(tmp+"");
