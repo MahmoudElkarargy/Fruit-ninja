@@ -1,5 +1,6 @@
 package View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,14 +28,20 @@ public class ViewManger {
     private AnimationTimer gameTimer;
     private GridPane gridPane1,gridPane2;
     private CreateSubScene newSubScene;
+    private static CreateSubScene ScoreLeaderBoard;
     private CreateSubScene sceneToHide;
     private ImageView classicButton, arcadeButton, GameZoneButton, closeButton, helpButton, logo;
     private GameViewManger gameManger = new GameViewManger();
     private Reflection effect1 = new Reflection();
     private MotionBlur effect2 = new MotionBlur();
-    private int Case;
-
-    public ViewManger(){
+    private int Case =0;
+    private static ViewManger viewManger = null;
+    public static ViewManger getInstance(){
+        if (viewManger==null)
+            viewManger = new ViewManger();
+        return viewManger;
+    }
+    private ViewManger(){
         mainpane=new AnchorPane();
         mainscene= new Scene(mainpane, 1024,700);
         mainstage= new Stage();
@@ -126,6 +133,61 @@ public class ViewManger {
 
 
     }
+      void  showingScores(){
+        createSubSceneLeaderBoard();
+        showSubScene(ScoreLeaderBoard);
+     }
+    private void createSubSceneLeaderBoard(){
+        ImageView  closeButton1 = new ImageView("View/resources/Icons/exit.png");
+        mainpane.getChildren().remove(newSubScene);
+        ScoreLeaderBoard = new CreateSubScene(createBackground2());
+        closeButton1.setLayoutX(10);
+        closeButton1.setLayoutY(10);
+        closeButton1.setOnMouseClicked(e->{
+            mainpane.getChildren().remove(ScoreLeaderBoard);
+            mainpane.getChildren().remove(newSubScene);
+        });
+//        int x = 100;
+        Label l =null;
+        if(Case==0)
+        l = new Label("Classic Scores");
+        else
+            l = new Label("Arcade Scores");
+
+        l.setLayoutX(170);
+        l.setLayoutY(10);
+        l.setStyle("-fx-text-fill: #FFF;-fx-font-size: 45px; font-weight: bold");
+        l.setEffect(new Glow(90));
+        int y = 70;
+        int Increase = 30 ;
+        ScoreLeaderBoard.getPane().getChildren().add(l);
+
+        ScoreLeaderBoard.getPane().getChildren().add(closeButton1);
+
+        ArrayList<Label> tmp ;
+        Label tmplabel;
+        Save_File_name s = new Save_File_name(Case);
+        tmp = s.ReadFile1();
+        for (int i = 0;i<tmp.size();i++){
+            tmplabel = new Label((i+1) + " - ");
+            tmplabel.setText(tmplabel.getText()+tmp.get(i).getText());
+//            tmplabel = tmp.get(i);
+            tmplabel.setLayoutX(170);
+            tmplabel.setLayoutY(y);
+            tmplabel.setStyle("-fx-text-fill: #FFF;-fx-font-size: 30px; font-weight: bold");
+            ScoreLeaderBoard.getPane().getChildren().add(tmplabel);
+            y+=Increase;
+        }
+
+
+
+
+
+//        newSubScene.getPane().getChildren().addAll(n,button,textField);
+        mainpane.getChildren().add(ScoreLeaderBoard);
+
+
+    }
 
     private void createGameZonebutton(){
         GameZoneButton = new ImageView("View/resources/GameZone.png");
@@ -145,7 +207,9 @@ public class ViewManger {
         helpButton.setOnMouseExited(e->{ helpButton.setEffect(null); });
         helpButton.setOnMouseClicked(e->{
 
-
+//            Save_File_name s = new Save_File_name(Case);
+//            s.ReadFile1();
+//            showingScores();
             System.out.println("help will open here");
         });
     }
@@ -207,6 +271,11 @@ public class ViewManger {
     }
     private BackgroundImage createBackground1 (){
         Image backgroundImage = new Image("View/resources/backgroundLarge.png",700,300,false,true);
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
+        return background;
+    }
+    private BackgroundImage createBackground2 (){
+        Image backgroundImage = new Image("View/resources/Leaderboard-background-1.jpg",700,300,false,true);
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,null);
         return background;
     }

@@ -1,6 +1,2 @@
-ali,2
-nn,4
-Karargy,13
-ElKarargy,14
-Kiko,54
-Mahmoud,110
+shweehy         1
+yasso         1

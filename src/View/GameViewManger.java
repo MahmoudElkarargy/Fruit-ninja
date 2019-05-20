@@ -1,5 +1,6 @@
 package View;
 
+import Logic.BackgroundSound;
 import Logic.Difficuly;
 import Logic.LineDrawing;
 import Logic.Score;
@@ -66,7 +67,7 @@ public class GameViewManger {
     private List<Fruits> fruitsObjects = new LinkedList<Fruits>();
     private List<Booms> boomObject = new LinkedList<Booms>();
     private List<BonusObjects> bonusObject = new LinkedList<BonusObjects>();
-
+    private BackgroundSound backgroundSound = new BackgroundSound();
     private ImageView wtf = new ImageView("View/resources/Texts/WTF.png");
 
     private int Case;
@@ -76,12 +77,14 @@ public class GameViewManger {
     private GameEngine gameEngine = GameEngine.getInstance();
 
 
+
     ClockStopWatch watch = new ClockStopWatch();
     LineDrawing lineDrawing ;
 
     private ClassicMode classicMode ;
 
     public GameViewManger(){
+
         inializeStage();
         difficuly.setScore(Score);
         difficltyLevel=0;
@@ -115,17 +118,7 @@ public class GameViewManger {
         closeButton.setLayoutX(10);
         closeButton.setLayoutY(10);
         closeButton.setOnMouseClicked(e->{
-            gameStage.close();
-            ViewManger.mainstage.show();
-            gametimer.stop();
-//            gameEngine.saveScore();
-            gametimer.stop();
-//            gamePane.getChildren().clear();
-            if(youLostHAHA)
-                boomTimer.stop();
-            youLostHAHA = false;
-            gameEngine.saveScore(Case);
-            resetFunction();
+           CLOSING();
         });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });
         closeButton.setOnMouseExited(e->{ closeButton.setEffect(null); });
@@ -146,10 +139,15 @@ public class GameViewManger {
             if(!isMusicClicked) {
                 Sound.setImage(mutedSound);
                 isMusicClicked = true;
+                backgroundSound.setSound(isMusicClicked);
+                backgroundSound.Music_BackGround();
+
             }
             else {
                 Sound.setImage(soundOn);
                 isMusicClicked = false;
+                backgroundSound.setSound(isMusicClicked);
+                backgroundSound.Music_BackGround();
             }
         });
         Sound.setOnMouseEntered(e->{ Sound.setEffect(new Glow()); });
@@ -176,6 +174,23 @@ public class GameViewManger {
 
         gamePane.getChildren().addAll(closeButton,help,save,Sound,playAgian);
 
+    }
+    private void CLOSING(){
+        gameStage.close();
+        ViewManger.mainstage.show();
+        gametimer.stop();
+//            gameEngine.saveScore();
+        gametimer.stop();
+//            gamePane.getChildren().clear();
+        if(youLostHAHA)
+            boomTimer.stop();
+        youLostHAHA = false;
+        gameEngine.saveScore(Case);
+        resetFunction();
+//            new ViewManger().showingScores();
+        backgroundSound.setSound(false);
+        backgroundSound.Music_BackGround();
+        ViewManger.getInstance().showingScores();
     }
 
     private void resetFunction(){
@@ -562,8 +577,24 @@ public class GameViewManger {
 
             if(time.getState()==false)
             {
-                gameStage.close();
-                ViewManger.mainstage.show();
+
+                //gameStage.close();
+//                ViewManger.mainstage.show();
+
+                boomTimer = new AnimationTimer(){
+                    @Override
+                    public void handle(long l) {
+                        boomExplosion();
+                        for (int i=0; i<boom.size(); i++) {
+                            if (boomObject.get(i).isSliced())
+                                flag = 1;
+                        }
+                        if (flag==0)
+                            youLostHAHA = true;
+                        lostWindow();
+                    }
+                };
+                boomTimer.start();
                 gametimer.stop();
             }
         gamePane.setOnMouseDragged(event -> {
