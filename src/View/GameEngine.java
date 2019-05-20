@@ -52,6 +52,21 @@ public class GameEngine implements GameActions {
     public void slicedBonus(){
         score.addBonus();
     }
+    public void sliced3Combo(){
+        score.add3();
+    }
+
+    public void sliced4Combo(){
+        score.add4();
+    }
+
+    public void sliced5Combo(){
+        score.add5();
+    }
+
+    public void sliced6Combo(){
+        score.add6();
+    }
     public int getScore(){
         return score.getTmp();
     }

@@ -2,3 +2,6 @@ ahmed         20
 
 ali         8
 s         2
+m         2
+M         k         k         m         46
+                                                                                 

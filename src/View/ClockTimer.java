@@ -87,6 +87,12 @@ public void notifyAllObservers() {
         S=tmp +"";
         label.setText(S);
     }
+    void decrease(){
+        tmp-=5;
+
+        S=tmp +"";
+        label.setText(S);
+    }
     
     
 

@@ -52,7 +52,8 @@ public class GameViewManger implements Observer{
     private int bonusLevel=0;
     private Difficuly difficuly;
     private boolean moveWTFplease=false;
-
+    private String PATH;
+    private int comboNumber=0;
     private ImageView closeButton,help,save,Sound, playAgian;
     private String BOOM_PATH, EXPL1, EXPL2, EXPL3, txtEXPL;
     private List<String> FRUIT_PATH = new LinkedList<String>();
@@ -71,10 +72,12 @@ public class GameViewManger implements Observer{
     private BackgroundSound backgroundSound = new BackgroundSound();
     private ImageView wtf = new ImageView("View/resources/Texts/WTF.png");
 
+    private boolean showNowHAHA = false;
     private int Case;
     private ClockTimer time = new ClockTimer();
     private Score score1 = Logic.Score.getInstance();
 
+    private ImageView combo = new ImageView();
     private GameEngine gameEngine = GameEngine.getInstance();
 
 
@@ -349,6 +352,7 @@ public class GameViewManger implements Observer{
                 moveWTF(wtf);
 //                if(Case ==0){
                 checkLife();
+                showCombo(comboNumber, PATH);
 //                }
             }
         };
@@ -426,8 +430,7 @@ public class GameViewManger implements Observer{
             bonusObject.add(i, (BonusObjects) gameEngine.createGameObject(2));
             bonusObject.get(i).setSlicedFromGui(false);
             CurrentBonus.add(i, ((BONUS) bonusObject.get(i).getObjectType()));
-            while( (String.valueOf(CurrentBonus.get(i)) == "Life" && numberOfLifes==3) || (String.valueOf(CurrentBonus.get(i)) == "Time" && Case==0)
-            || (String.valueOf(CurrentBonus.get(i)) == "Poison" && Case==1)){
+            while( (String.valueOf(CurrentBonus.get(i)) == "Life" && numberOfLifes==3) || (String.valueOf(CurrentBonus.get(i)) == "Time" && Case==0)){
                     bonusObject.remove(bonusObject.get(i));
                     CurrentBonus.remove(CurrentBonus.get(i));
                     bonusObject.add(i, (BonusObjects) gameEngine.createGameObject(2));
@@ -600,8 +603,43 @@ public class GameViewManger implements Observer{
                 boomTimer.start();
                 gametimer.stop();
             }
-        gamePane.setOnMouseDragged(event -> {
+            gamePane.setOnMouseReleased(event -> {
+                int j;
+                for(j=0; j<fruit.size(); j++){
+                    if(fruitsObjects.get(j).isSliced()){
+                        comboNumber++;
+                    }
+                }
+                System.out.println("Nb: "+comboNumber);
 
+                if(comboNumber>2){
+                    showNowHAHA = true;
+                    switch (comboNumber){
+                        case 3: PATH = "View/resources/Texts/Combo3.png"; Score = gameEngine.getScore();
+                            difficuly.setScore(Score);
+                            gameEngine.sliced3Combo();break;
+                        case 4: PATH = "View/resources/Texts/Combo4.png"; Score = gameEngine.getScore();
+                            difficuly.setScore(Score);
+                            gameEngine.sliced4Combo();break;
+                        case 5: PATH = "View/resources/Texts/Combo5.png"; Score = gameEngine.getScore();
+                            difficuly.setScore(Score);
+                            gameEngine.sliced5Combo();break;
+                        case 6: PATH = "View/resources/Texts/Combo6.png"; Score = gameEngine.getScore();
+                            difficuly.setScore(Score);
+                            gameEngine.sliced6Combo();break;
+                    }
+                    combo.setImage(new Image(PATH));
+                    combo.setLayoutY(fruit.get(j-1).getLayoutY()-50);
+                    combo.setLayoutX(fruit.get(j-1).getLayoutX());
+                    if(!gamePane.getChildren().contains(combo)) {
+                        gamePane.getChildren().add(combo);
+                        showCombo(comboNumber, PATH);
+                    }
+
+                }
+            });
+        gamePane.setOnMouseDragged(event -> {
+            comboNumber =0;
             for(int i=0; i<fruit.size(); i++) {
                 if (Math.abs(event.getSceneX() - fruit.get(i).getLayoutX()) < 100) {
                     if (Math.abs(event.getSceneY() - fruit.get(i).getLayoutY()) < 50) {
@@ -628,6 +666,7 @@ public class GameViewManger implements Observer{
                         fruitsObjects.get(i).setSlicedFromGui(true);
                         for(int j=0; j<fruit.size(); j++)
                             gamePane.getChildren().remove(fruit.get(i));
+
                         moveFruitDown();
 
                     }
@@ -675,6 +714,23 @@ public class GameViewManger implements Observer{
 
     }
 
+    private void showCombo(int nb, String path){
+        if(showNowHAHA){
+            System.out.println("fe eh???"+combo.getFitHeight());
+            if(combo.getFitHeight()<300){
+                combo.setFitHeight(combo.getFitHeight()+10);
+                combo.setFitWidth(combo.getFitWidth()+10);
+                combo.setLayoutY(combo.getLayoutY()-5);
+            }
+            else {
+                gamePane.getChildren().remove(combo);
+                combo.setFitHeight(100);
+                combo.setFitWidth(100);
+                showNowHAHA = false;
+            }
+        }
+    }
+
     private void addBonus(BonusObjects bonuseObject, int index){
         if(bonuseObject.isSliced()) {
             if(String.valueOf(CurrentBonus.get(index)) == "Bonus") {
@@ -699,11 +755,18 @@ public class GameViewManger implements Observer{
             if(String.valueOf(CurrentBonus.get(index)) == "Poison") {
                 bonus.get(index).setImage(new Image(txtBonus.get(index)));
                 bonus.get(index).setRotate(0);
-                numberOfLifes -= 1;
-                classicMode.setNumberOfLifes(numberOfLifes);
-                largetxt =true;
+
+                if(Case==0) {
+                    numberOfLifes -= 1;
+                    classicMode.setNumberOfLifes(numberOfLifes);
+                }
+                else{
+                    time.decrease();
+                }
+                largetxt = true;
                 this.index = index;
                 movetxt(index);
+
             }
             if(String.valueOf(CurrentBonus.get(index)) == "Time") {
                 bonus.get(index).setImage(new Image(txtBonus.get(index)));
@@ -880,7 +943,7 @@ public class GameViewManger implements Observer{
             if (fruitsObjects.get(i).getXlocation()<=GAME_WIDTH)
                 temp.add(fruitsObjects.get(i));
     }
-        System.out.println(temp.size());
+
         gameEngine.saveScore(Case,temp);
 
     }

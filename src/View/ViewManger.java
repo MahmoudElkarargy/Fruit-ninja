@@ -39,6 +39,7 @@ public class ViewManger {
     private int Case =0;
     private ImageView ChoosenIcon = new ImageView();
     private static ViewManger viewManger = null;
+    private int caseButton;
     public static ViewManger getInstance(){
         if (viewManger==null)
             viewManger = new ViewManger();
@@ -50,11 +51,11 @@ public class ViewManger {
         mainstage= new Stage();
         mainstage.setScene(mainscene);
         effect2.setInput(effect1);
-        createButton();
-        creatLogo();
         createSubScene();
-
         createBackground();
+        createButton();
+
+
         creatGameLoop();
 
     }
@@ -65,14 +66,14 @@ public class ViewManger {
 
     private  void createButton(){
         createClassicbutton();
-       createArcadebutton();
+        createArcadebutton();
         createGameZonebutton();
         createHelpbutton();
-       createClosebutton();
+        createClosebutton();
         createCaseloop();
+        creatLogo();
     }
     private void createCaseloop(){
-
         viewTimer = new AnimationTimer(){
             @Override
             public void handle(long l) {
@@ -97,21 +98,29 @@ public class ViewManger {
             this.Case = 0;
             createSubScene();
             showSubScene(newSubScene);
+            caseButton =3;
         });
+        mainpane.getChildren().addAll(classicButton);
+
     }
 
     private void moveIcon(ImageView ChoosenIcon){
         this.ChoosenIcon = ChoosenIcon;
         if(movable){
+            if(mainpane.getChildren().contains(helpButton)){
+                mainpane.getChildren().removeAll(helpButton,logo,arcadeButton,GameZoneButton,classicButton);
+                mainpane.getChildren().add(ChoosenIcon);
+            }
             if(ChoosenIcon.getLayoutX() < 400 && ChoosenIcon.getFitHeight()==0){
-                if(mainpane.getChildren().contains(helpButton)){
-                    mainpane.getChildren().removeAll(helpButton,logo,arcadeButton,GameZoneButton,classicButton);
-                    mainpane.getChildren().add(ChoosenIcon);
-                }
                 ChoosenIcon.setLayoutX(ChoosenIcon.getLayoutX()+7);
                 ChoosenIcon.setLayoutY(ChoosenIcon.getLayoutY()+2);
                 ChoosenIcon.setRotate(ChoosenIcon.getRotate()+20);
 //                ChoosenIcon.setFitHeight();
+            }
+            else if(ChoosenIcon.getLayoutX() > 400 && ChoosenIcon.getFitHeight()==0){
+                ChoosenIcon.setLayoutX(ChoosenIcon.getLayoutX()-10);
+                ChoosenIcon.setLayoutY(ChoosenIcon.getLayoutY()-2);
+                ChoosenIcon.setRotate(ChoosenIcon.getRotate()+20);
             }
             else {
                 if(ChoosenIcon.getFitHeight()<1500){
@@ -123,8 +132,29 @@ public class ViewManger {
 
                 }
                 else {
-                    movable = false;
-                gameManger.createNewGame(mainstage, Case);
+
+                    if(caseButton==0){
+                        Help helpscene = new Help();
+                        helpscene.createHelpScene(mainstage);
+                        movable = false;
+                    }
+                    else if(caseButton==1){
+
+                    }
+                    else{
+                        movable = false;
+                        gameManger.createNewGame(mainstage, Case);
+//                    ChoosenIcon.setFitWidth(0);
+//                    ChoosenIcon.setFitHeight(0);
+//                    ChoosenIcon.setLayoutX(80);
+//                    ChoosenIcon.setLayoutY(GAMEHIGHT-600);
+
+//                    mainpane.getChildren().addAll(helpButton,logo,arcadeButton,GameZoneButton,classicButton);
+
+                    }
+                    mainpane.getChildren().remove(ChoosenIcon);
+                    createButton();
+                    gameTimer.stop();
                 }
             }
         }
@@ -139,11 +169,13 @@ public class ViewManger {
         arcadeButton.setOnMouseClicked(e->{
             mainpane.getChildren().remove(newSubScene);
             this.Case =1;
+            ChoosenIcon = arcadeButton;
             createSubScene();
             System.out.println("arcade Game will open here");
             showSubScene(newSubScene);
-
+            caseButton = 3;
         });
+        mainpane.getChildren().addAll(arcadeButton);
     }
     private void createSubScene(){
 
@@ -240,7 +272,10 @@ public class ViewManger {
         GameZoneButton.setOnMouseClicked(e->{
             System.out.println("Game zone will open here");
             mainpane.getChildren().remove(newSubScene);
+            ChoosenIcon = GameZoneButton;
+            caseButton =1;
         });
+        mainpane.getChildren().addAll(GameZoneButton);
     } private void createHelpbutton(){
         helpButton = new ImageView("View/resources/Help.png");
         helpButton.setLayoutX(700);
@@ -248,14 +283,18 @@ public class ViewManger {
         helpButton.setOnMouseEntered(e->{ helpButton.setEffect(effect2); });
         helpButton.setOnMouseExited(e->{ helpButton.setEffect(null); });
         helpButton.setOnMouseClicked(e->{
-        	Help helpscene = new Help();
-        	helpscene.createHelpScene(mainstage);
-
+            ChoosenIcon = helpButton;
+            caseButton =0;
 //            Save_File_name s = new Save_File_name(Case);
 //            s.ReadFile1();
 //            showingScores();
             System.out.println("help will open here");
+            System.out.println(ChoosenIcon.getLayoutY()+" "+ChoosenIcon.getLayoutX());
+            movable= true;
+            moveIcon(ChoosenIcon);
         });
+
+        mainpane.getChildren().addAll(helpButton);
     }
 
     private void createBackground(){
@@ -270,7 +309,7 @@ public class ViewManger {
             gridPane2.getChildren().add(backgroundImage2);
         }
         gridPane2.setLayoutX(-1250);
-        mainpane.getChildren().addAll(gridPane1,gridPane2,classicButton,arcadeButton,GameZoneButton,helpButton,logo,closeButton);
+        mainpane.getChildren().addAll(gridPane1,gridPane2);
     }
 
     private void createClosebutton(){
@@ -282,6 +321,7 @@ public class ViewManger {
         closeButton.setOnMouseClicked(e->{
             mainstage.close();
         });
+        mainpane.getChildren().addAll(closeButton);
     }
     private void creatLogo(){
         logo = new ImageView("View/resources/logo.png");
@@ -294,6 +334,7 @@ public class ViewManger {
         	credits.createCreditsScene(mainstage);
         	System.out.println("Credit will open here");
         });
+        mainpane.getChildren().addAll(logo);
     }
 
     private void creatGameLoop(){
