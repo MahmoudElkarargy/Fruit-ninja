@@ -185,7 +185,7 @@ public class GameViewManger {
         if(youLostHAHA)
             boomTimer.stop();
         youLostHAHA = false;
-//        gameEngine.saveScore(Case);
+        gameEngine.saveScore(Case);
         resetFunction();
 //            new ViewManger().showingScores();
         backgroundSound.setSound(false);
