@@ -1,5 +1,6 @@
 package Logic;
 
+import View.Fruits;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.List;
 
 public class SaveScoreFILE {
 //    GameEngine Game = GameEngine.getInstance();
@@ -33,7 +35,7 @@ public class SaveScoreFILE {
             mainRootElement = doc.createElementNS("alyelshwahy@yahoo.com", "Data");
 
             doc.appendChild(mainRootElement);
-            mainRootElement.appendChild(createUser(doc,save.type,save.score));
+            mainRootElement.appendChild(createUser(doc,save.type,save.score,save.fruits));
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transf = transformerFactory.newTransformer();
 
@@ -54,10 +56,13 @@ public class SaveScoreFILE {
             e.printStackTrace();
         }
     }
-    private static Node createUser(Document doc, int type , int score){
+    private static Node createUser(Document doc, int type , int score, List<Fruits> fruits){
         Element user = doc.createElement("user1");
         user.setAttribute("TYPE", Integer.toString(type));
         user.appendChild(createUserElement(doc, "Score", Integer.toString(score)) );
+        for (int i =0; i<fruits.size();i++){
+            user.appendChild(createUserElement(doc, "Location", fruits.get(i).getXlocation() +"  " + fruits.get(i).getYlocation()));
+        }
 
 return user;
     }

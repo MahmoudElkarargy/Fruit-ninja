@@ -156,7 +156,7 @@ public class GameViewManger {
         save.setLayoutX(10);
         save.setLayoutY(90);
         save.setOnMouseClicked(e->{
-
+            SaveInstance();
         });
         save.setOnMouseEntered(e->{ save.setEffect(new Glow()); });
         save.setOnMouseExited(e->{ save.setEffect(null); });
@@ -185,7 +185,7 @@ public class GameViewManger {
         if(youLostHAHA)
             boomTimer.stop();
         youLostHAHA = false;
-        gameEngine.saveScore(Case);
+//        gameEngine.saveScore(Case);
         resetFunction();
 //            new ViewManger().showingScores();
         backgroundSound.setSound(false);
@@ -864,6 +864,22 @@ public class GameViewManger {
         if(bonus.isEmpty()) {
             createBonus();
         }
+    }
+    private void SaveInstance(){
+        gametimer.stop();
+        time.stopAnimation();
+        watch.stopAnimation();
+        List<Fruits> temp = new LinkedList<>();
+//        fruitsObjects
+    for (int i = 0 ; i<fruitsObjects.size();i++){
+
+        if(fruitsObjects.get(i).getYlocation()<=GAME_HEIGHT)
+            if (fruitsObjects.get(i).getXlocation()<=GAME_WIDTH)
+                temp.add(fruitsObjects.get(i));
+    }
+        System.out.println(temp.size());
+        gameEngine.saveScore(Case,temp);
+
     }
 
 }

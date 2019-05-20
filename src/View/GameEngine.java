@@ -10,6 +10,8 @@ import Logic.*;
 import MainPackage.GameActions;
 import MainPackage.GameObject;
 
+import java.util.List;
+
 
 public class GameEngine implements GameActions {
     Score score = Score.getInstance();
@@ -56,8 +58,8 @@ public class GameEngine implements GameActions {
     public void saveGame() {
 
     }
-    public void saveScore(int Case){
-        SaveScoreModel save = new SaveScoreModel(score.getTmp(),1);
+    public void saveScore(int Case, List<Fruits>fruits){
+        SaveScoreModel save = new SaveScoreModel(score.getTmp(),Case,fruits);
         SaveScoreFILE file = new SaveScoreFILE(save);
         RemoteSave control = new RemoteSave();
         SaveComand SAVE = new SaveComand(file);
