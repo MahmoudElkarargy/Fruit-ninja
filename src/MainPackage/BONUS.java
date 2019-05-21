@@ -19,4 +19,4 @@ public enum BONUS {
     public String getTxt() {
         return txt;
     }
-}
+}  

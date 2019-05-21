@@ -1,5 +1,6 @@
 package View;
 
+import Logic.BackgroundSound;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -28,12 +29,11 @@ public class Help {
     private boolean isMusicClicked = false;
     private Reflection effect1 = new Reflection();
     private MotionBlur effect2 = new MotionBlur();
-     
+    private BackgroundSound backgroundSound = new BackgroundSound();
+ 
     public Help(){
     	
        inializeStage();
-       
-     
     }
     private void inializeStage() {
         HelpPane = new AnchorPane();
@@ -53,7 +53,6 @@ public class Help {
         Image mutedSound = new Image("View/resources/Icons/mutedSound.png");
         closeButton = new ImageView("View/resources/Icons/exit.png");
         help = new ImageView("View/resources/Icons/help.png");
-      //  save = new ImageView("View/resources/Icons/save.png");
         Sound = new ImageView(soundOn);
        
         closeButton.setLayoutX(10);
@@ -75,31 +74,27 @@ public class Help {
         help.setOnMouseExited(e->{ help.setEffect(null); });
 
 
+
         Sound.setLayoutX(width-101);
         Sound.setLayoutY(10);
         Sound.setOnMouseClicked(e->{
             if(!isMusicClicked) {
                 Sound.setImage(mutedSound);
                 isMusicClicked = true;
+                backgroundSound.setSound(isMusicClicked);
+                backgroundSound.Music_BackGround();
+
             }
             else {
                 Sound.setImage(soundOn);
                 isMusicClicked = false;
+                backgroundSound.setSound(isMusicClicked);
+                backgroundSound.Music_BackGround();
             }
         });
         Sound.setOnMouseEntered(e->{ Sound.setEffect(new Glow()); });
-        Sound.setOnMouseExited(e->{
-        	Sound.setEffect(null);
-        	});
+        Sound.setOnMouseExited(e->{ Sound.setEffect(null); });
 
-//        save.setLayoutX(10);
-//        save.setLayoutY(50);
-//        save.setOnMouseClicked(e->{
-//
-//        });
-//        save.setOnMouseEntered(e->{ save.setEffect(new Glow()); });
-//        save.setOnMouseExited(e->{ save.setEffect(null); });
-//        
         
         arcadehelpbutton = new ImageView("View/resources/Help/ArcadeHelp2.png");
         arcadehelpbutton.setLayoutX(110);
@@ -107,23 +102,16 @@ public class Help {
         arcadehelpbutton.setOnMouseEntered(e->{ 
         	
         	arcadehelpbutton.setEffect(effect2);
-//        	if(!HelpPane.getChildren().contains(helptext))
-//        		HelpPane.getChildren().add(helptext);
-//        	
+        	
         });
         arcadehelpbutton.setOnMouseExited(e->{ 
         	arcadehelpbutton.setEffect(null);
-        	
-//        	if(HelpPane.getChildren().contains(helptext))
-//        		HelpPane.getChildren().remove(helptext);
-        	});
+       	});
         arcadehelpbutton.setOnMouseClicked(e->{
         	
         	ArcadeHelpClass arcade= new ArcadeHelpClass();
         	arcade.createNewGame(HelpStage);
         	HelpStage.close();
-        	
-        	
         	
         });
     
@@ -133,17 +121,12 @@ public class Help {
         classichelpbutton.setOnMouseEntered(e->{
         	
         	classichelpbutton.setEffect(effect2);
-//        	if(!HelpPane.getChildren().contains(classictext))
-//        		HelpPane.getChildren().add(classictext);        
-//             	
+             	
         	
         });
         classichelpbutton.setOnMouseExited(e->{ 
         	
         	classichelpbutton.setEffect(null); 
-//        	if(HelpPane.getChildren().contains(classictext))
-//        		HelpPane.getChildren().remove(classictext);
-//               	
         	});
         
         classichelpbutton.setOnMouseClicked(e->{
@@ -154,27 +137,8 @@ public class Help {
         	        	
         });
     
-  /*      helptext = new ImageView("View/resources/Help/Arcadehelptextt.png");
-        helptext.setLayoutX(5);
-        helptext.setLayoutY(height -480);
-        helptext.setOnMouseEntered(e->helptext.setEffect(effect2));
-//        helptext.setOnMouseExited(e->{ 
-//        	helptext.setEffect(null); 
-//        	});
-        classictext = new ImageView("View/resources/Help/classichelptextt3.png");
-        classictext.setLayoutX(720);
-        classictext.setLayoutY(height -470);
-        classictext.setOnMouseEntered(e->classictext.setEffect(effect2));
-     /*   classictext.setOnMouseExited(e->{ 
-        	classictext.setEffect(null);
-        */	
-        //	});
-        
-        
-        
-        
-   
-        
+ 
+       
         HelpPane.getChildren().addAll(closeButton,help,Sound,arcadehelpbutton,classichelpbutton);
         
         

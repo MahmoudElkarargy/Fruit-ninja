@@ -2,6 +2,7 @@ package View;
 
 import java.awt.event.ActionEvent;
 
+import Logic.BackgroundSound;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -30,14 +31,15 @@ public class ArcadeHelpClass {
 
 	
 	private static AnchorPane Arcadehelppane;
-	private Scene Arcadehelpscene ;
+	private Scene Arcadehelpscene ;    
     private Stage ArcadehelpStage, MenuStage ;
     private static final int width= 1200;
     private static final int height =700;
     private GameViewManger gameManger = new GameViewManger();
 
-    private ImageView backarrow,starbutton,closeButton,help,save,Sound,bombbutton,bombtext,extratimebutton,extratimetext,poisonbutton,poisontext;
+    private ImageView backarrow,starbutton,closeButton,help,save,Sound,bombbutton,extratimebutton,poisonbutton;
     private ImageView ninja,ninja1,ninja2,ninja3,ninja4,ninja5;
+    private ImageView bombtext,extratimetext,poisontext,startext;
     
     private boolean isMusicClicked = false;
     private String musicSlice = "src/View/resources/Slice.mp3";
@@ -49,6 +51,8 @@ public class ArcadeHelpClass {
     private boolean moveimage=false;
     Help helpInst = new Help();
     private ImageView button= new ImageView();
+    private BackgroundSound backgroundSound = new BackgroundSound();
+
 
     public ArcadeHelpClass(){
     	
@@ -73,7 +77,6 @@ public class ArcadeHelpClass {
         Image mutedSound = new Image("View/resources/Icons/mutedSound.png");
         closeButton = new ImageView("View/resources/Icons/exit.png");
         help = new ImageView("View/resources/Icons/help.png");
-       // save = new ImageView("View/resources/Icons/save.png");
         Sound = new ImageView(soundOn);
        
         closeButton.setLayoutX(10);
@@ -82,7 +85,6 @@ public class ArcadeHelpClass {
         	ArcadehelpStage.close();
         	helpInst.createHelpScene(ArcadehelpStage);
 
-        	//  ViewManger.mainstage.show();
          });
         closeButton.setOnMouseEntered(e->{ closeButton.setEffect(new Glow()); });
         closeButton.setOnMouseExited(e->{ closeButton.setEffect(null); });
@@ -103,107 +105,26 @@ public class ArcadeHelpClass {
             if(!isMusicClicked) {
                 Sound.setImage(mutedSound);
                 isMusicClicked = true;
+                backgroundSound.setSound(isMusicClicked);
+                backgroundSound.Music_BackGround();
+
             }
             else {
                 Sound.setImage(soundOn);
                 isMusicClicked = false;
+                backgroundSound.setSound(isMusicClicked);
+                backgroundSound.Music_BackGround();
             }
         });
         Sound.setOnMouseEntered(e->{ Sound.setEffect(new Glow()); });
         Sound.setOnMouseExited(e->{ Sound.setEffect(null); });
 
-//        save.setLayoutX(10);
-//        save.setLayoutY(50);
-//        save.setOnMouseClicked(e->{
-//
-//        });
-//        save.setOnMouseEntered(e->{ save.setEffect(new Glow()); });
-//        save.setOnMouseExited(e->{ save.setEffect(null); });
-//        
-//        
-        
- /*       bombbutton = new ImageView("View/resources/Help/bomb.png");
-        bombbutton.setFitHeight(80);
-        bombbutton.setFitWidth(60);
-        bombbutton.setLayoutX(100);
-        bombbutton.setLayoutY(height-670);
-        bombbutton.setOnMouseEntered(e->{
-        		bombbutton.setEffect(effect2);
-        });
-        bombbutton.setOnMouseExited(e->{ bombbutton.setEffect(null); });
-        bombbutton.setOnMouseClicked(e->{ 
-        	
-        });
-        
-        bombtext = new ImageView("View/resources/Help/bombtext2.png");
-        bombtext.setLayoutX(160);
-        bombtext.setLayoutY(height -690);
-        bombtext.setOnMouseEntered(e->bombtext.setEffect(effect2));
-        bombtext.setOnMouseExited(e->{ 
-        	bombtext.setEffect(null); 
-        	});
-        
-        
-        extratimebutton = new ImageView("View/resources/BonusObjects/BonusTime.png");
-        extratimebutton.setFitHeight(60);
-        extratimebutton.setFitWidth(60);
-        extratimebutton.setLayoutX(100);
-        extratimebutton.setLayoutY(height -540);
-        extratimebutton.setOnMouseEntered(e->extratimebutton.setEffect(effect2));
-        extratimebutton.setOnMouseExited(e->{ 
-        	extratimebutton.setEffect(null); 
-        	});
-        
-        extratimetext = new ImageView("View/resources/Help/timetext.png");
-        extratimetext.setLayoutX(250);
-        extratimetext.setLayoutY(height -510);
-        extratimetext.setOnMouseEntered(e->extratimetext.setEffect(effect2));
-        extratimetext.setOnMouseExited(e->{ 
-        	extratimetext.setEffect(null); 
-        	
-        	});
-  
-        poisonbutton = new ImageView("View/resources/Help/poison2.png");
-        poisonbutton.setFitHeight(80);
-        poisonbutton.setFitWidth(60);
-        
-        poisonbutton.setLayoutX(100);
-        poisonbutton.setLayoutY(height -410);
-        poisonbutton.setOnMouseEntered(e->poisonbutton.setEffect(effect2));
-        poisonbutton.setOnMouseExited(e->{ 
-        	poisonbutton.setEffect(null); 
-        	});
-    
-        
-        poisontext = new ImageView("View/resources/Help/poisontext22.png");
-        poisontext.setLayoutX(320);
-        poisontext.setLayoutY(height -320);
-        poisontext.setOnMouseEntered(e->poisontext.setEffect(effect2));
-        poisontext.setOnMouseExited(e->{ 
-        	poisontext.setEffect(null); 
-        	});
-    
-        
-        starbutton = new ImageView("View/resources/BonusObjects/Bonus.png");
-        starbutton.setFitHeight(70);
-        starbutton.setFitWidth(70);
-        starbutton.setLayoutX(100);
-        starbutton.setLayoutY(height -280);
-        starbutton.setOnMouseEntered(e->starbutton.setEffect(effect2));
-        starbutton.setOnMouseExited(e->{ 
-        	starbutton.setEffect(null); 
-        	});
-    */
         ninja = new ImageView("View/resources/Help/write.png");
         ninja.setFitHeight(600);
         ninja.setFitWidth(1100);
         ninja.setLayoutX(300);
         ninja.setLayoutY(height -700);
- /*       ninja.setOnMouseEntered(e->ninja.setEffect(effect2));
-        ninja.setOnMouseExited(e->{ 
-        	ninja.setEffect(null); 
-        	});
-  */      
+    
         bombbutton = new ImageView("View/resources/Help/bomb.png");
         bombbutton.setFitHeight(190);
         bombbutton.setFitWidth(150);
@@ -211,7 +132,7 @@ public class ArcadeHelpClass {
         bombbutton.setLayoutY(height-475);
         bombbutton.setOnMouseEntered(e->{
 
-        //	bombbutton.setRotate(50);
+      
          
         bombbutton.setEffect(effect2);
         		
@@ -258,6 +179,16 @@ public class ArcadeHelpClass {
         	extratimebutton.setEffect(null); 
         	});
         
+        
+        extratimetext = new ImageView("View/resources/Help/time1.png");
+        extratimetext.setLayoutX(380);
+        extratimetext.setLayoutY(height -580);
+        extratimetext.setOnMouseEntered(e->extratimetext.setEffect(effect2));
+        extratimetext.setOnMouseExited(e->{ 
+        	extratimetext.setEffect(null); 
+        	});
+        
+        
         poisonbutton = new ImageView("View/resources/Help/poison2.png");
         poisonbutton.setFitHeight(160);
         poisonbutton.setFitWidth(120);
@@ -274,6 +205,15 @@ public class ArcadeHelpClass {
         	poisonbutton.setEffect(null); 
         	});
         
+       poisontext = new ImageView("View/resources/Help/poisontextarcade1.png");
+        poisontext.setLayoutX(380);
+        poisontext.setLayoutY(height -580);
+        poisontext.setOnMouseEntered(e->poisontext.setEffect(effect2));
+        poisontext.setOnMouseExited(e->{ 
+        	poisontext.setEffect(null); 
+        	});
+       
+        
         starbutton = new ImageView("View/resources/BonusObjects/Bonus.png");
         starbutton.setFitHeight(150);
         starbutton.setFitWidth(150);
@@ -288,13 +228,25 @@ public class ArcadeHelpClass {
         starbutton.setOnMouseExited(e->{ 
         	starbutton.setEffect(null); 
         	});
-        
-        
+       
 
+        startext = new ImageView("View/resources/Help/arcadestartext2.png");
+        startext.setLayoutX(355);
+        startext.setLayoutY(height -620);
+        startext.setOnMouseEntered(e->startext.setEffect(effect2));
+        startext.setOnMouseExited(e->{ 
+        	startext.setEffect(null); 
+        	});
+        
+        
+        
         backarrow = new ImageView("View/resources/Help/backbutton.png");
         backarrow.setFitHeight(180);
         backarrow.setFitWidth(230);
         backarrow.setLayoutX(620);
+        
+        
+       
         backarrow.setLayoutY(height -330);
         backarrow.setOnMouseEntered(e->backarrow.setEffect(new Glow()));
         backarrow.setOnMouseExited(e->{ 
@@ -303,14 +255,46 @@ public class ArcadeHelpClass {
         	
         });
         backarrow.setOnMouseClicked(e->{
+        	
+        	 if (button==bombbutton) {
         	 Arcadehelppane.getChildren().removeAll(ninja,bombtext,backarrow);
         	 Arcadehelppane.getChildren().addAll(extratimebutton,poisonbutton,starbutton);
-        	 if (button==bombbutton) {
+        	
         	 bombbutton.setRotate(bombbutton.getRotate()+1.5);	 
         	 bombbutton.setLayoutX(200);
              bombbutton.setLayoutY(height-475);
         	 }
           
+        	 else if (button==extratimebutton) {
+        		 Arcadehelppane.getChildren().removeAll(ninja,extratimetext,backarrow);//add extratime text
+        		 Arcadehelppane.getChildren().addAll(bombbutton,poisonbutton,starbutton);
+        		 
+        		 //extratimebutton.setRotate(extratimebutton.getRotate());
+        		 extratimebutton.setLayoutX(450);
+        	     extratimebutton.setLayoutY(height -440);
+        	       
+        	 }
+        	 else if (button==poisonbutton) {
+        		 
+        		 Arcadehelppane.getChildren().removeAll(ninja,poisontext,backarrow);//add poison text
+        		 Arcadehelppane.getChildren().addAll(bombbutton,extratimebutton,starbutton);
+        		 
+        		  poisonbutton.setLayoutX(690);
+        	      poisonbutton.setLayoutY(height -440);
+        	      
+        		 
+        	 }
+        	 else if(button==starbutton) {
+        		 Arcadehelppane.getChildren().removeAll(ninja,startext,backarrow);//add star text
+        		 Arcadehelppane.getChildren().addAll(bombbutton,extratimebutton,poisonbutton);
+        		 
+        		 starbutton.setLayoutX(900);
+        	     starbutton.setLayoutY(height -445);
+        	        
+        	 }
+        	 
+        	 
+        	 
         });
     
         
@@ -392,17 +376,6 @@ public class ArcadeHelpClass {
         fade5.setAutoReverse(true);
         fade5.play();
         
-    
-
-      
-        
-   //slice the criminal and reach the end of the terminal
-        
-        
-       // Arcadehelppane.getChildren().addAll(closeButton,help,save,Sound,bombbutton,bombtext,extratimebutton,extratimetext,poisonbutton,poisontext,ninja1,ninja2,ninja3,ninja4,ninja5);
-        
-        
-        
 
     }
 
@@ -445,7 +418,8 @@ public class ArcadeHelpClass {
 
 	
     	if(!Arcadehelppane.getChildren().contains(ninja))
-    		Arcadehelppane.getChildren().add(ninja);        
+    		Arcadehelppane.getChildren().addAll(ninja,extratimetext,backarrow);//add extratime text
+    	
     		
     }
 
@@ -456,11 +430,11 @@ public class ArcadeHelpClass {
     			button.setLayoutY(button.getLayoutY() -4);
 				Arcadehelppane.getChildren().removeAll(bombbutton,extratimebutton,starbutton);
 
-    		
     	    	if(!Arcadehelppane.getChildren().contains(ninja))
-    	    		Arcadehelppane.getChildren().add(ninja);        
+    	    		Arcadehelppane.getChildren().addAll(ninja,poisontext,backarrow);  //add posion text      
     	    
-    	    }
+    	   
+    		}
 
     		else if (button.getLayoutY() > 100 && button==starbutton) {
     	    	button.setRotate(button.getRotate()+11.7);
@@ -470,7 +444,7 @@ public class ArcadeHelpClass {
 
     		
     	    	if(!Arcadehelppane.getChildren().contains(ninja))
-    	    		Arcadehelppane.getChildren().add(ninja);        
+    	    		Arcadehelppane.getChildren().addAll(ninja,startext,backarrow);     //add star text   
     	    }
 
     		
@@ -505,8 +479,8 @@ public class ArcadeHelpClass {
         gridPane1 = new GridPane();
         gridPane2 = new GridPane();
         for(int i=0;i<12;i++){
-            ImageView backgroundImage1 = new ImageView("View/resources/Help/ArcadeHelpBackground.jpg");
-            ImageView backgroundImage2 = new ImageView("View/resources/Help/ArcadeHelpBackground.jpg");
+            ImageView backgroundImage1 = new ImageView("View/resources/Leaderboard-background-1.jpg");
+            ImageView backgroundImage2 = new ImageView("View/resources/Leaderboard-background-1.jpg");
             GridPane.setConstraints(backgroundImage1, i%3, 0);
             GridPane.setConstraints(backgroundImage2, i%3, 0);
             gridPane1.getChildren().add(backgroundImage1);
@@ -515,7 +489,6 @@ public class ArcadeHelpClass {
         }
         gridPane2.setLayoutX(-1250);
         
-//          Arcadehelppane.getChildren().addAll(gridPane1,gridPane2,closeButton,help,Sound,bombbutton,bombtext,extratimebutton,extratimetext,poisonbutton,poisontext,ninja1,ninja2,ninja3,ninja4,ninja5,starbutton);
         Arcadehelppane.getChildren().addAll(gridPane1,gridPane2,closeButton,help,Sound,bombbutton,extratimebutton,poisonbutton,ninja1,ninja2,ninja3,ninja4,ninja5,starbutton);
 
         
@@ -536,7 +509,6 @@ public class ArcadeHelpClass {
         gridPane2.setLayoutX(gridPane2.getLayoutX()+ 0.2);
         if(gridPane1.getLayoutX()>=1250){
             gridPane1.setLayoutX(-1250);
-        //    gridPane2.setLayoutX(-1250);
         }
         if(gridPane2.getLayoutX() >= 1250){
             gridPane2.setLayoutX(-1250);

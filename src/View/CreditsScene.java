@@ -87,7 +87,6 @@ public class CreditsScene {
         Image mutedSound = new Image("View/resources/Icons/mutedSound.png");
         closeButton = new ImageView("View/resources/Icons/exit.png");
         help = new ImageView("View/resources/Icons/help.png");
-       // save = new ImageView("View/resources/Icons/save.png");
         Sound = new ImageView(soundOn);
         
         closeButton.setLayoutX(10);

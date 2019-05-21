@@ -610,8 +610,8 @@ public class GameViewManger implements Observer{
                         comboNumber++;
                     }
                 }
-                System.out.println("Nb: "+comboNumber);
 
+                
                 if(comboNumber>2){
                     showNowHAHA = true;
                     switch (comboNumber){
@@ -716,7 +716,6 @@ public class GameViewManger implements Observer{
 
     private void showCombo(int nb, String path){
         if(showNowHAHA){
-            System.out.println("fe eh???"+combo.getFitHeight());
             if(combo.getFitHeight()<300){
                 combo.setFitHeight(combo.getFitHeight()+10);
                 combo.setFitWidth(combo.getFitWidth()+10);
