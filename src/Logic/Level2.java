@@ -27,7 +27,7 @@ public class Level2 implements IStartegy {
 
     @Override
     public int increaseBooms() {
-        return randomPositionGenerator.nextInt(4);
+        return randomPositionGenerator.nextInt(2)+2;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Level2 implements IStartegy {
 
     @Override
     public int increaseBonus() {
-        return randomPositionGenerator.nextInt(3);
+        return randomPositionGenerator.nextInt(3)+1;
     }
 
     @Override
