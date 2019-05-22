@@ -813,20 +813,11 @@ public class GameViewManger implements Observer{
                 }
                 if(boom.get(i).getFitHeight() >= 300 && boom.get(i).getFitHeight() <= 700){
                     boom.get(i).setImage( new Image(EXPL3));
-                    boom.get(i).setLayoutY(500);
-                    boom.get(i).setLayoutY(boom.get(i).getLayoutY() - 5);
+                    boom.get(i).setLayoutY(200);
+                    boom.get(i).setLayoutY(boom.get(i).getLayoutY() - 100);
                     boom.get(i).setFitHeight(boom.get(i).getFitHeight() + 5);
                     boom.get(i).setFitWidth(boom.get(i).getFitWidth() + 3);
                 }
-
-//                if(boom.get(i).getFitHeight() >= 500 && boom.get(i).getFitHeight() <= 700){
-//
-//                    boom.get(i).setImage( new Image(txtEXPL));
-//                    boom.get(i).setLayoutX(200);
-//                    boom.get(i).setLayoutY(50);
-//                    boom.get(i).setFitHeight(boom.get(i).getFitHeight() + 2);
-//                    boom.get(i).setFitWidth(boom.get(i).getFitWidth() + 5);
-//                }
                 if(boom.get(i).getFitHeight() >= 700)
                     youLostHAHA =true;
             }

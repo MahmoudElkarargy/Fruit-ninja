@@ -114,7 +114,7 @@ public class ViewManger {
         classicButton.setOnMouseExited(e->{ classicButton.setEffect(null); });
         classicButton.setOnMouseClicked(e->{
 //            gameManger.createNewGame(mainstage,0);
-            System.out.println("Classic Game will open here");
+//            System.out.println("Classic Game will open here");
             ChoosenIcon = classicButton;
             mainpane.getChildren().remove(newSubScene);
             this.Case = 0;
@@ -192,7 +192,7 @@ public class ViewManger {
             this.Case =1;
             ChoosenIcon = arcadeButton;
             createSubScene();
-            System.out.println("arcade Game will open here");
+//            System.out.println("arcade Game will open here");
             showSubScene(newSubScene);
             caseButton = 3;
         });
@@ -297,7 +297,7 @@ public class ViewManger {
         });
         GameZoneButton.setOnMouseClicked(e -> {
 
-            System.out.println("Game zone will open here");
+//            System.out.println("Game zone will open here");
             ChoosenIcon = GameZoneButton;
             caseButton =1;
             movable= true;
@@ -319,7 +319,7 @@ public class ViewManger {
 //            Save_File_name s = new Save_File_name(Case);
 //            s.ReadFile1();
 //            showingScores();
-            System.out.println("help will open here");
+//            System.out.println("help will open here");
             System.out.println(ChoosenIcon.getLayoutY()+" "+ChoosenIcon.getLayoutX());
             movable= true;
             moveIcon(ChoosenIcon);
@@ -363,7 +363,7 @@ public class ViewManger {
         logo.setOnMouseClicked(e->{
         	CreditsScene credits = new CreditsScene();
         	credits.createCreditsScene(mainstage);
-        	System.out.println("Credit will open here");
+//        	System.out.println("Credit will open here");
         });
         mainpane.getChildren().addAll(logo);
     }
@@ -421,7 +421,7 @@ public class ViewManger {
             ChangeBackground.setEffect(null);
         });
         ChangeBackground.setOnMouseClicked(e -> {
-            System.out.println("change background image ");
+//            System.out.println("change background image ");
             mainstage.setScene(BackgroundZoneScene);
 
         });
@@ -440,7 +440,7 @@ public class ViewManger {
             ChangeBoom.setEffect(null);
         });
         ChangeBoom.setOnMouseClicked(e -> {
-            System.out.println("change booms image ");
+//            System.out.println("change booms image ");
 
         });
 
@@ -458,7 +458,7 @@ public class ViewManger {
             ChangeCursor.setEffect(null);
         });
         ChangeCursor.setOnMouseClicked(e -> {
-            System.out.println("change Cursor image ");
+//            System.out.println("change Cursor image ");
         });
 
     }
@@ -476,7 +476,7 @@ public class ViewManger {
             ChangeLight.setEffect(null);
         });
         ChangeLight.setOnMouseClicked(e -> {
-            System.out.println("change light image ");
+//            System.out.println("change light image ");
         });
 
 
@@ -524,356 +524,3 @@ public class ViewManger {
 
     }
 }
-
-
-
-
-
-
-
-/*
-
-
-
-package View;
-
-        import java.util.List;
-
-
-        import javafx.animation.AnimationTimer;
-        import javafx.event.EventHandler;
-        import javafx.scene.Scene;
-        import javafx.scene.effect.*;
-        import javafx.scene.input.MouseEvent;
-        import javafx.scene.layout.*;
-        import javafx.stage.Stage;
-        import javafx.scene.image.Image;
-        import javafx.scene.image.ImageView;
-
-
-public class ViewManger {
-    private AnchorPane mainpane;
-    private Scene mainscene;
-    ///////////////////
-    private AnchorPane gameZonePane;
-    private Scene gameZoneScene;
-    private Scene BackgroundZoneScene;
-    private AnchorPane backgroundZonePane;
-    ////////////////////
-    public static Stage mainstage;
-    private final static int GAMEWIDTH = 1024;
-    private final static int GAMEHIGHT = 700;
-    private AnimationTimer gameTimer;
-    private GridPane gridPane1, gridPane2;
-    private ImageView classicButton, arcadeButton, GameZoneButton, closeButton, helpButton, logo;
-    ////////////////////////////////////
-    private ImageView ChangeBackground, ChangeBoom, ChangeCursor, ChangeLight, BackButton;
-    private ImageView background1, background2, background3;
-    ////////////////////////////////////
-    private GameViewManger gameManger = new GameViewManger();
-    private Reflection effect1 = new Reflection();
-    private MotionBlur effect2 = new MotionBlur();
-
-
-    public ViewManger() {
-        ///////////////////////////////////
-        gameZonePane = new AnchorPane();
-        gameZoneScene = new Scene(gameZonePane, 1024, 700);
-        backgroundZonePane = new AnchorPane();
-        BackgroundZoneScene = new Scene(backgroundZonePane, 1024, 700);
-        ////////////////////////////////////////////
-        mainpane = new AnchorPane();
-        mainscene = new Scene(mainpane, 1024, 700);
-        mainstage = new Stage();
-        mainstage.setScene(mainscene);
-        effect2.setInput(effect1);
-        createButton();
-        creatLogo();
-        createBackground();
-        creatGameLoop();
-        ///////////////////////
-        createGameZoneBackground();
-/////////////////////////
-
-    }
-
-    public Stage getMainstage() {
-        return mainstage;
-    }
-
-    private void createButton() {
-        createClassicbutton();
-        createArcadebutton();
-        createGameZonebutton();
-        createHelpbutton();
-        createClosebutton();
-        createChangeBackground();
-        createChangeBooms();
-        createBackButton();
-        createChangeCursor();
-        createChangeLight();
-        createGameZoneBackground();
-        createBackgroundZoneBackground();
-    }
-
-    private void createClosebutton() {
-        closeButton = new ImageView("View/resources/Icons/exit.png");
-        closeButton.setLayoutX(10);
-        closeButton.setLayoutY(GAMEHIGHT - 690);
-        closeButton.setOnMouseEntered(e -> {
-            closeButton.setEffect(new Glow());
-        });
-        closeButton.setOnMouseExited(e -> {
-            closeButton.setEffect(null);
-        });
-        closeButton.setOnMouseClicked(e -> {
-            mainstage.close();
-
-        });
-    }
-
-    private void createClassicbutton() {
-
-//        gameManger = new GameViewManger();
-        classicButton = new ImageView("View/resources/Classic.png");
-        classicButton.setLayoutX(80);
-        classicButton.setLayoutY(GAMEHIGHT - 600);
-        classicButton.setOnMouseEntered(e -> {
-            classicButton.setEffect(effect2);
-        });
-        classicButton.setOnMouseExited(e -> {
-            classicButton.setEffect(null);
-        });
-        classicButton.setOnMouseClicked(e -> {
-            gameManger.createNewGame(mainstage, 0);
-            System.out.println("Classic Game will open here");
-        });
-    }
-
-    private void createArcadebutton() {
-//        gameManger = new GameViewManger();
-
-        arcadeButton = new ImageView("View/resources/Arcade.png");
-        arcadeButton.setLayoutX(110);
-        arcadeButton.setLayoutY(GAMEHIGHT - 250);
-        arcadeButton.setOnMouseEntered(e -> {
-            arcadeButton.setEffect(effect2);
-        });
-        arcadeButton.setOnMouseExited(e -> {
-            arcadeButton.setEffect(null);
-        });
-        arcadeButton.setOnMouseClicked(e -> {
-            System.out.println("arcade Game will open here");
-            gameManger.createNewGame(mainstage, 1);
-        });
-    }
-
-    private void createGameZonebutton() {
-
-        GameZoneButton = new ImageView("View/resources/GameZone.png");
-        GameZoneButton.setLayoutX(650);
-        GameZoneButton.setLayoutY(GAMEHIGHT - 600);
-        GameZoneButton.setOnMouseEntered(e -> {
-            GameZoneButton.setEffect(effect2);
-        });
-        GameZoneButton.setOnMouseExited(e -> {
-            GameZoneButton.setEffect(null);
-        });
-        GameZoneButton.setOnMouseClicked(e -> {
-            mainstage.setScene(gameZoneScene);
-
-            System.out.println("Game zone will open here");
-        });
-    }
-
-    private void createHelpbutton() {
-        helpButton = new ImageView("View/resources/Help.png");
-        helpButton.setLayoutX(700);
-        helpButton.setLayoutY(GAMEHIGHT - 250);
-        helpButton.setOnMouseEntered(e -> {
-            helpButton.setEffect(effect2);
-        });
-        helpButton.setOnMouseExited(e -> {
-            helpButton.setEffect(null);
-        });
-        helpButton.setOnMouseClicked(e -> {
-            System.out.println("help will open here");
-        });
-    }
-
-
-
-
-
-    private void createBackground() {
-        gridPane1 = new GridPane();
-        gridPane2 = new GridPane();
-        for (int i = 0; i < 12; i++) {
-            ImageView backgroundImage1 = new ImageView("View/resources/backgroundLarge.png");
-            ImageView backgroundImage2 = new ImageView("View/resources/backgroundLarge.png");
-            GridPane.setConstraints(backgroundImage1, i % 3, 0);
-            GridPane.setConstraints(backgroundImage2, i % 3, 0);
-            gridPane1.getChildren().add(backgroundImage1);
-            gridPane2.getChildren().add(backgroundImage2);
-        }
-        gridPane2.setLayoutX(-1250);
-        mainpane.getChildren().addAll(gridPane1, gridPane2, classicButton, arcadeButton, GameZoneButton, helpButton, logo, closeButton);
-    }
-
-
-    private void creatLogo() {
-        logo = new ImageView("View/resources/logo.png");
-        logo.setLayoutX(GAMEWIDTH / 2 - 180);
-        logo.setLayoutY(200);
-        logo.setOnMouseEntered(e -> {
-            logo.setEffect(new Bloom());
-        });
-        logo.setOnMouseExited(e -> {
-            logo.setEffect(null);
-        });
-        logo.setOnMouseClicked(e -> {
-            System.out.println("Credit will open here");
-        });
-    }
-
-    private void creatGameLoop() {
-        gameTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                moveBackground();
-            }
-        };
-        gameTimer.start();
-    }
-
-    private void moveBackground() {
-        gridPane1.setLayoutX(gridPane1.getLayoutX() + 0.5);
-        gridPane2.setLayoutX(gridPane2.getLayoutX() + 0.5);
-        if (gridPane1.getLayoutX() >= 1250) {
-            gridPane1.setLayoutX(-1250);
-        }
-        if (gridPane2.getLayoutX() >= 1250) {
-            gridPane2.setLayoutX(-1250);
-        }
-    }
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-    private void createChangeBackground() {
-
-        ChangeBackground = new ImageView("View/resources/GameZone/ChangeBackground.png");
-        ChangeBackground.setLayoutX(80);
-        ChangeBackground.setLayoutY(GAMEHIGHT - 600);
-        ChangeBackground.setOnMouseEntered(e -> {
-            ChangeBackground.setEffect(effect2);
-        });
-        ChangeBackground.setOnMouseExited(e -> {
-            ChangeBackground.setEffect(null);
-        });
-        ChangeBackground.setOnMouseClicked(e -> {
-            System.out.println("change background image ");
-            mainstage.setScene(BackgroundZoneScene);
-
-        });
-
-    }
-
-    private void createChangeBooms() {
-
-        ChangeBoom = new ImageView("View/resources/GameZone/ChangeBooms.png");
-        ChangeBoom.setLayoutX(650);
-        ChangeBoom.setLayoutY(GAMEHIGHT - 250);
-        ChangeBoom.setOnMouseEntered(e -> {
-            ChangeBoom.setEffect(effect2);
-        });
-        ChangeBoom.setOnMouseExited(e -> {
-            ChangeBoom.setEffect(null);
-        });
-        ChangeBoom.setOnMouseClicked(e -> {
-            System.out.println("change booms image ");
-            gameManger.createNewGame(mainstage, 1);
-        });
-
-
-    }
-
-    private void createChangeCursor() {
-
-        ChangeCursor = new ImageView("View/resources/GameZone/ChangeCursor.png");
-        ChangeCursor.setLayoutX(650);
-        ChangeCursor.setLayoutY(GAMEHIGHT - 600);
-        ChangeCursor.setOnMouseEntered(e -> {
-            ChangeCursor.setEffect(effect2);
-        });
-        ChangeCursor.setOnMouseExited(e -> {
-            ChangeCursor.setEffect(null);
-        });
-        ChangeCursor.setOnMouseClicked(e -> {
-            System.out.println("change Cursor image ");
-            gameManger.createNewGame(mainstage, 1);
-        });
-
-    }
-
-
-    private void createChangeLight() {
-
-        ChangeLight = new ImageView("View/resources/GameZone/ChangeLight.png");
-        ChangeLight.setLayoutX(110);
-        ChangeLight.setLayoutY(GAMEHIGHT - 250);
-        ChangeLight.setOnMouseEntered(e -> {
-            ChangeLight.setEffect(effect2);
-        });
-        ChangeLight.setOnMouseExited(e -> {
-            ChangeLight.setEffect(null);
-        });
-        ChangeLight.setOnMouseClicked(e -> {
-            System.out.println("change light image ");
-            gameManger.createNewGame(mainstage, 1);
-        });
-
-
-    }
-
-
-
-    private void createGameZoneBackground() {
-
-        Image backgroundImage2 = new Image("View/resources/GameZone/GameZoneBackground.png", 1200, 700, false, true);
-        BackgroundImage background2 = new BackgroundImage(backgroundImage2, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
-        gameZonePane.setBackground(new Background(background2));
-        gameZonePane.getChildren().addAll(ChangeLight, ChangeCursor, ChangeBoom, ChangeBackground, BackButton);
-
-    }
-
-    private void createBackgroundZoneBackground() {
-
-        Image backgroundImage2 = new Image("View/resources/GameZone/GameZoneBackground.png", 1200, 700, false, true);
-        BackgroundImage background2 = new BackgroundImage(backgroundImage2, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
-        backgroundZonePane.setBackground(new Background(background2));
-        backgroundZonePane.getChildren().addAll(ChangeLight, ChangeCursor, ChangeBoom, ChangeBackground, BackButton);
-
-    }
-
-    private void createBackButton() {
-
-        BackButton = new ImageView("View/resources/Icons/exit.png");
-        BackButton.setLayoutX(10);
-        BackButton.setLayoutY(GAMEHIGHT - 690);
-        BackButton.setOnMouseEntered(e -> {
-            BackButton.setEffect(new Glow());
-        });
-        BackButton.setOnMouseExited(e -> {
-            BackButton.setEffect(null);
-        });
-        BackButton.setOnMouseClicked(e -> {
-            mainstage.setScene(mainscene);
-
-        });
-
-
-    }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
- */
