@@ -1,6 +1,4 @@
-# Fruit-ninja
-A college project using Java.
-
+# Fruit-ninja (college project using Java.)
 **Game Description
 
   It is a single player game in which player slices fruits with a blade controlled by mouse swipes
